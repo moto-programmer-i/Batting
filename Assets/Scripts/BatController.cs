@@ -29,10 +29,12 @@ public class BatController : MonoBehaviour
     /// </summary>
     private List<InputAction> actions = new ();
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -67,7 +69,8 @@ public class BatController : MonoBehaviour
         }
 
         // 押した位置にバットを移動
-        this.transform.position = CameraUtils.ScreenToWorldPoint(mainCamera, screenPosition, distance);
+        // this.transform.position = CameraUtils.ScreenToWorldPoint(mainCamera, screenPosition, distance);
+        animator.SetTrigger(AnimatorConstants.SWING);
     }
 
     void OnEnable()
