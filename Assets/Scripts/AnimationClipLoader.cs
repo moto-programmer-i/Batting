@@ -55,6 +55,8 @@ public static class AnimationClipLoader
         AnimationClip clip = new AnimationClip();
 
         // Positionの成分ごとのカーブを作成
+        // 参考
+        // https://im0039kp.jp/%E3%80%90unity%E3%80%91animationclip%E3%82%92%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%8B%E3%82%89%E7%94%9F%E6%88%90/
         AnimationCurve xCurve = new AnimationCurve();
         AnimationCurve yCurve = new AnimationCurve();
         AnimationCurve zCurve = new AnimationCurve();
