@@ -3,32 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class AnimationClipLoader : MonoBehaviour
+public static class AnimationClipLoader
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        // // AnimationClip animationClip =  Resources.Load<AnimationClip>("D:\\Unity\\Projects\\Batting\\ExternalSwing.anim");
-        // AnimationClip clip =  Resources.Load<AnimationClip>("Animations/TemplateSwing");
-        // // EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(clip);
-        // foreach (var binding in AnimationUtility.GetCurveBindings(clip))
-        //     {
-        //         AnimationCurve curve = AnimationUtility.GetEditorCurve(clip, binding);
-        //         // EditorGUILayout.LabelField(binding.path + "/" + binding.propertyName + ", Keys: " + curve.keys.Length);
-        //         Debug.Log(curve.ToString());
-        //     }
-        // // Debug.Log(animationClip.);
 
-        AnimationCurveJson curve = ResourceUtils.LoadJson<AnimationCurveJson>("Animations/TemplateSwing");
-        Debug.Log(curve);
-        // AnimationKeyframe keyframe = ResourceUtils.LoadJson<AnimationKeyframe>("Animations/temp");
-        // Debug.Log(keyframe);
-        
+    // https://docs.unity3d.com/ja/2020.3/ScriptReference/AnimationClip.SetCurve.html
+    // Transform.localPosition のようにTransformの変数一覧がキーになるらしい
+    /// <summary>
+    /// 相対x座標をSetCurveする場合のキー
+    /// </summary>
+    const string LOCAL_POSITION_X_KEY = "localPosition.x";
+    /// <summary>
+    /// 相対y座標をSetCurveする場合のキー
+    /// </summary>
+    const string LOCAL_POSITION_Y_KEY = "localPosition.y";
+    /// <summary>
+    /// 相対z座標をSetCurveする場合のキー
+    /// </summary>
+    const string LOCAL_POSITION_Z_KEY = "localPosition.z";
+    
+
+    /// <summary>
+    /// AnimationClipをAnimatorに設定
+    /// </summary>
+    /// <param name="jsonFilename"></param>
+    /// <param name="clipname"></param>
+    /// <param name="anim"></param>
+    public static void setClip(string jsonFilename, string clipname, Animator anim)
+    {
+        // jsonからAnimationClipを作成
+        AnimationCurveJson curve = ResourceUtils.LoadJson<AnimationCurveJson>(jsonFilename);
+        AnimationClip clip = convertToAnimationClip(curve);
+        clip.name = clipname;
+
+        // AnimationClipを変更（AnimatorOverrideControllerを経由しないと動かない）
+		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(anim.runtimeAnimatorController);
+        anim.runtimeAnimatorController = animatorOverrideController;
+        animatorOverrideController[clip.name] = clip;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// JsonからAnimationClipに変換
+    /// </summary>
+    /// <param name="curve"></param>
+    /// <returns></returns>
+    public static AnimationClip convertToAnimationClip(AnimationCurveJson curve)
     {
-        
+        if (curve == null || ListUtils.IsEmpty(curve.keyframes)) {
+            return null;
+        }
+
+        AnimationClip clip = new AnimationClip();
+
+        // Positionの成分ごとのカーブを作成
+        AnimationCurve xCurve = new AnimationCurve();
+        AnimationCurve yCurve = new AnimationCurve();
+        AnimationCurve zCurve = new AnimationCurve();
+        for(int i = 0; i < curve.keyframes.Count; ++i) {
+            xCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.x);
+            yCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.y);
+            zCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.z);
+        }
+        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_X_KEY, xCurve);
+        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_Y_KEY, yCurve);
+        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_Z_KEY, zCurve);
+
+
+        return clip;
     }
 }

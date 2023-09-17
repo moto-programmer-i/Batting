@@ -35,6 +35,9 @@ public class BatController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        // ファイルからスイング読み込み
+        AnimationClipLoader.setClip("Animations/TemplateSwing", "Swing", animator);
     }
 
     // Update is called once per frame
