@@ -25,10 +25,15 @@ public class PaintController : MonoBehaviour
     private InputAction draw;
 
     /// <summary>
-    /// 入力位置
+    /// 入力座標
     /// </summary>
-    // [SerializeField]
-    public InputAction position;
+    [SerializeField]
+    private InputAction position;
+
+    /// <summary>
+    /// 前回の入力座標
+    /// </summary>
+    private Vector2 prePosition = Vector2.zero;
 
     /// <summary>
     /// Actionの有効を自分で管理するクラス
@@ -38,12 +43,16 @@ public class PaintController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 画像の用意
         Rect rect = image.gameObject.GetComponent<RectTransform>().rect;
         texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
-
-        
-
         image.texture = texture;
+
+        // 描画終了時は、前回の座標を消す
+        draw.canceled += context => {
+            // prePosition = null; // nullをいれられない
+            prePosition = Vector2.zero;
+        };
     }
 
     // Update is called once per frame
@@ -59,23 +68,36 @@ public class PaintController : MonoBehaviour
             return;
         }
 
-        if (!draw.triggered) {
+        // 押されてなければなにもしない
+        if (!draw.IsInProgress()) {
             return;
         }
 
         Vector2 penPosition = position.ReadValue<Vector2>();
-        Vector2Int min = Vector2Int.RoundToInt(penPosition - PEN / 2);
+        drawPoint(penPosition);
+
+        // 前回の入力があれば線を描く
+        if (prePosition != Vector2.zero) {
+            VectorUtils.withLerpPoints(prePosition, penPosition, drawPoint);
+        }
+
+        // 前回の座標を保存
+        prePosition = penPosition;
+ 
+        texture.Apply();
+    }
+
+    public void drawPoint(Vector2 center) {
+        Vector2Int min = Vector2Int.RoundToInt(center - PEN / 2);
         Vector2Int max = min + PEN;
         
         // 参考
         // https://qiita.com/maple-bitter/items/290ba820cffb8c97834f
         for(int x = min.x; x < max.x; ++x) {
             for(int y = min.y; y < max.y; ++y) {
-                texture.SetPixel( x, y, Color.black );
+                texture.SetPixel( x, y, Color.black);
             }
         }
- 
-        texture.Apply();
     }
 
      void OnEnable()

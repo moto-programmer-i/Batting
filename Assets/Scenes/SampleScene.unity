@@ -1404,7 +1404,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 459819a7-1e60-4ef4-8aac-77bc6f1692cf
-      m_Path: <Mouse>/leftButton
+      m_Path: <Mouse>/press
       m_Interactions: 
       m_Processors: 
       m_Groups: 
