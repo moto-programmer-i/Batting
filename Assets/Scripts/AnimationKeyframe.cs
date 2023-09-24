@@ -14,4 +14,12 @@ public class AnimationKeyframe
 
     public float time;
     public Vector3 position;
+
+    public AnimationKeyframe(){}
+
+    public AnimationKeyframe(float time, Vector3 position)
+    {
+        this.time = time;
+        this.position = position;
+    }
 }

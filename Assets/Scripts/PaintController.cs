@@ -13,6 +13,16 @@ public class PaintController : MonoBehaviour
     static readonly int PEN_WIDTH = 10;
     private static readonly Vector2Int PEN = new Vector2Int(PEN_WIDTH, PEN_WIDTH);
 
+    /// <summary>
+    /// スイングを保存するときの点同士の最小マンハッタン距離
+    /// </summary>
+    static readonly int SWING_POINT_MIN_DISTANCE = 100;
+
+    /// <summary>
+    /// スイング軌道のJSONのファイル名
+    /// </summary>
+    static readonly string SWING_FILE_NAME = "swingPath.json";
+
     [SerializeField]
     private RawImage image;
 
@@ -36,6 +46,11 @@ public class PaintController : MonoBehaviour
     private Vector2 prePosition = Vector2.zero;
 
     /// <summary>
+    /// スイング軌道を表す座標のリスト
+    /// </summary>
+    private List<Vector2> swingPath = new ();
+
+    /// <summary>
     /// Actionの有効を自分で管理するクラス
     /// </summary>
     private List<InputAction> actions = new ();
@@ -48,11 +63,18 @@ public class PaintController : MonoBehaviour
         texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
         image.texture = texture;
 
-        // 描画終了時は、前回の座標を消す
+        // スイング描画終了時
         draw.canceled += context => {
+            // 保存
+            FileUtils.SaveJson(SWING_FILE_NAME, swingPathToJson(swingPath));
+
+            // スイングを初期化
+            swingPath.Clear();
             // prePosition = null; // nullをいれられない
             prePosition = Vector2.zero;
         };
+
+        Debug.Log(FileUtils.GetCurrentDirectory());
     }
 
     // Update is called once per frame
@@ -76,9 +98,18 @@ public class PaintController : MonoBehaviour
         Vector2 penPosition = position.ReadValue<Vector2>();
         drawPoint(penPosition);
 
-        // 前回の入力があれば線を描く
-        if (prePosition != Vector2.zero) {
+        // 前回の入力がなければ最初の点として保存
+        if (prePosition == Vector2.zero) {
+            swingPath.Add(penPosition);
+        }
+        else {
+            // 前回の入力があれば線を描く
             VectorUtils.withLerpPoints(prePosition, penPosition, drawPoint);
+
+            // 最小距離より離れていればスイング軌道に追加
+            if (SWING_POINT_MIN_DISTANCE  < VectorUtils.ManhattanDistance(penPosition, swingPath.Last())) {
+                swingPath.Add(penPosition);
+            }
         }
 
         // 前回の座標を保存
@@ -121,5 +152,14 @@ public class PaintController : MonoBehaviour
         actions.ForEach(action => action.Disable());
     }
 
-    
+    static AnimationCurveJson swingPathToJson(List<Vector2> swingPath)
+    {
+        AnimationCurveJson json = new ();
+        swingPath.ForEach(point => {
+            // 2Dから3D上のスイング軌道に変換
+            // キーフレームと変換をかく
+            json.keyframes.Add(new AnimationKeyframe(0, new Vector3(point.x, point.y, 0)));
+        });
+        return json;
+    }
 }

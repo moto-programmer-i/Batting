@@ -31,4 +31,18 @@ public static class VectorUtils
             midPointHandler(Vector2.Lerp(start, destination, i * delta));
         }
     }
+    
+    /// <summary>
+    /// マンハッタン距離を返す
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static float ManhattanDistance(Vector2 a, Vector2 b)
+    {
+        // オーバーフローする可能性は一旦無視
+        // 参考
+        // https://forum.unity.com/threads/suggest-add-vector3int-manhattandistance-vector3int-a-vector3int-b.444672/
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
 }

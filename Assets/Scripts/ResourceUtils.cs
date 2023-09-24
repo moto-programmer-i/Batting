@@ -10,7 +10,8 @@ public static class ResourceUtils
     /// <typeparam name="T"></typeparam>
     /// <param name="filepath">Resources以下のパス（拡張子は不要）</param>
     /// <returns></returns>
-    public static T LoadJson<T>(string filepath){
+    public static T LoadJson<T>(string filepath)
+    {
         string inputJson = Resources.Load<TextAsset>(filepath).ToString();
         return JsonUtility.FromJson<T>(inputJson);
     }
