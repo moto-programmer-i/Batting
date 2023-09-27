@@ -28,10 +28,9 @@ public static class AnimationClipLoader
     /// <param name="jsonFilename"></param>
     /// <param name="clipname"></param>
     /// <param name="anim"></param>
-    public static void setClip(string jsonFilename, string clipname, Animator anim)
+    public static void setClip(AnimationCurveJson curve, string clipname, Animator anim)
     {
-        // jsonからAnimationClipを作成
-        AnimationCurveJson curve = ResourceUtils.LoadJson<AnimationCurveJson>(jsonFilename);
+        // AnimationCurveJsonからAnimationClipを作成
         AnimationClip clip = convertToAnimationClip(curve);
         clip.name = clipname;
 

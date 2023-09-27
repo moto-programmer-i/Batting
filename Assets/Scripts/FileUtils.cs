@@ -30,4 +30,23 @@ public static class FileUtils
             sw.WriteLine(JsonUtility.ToJson(json));
         }
     }
+
+    /// <summary>
+    /// Jsonファイルを読み込み
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="filename"></param>
+    /// <param name="directory">ディレクトリ（空の場合はカレントになる）</param>
+    /// <returns></returns>
+    public static T LoadJson<T>(string filename, string directory = "")
+    {
+        // ディレクトリの指定がない場合はカレント
+        if (string.IsNullOrEmpty(directory)) {
+            directory = GetCurrentDirectory();
+        }
+
+        using (StreamReader sr = new StreamReader(Path.Combine(directory, filename))) {
+            return JsonUtility.FromJson<T>(sr.ReadToEnd());
+        }
+    }
 }

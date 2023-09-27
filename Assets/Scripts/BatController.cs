@@ -7,6 +7,10 @@ using UnityEngine.UIElements;
 
 public class BatController : MonoBehaviour
 {
+    public static readonly string DEFAULT_SWING_FILENAME = "swingPath.json";
+
+    public static readonly string SWING_CLIPNAME = "Swing";
+
     public Camera mainCamera; 
 
     /// <summary>
@@ -37,7 +41,8 @@ public class BatController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // ファイルからスイング読み込み
-        AnimationClipLoader.setClip("Animations/TemplateSwing", "Swing", animator);
+        AnimationCurveJson curve = FileUtils.LoadJson<AnimationCurveJson>(DEFAULT_SWING_FILENAME);
+        AnimationClipLoader.setClip(curve, SWING_CLIPNAME, animator);
     }
 
     // Update is called once per frame
