@@ -20,6 +20,19 @@ public static class AnimationClipLoader
     /// 相対z座標をSetCurveする場合のキー
     /// </summary>
     const string LOCAL_POSITION_Z_KEY = "localPosition.z";
+
+    /// <summary>
+    /// 回転x成分をSetCurveする場合のキー
+    /// </summary>
+    const string ROTATION_X_KEY = "rotation.x";
+    /// <summary>
+    /// 回転y成分をSetCurveする場合のキー
+    /// </summary>
+    const string ROTATION_Y_KEY = "rotation.y";
+    /// <summary>
+    /// 回転z成分をSetCurveする場合のキー
+    /// </summary>
+    const string ROTATION_Z_KEY = "rotation.z";
     
 
     /// <summary>
@@ -56,17 +69,32 @@ public static class AnimationClipLoader
         // Positionの成分ごとのカーブを作成
         // 参考
         // https://im0039kp.jp/%E3%80%90unity%E3%80%91animationclip%E3%82%92%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%8B%E3%82%89%E7%94%9F%E6%88%90/
-        AnimationCurve xCurve = new AnimationCurve();
-        AnimationCurve yCurve = new AnimationCurve();
-        AnimationCurve zCurve = new AnimationCurve();
+        AnimationCurve xPositionCurve = new AnimationCurve();
+        AnimationCurve yPositionCurve = new AnimationCurve();
+        AnimationCurve zPositionCurve = new AnimationCurve();
+        AnimationCurve xRotationCurve = new AnimationCurve();
+        AnimationCurve yRotationCurve = new AnimationCurve();
+        AnimationCurve zRotationCurve = new AnimationCurve();
         for(int i = 0; i < curve.keyframes.Count; ++i) {
-            xCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.x);
-            yCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.y);
-            zCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.z);
+            if (curve.keyframes[i].position != null) {
+                xPositionCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.x);
+                yPositionCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.y);
+                zPositionCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.z);
+            }
+            
+            if (curve.keyframes[i].rotation != null) {
+                xRotationCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].rotation.x);
+                yRotationCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].rotation.y);
+                zRotationCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].rotation.z);
+            }
         }
-        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_X_KEY, xCurve);
-        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_Y_KEY, yCurve);
-        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_Z_KEY, zCurve);
+        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_X_KEY, xPositionCurve);
+        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_Y_KEY, yPositionCurve);
+        clip.SetCurve("", typeof(Transform), LOCAL_POSITION_Z_KEY, zPositionCurve);
+
+        clip.SetCurve("", typeof(Transform), ROTATION_X_KEY, xRotationCurve);
+        clip.SetCurve("", typeof(Transform), ROTATION_Y_KEY, yRotationCurve);
+        clip.SetCurve("", typeof(Transform), ROTATION_Z_KEY, zRotationCurve);
 
 
         return clip;

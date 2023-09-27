@@ -158,7 +158,7 @@ public class PaintController : MonoBehaviour
         swingPath.ForEach(point => {
             // 2Dから3D上のスイング軌道に変換
             // キーフレームと変換をかく
-            json.keyframes.Add(new AnimationKeyframe(0, new Vector3(point.x, point.y, 0)));
+            json.keyframes.Add(new AnimationKeyframe(0, new Vector3(point.x, point.y, 0), Vector3.zero));
         });
         return json;
     }
