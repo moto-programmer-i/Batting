@@ -14,9 +14,14 @@ public class PaintController : MonoBehaviour
     private static readonly Vector2Int PEN = new Vector2Int(PEN_WIDTH, PEN_WIDTH);
 
     /// <summary>
+    /// スイングを保存するときの点同士の最小マンハッタン距離をだすための分割数
+    /// </summary>
+    public static readonly int SWING_POINT_SPRIT_FOR_MIN_DISTANCE = 10;
+
+    /// <summary>
     /// スイングを保存するときの点同士の最小マンハッタン距離
     /// </summary>
-    static readonly int SWING_POINT_MIN_DISTANCE = 100;
+    private static int SWING_POINT_MIN_DISTANCE;
 
     /// <summary>
     /// スイング軌道のJSONのファイル名
@@ -55,9 +60,38 @@ public class PaintController : MonoBehaviour
     /// </summary>
     private List<InputAction> actions = new ();
 
+    /// <summary>
+    /// 基となるスイング軌道のJSONのファイル名
+    /// </summary>
+    static readonly string BASE_SWING_RESOURCE_NAME = "Animations/BaseSwing";
+
+    /// <summary>
+    /// 基となるスイングのJSON
+    /// </summary>
+    private static AnimationCurveJson baseCurve;
+
+    /// <summary>
+    /// 基となるスイングのインパクトの添え字
+    /// </summary>
+    private static int baseSwingImpactIndex;
+
+    static readonly float SWING_MIN_Y = 3;
+    static readonly float SWING_Y_RANGE = 10;
+
     // Start is called before the first frame update
     void Start()
     {
+        // スイングの最小距離を設定
+        SWING_POINT_MIN_DISTANCE = Screen.width / SWING_POINT_SPRIT_FOR_MIN_DISTANCE;
+        
+
+        // ファイルからスイング読み込み
+        if (baseCurve == null) {
+            baseCurve = ResourceUtils.LoadJson<AnimationCurveJson>(BASE_SWING_RESOURCE_NAME);
+            baseCurve.initImpactIndex();
+        }
+        
+
         // 画像の用意
         Rect rect = image.gameObject.GetComponent<RectTransform>().rect;
         texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
@@ -66,7 +100,7 @@ public class PaintController : MonoBehaviour
         // スイング描画終了時
         draw.canceled += context => {
             // 保存
-            FileUtils.SaveJson(SWING_FILE_NAME, swingPathToJson(swingPath));
+            FileUtils.SaveJson(SWING_FILE_NAME, SwingPathToJson(swingPath));
 
             // スイングを初期化
             swingPath.Clear();
@@ -95,6 +129,12 @@ public class PaintController : MonoBehaviour
             return;
         }
 
+        addPenPosition();
+ 
+        texture.Apply();
+    }
+
+    private void addPenPosition() {
         Vector2 penPosition = position.ReadValue<Vector2>();
         drawPoint(penPosition);
 
@@ -114,8 +154,6 @@ public class PaintController : MonoBehaviour
 
         // 前回の座標を保存
         prePosition = penPosition;
- 
-        texture.Apply();
     }
 
     public void drawPoint(Vector2 center) {
@@ -152,14 +190,55 @@ public class PaintController : MonoBehaviour
         actions.ForEach(action => action.Disable());
     }
 
-    static AnimationCurveJson swingPathToJson(List<Vector2> swingPath)
+    static AnimationCurveJson SwingPathToJson(List<Vector2> swingPath)
     {
         AnimationCurveJson json = new ();
-        swingPath.ForEach(point => {
-            // 2Dから3D上のスイング軌道に変換
-            // キーフレームと変換をかく
-            json.keyframes.Add(new AnimationKeyframe(0, new Vector3(point.x, point.y, 0), Vector3.zero));
-        });
+        // 2Dから3D上のスイング軌道に変換
+        // インパクトから逆順に追加していく
+        int baseSwingIndex = baseCurve.ImpactIndex;
+        int swingPathIndex = swingPath.Count - 1;
+        json.keyframes.Add(ToAnimationKeyframe(
+                    baseCurve.keyframes[baseSwingIndex],
+                    ConvertSwingY2Dto3D(swingPath[swingPathIndex].y),
+                    SwingType.IMPACT));
+        
+        // swingPathの最初の点を活かせない可能性がある、要調整
+        for(--swingPathIndex; swingPathIndex >= 0 && baseSwingIndex >= 0; --swingPathIndex,--baseSwingIndex) {
+            // List.Prependが存在せず、エラーもでなかった
+            // json.keyframes.Prepend(ToAnimationKeyframe(
+            json.keyframes.Add(ToAnimationKeyframe(
+                    baseCurve.keyframes[baseSwingIndex],
+                    ConvertSwingY2Dto3D(swingPath[swingPathIndex].y)));
+        }
+        json.keyframes.Reverse();
+        
+        // フォロースルーを追加（とりあえずフォロースルーの高さはインパクトと同じ）
+        float lastHeight = json.keyframes.Last().position.y;
+        for(baseSwingIndex = baseCurve.ImpactIndex + 1; baseSwingIndex < baseCurve.keyframes.Count; ++baseSwingIndex) {
+            json.keyframes.Add(ToAnimationKeyframe(
+                    baseCurve.keyframes[baseSwingIndex],
+                    lastHeight));
+        }
         return json;
+    }
+
+    static AnimationKeyframe ToAnimationKeyframe(AnimationKeyframe baseFrame, float y, SwingType type = SwingType.DEFAULT) {
+        return new AnimationKeyframe(
+                baseFrame.time,
+                new Vector3(baseFrame.position.x, y, baseFrame.position.z),
+                baseFrame.rotation,
+                type
+                );
+    }
+
+    /// <summary>
+    /// スイング軌道のY成分を2Dから3Dに変換
+    /// </summary>
+    /// <param name="y2d">2Dでのy成分（0～Screen.height）</param>
+    /// <returns>3Dでのy成分</returns>
+    static float ConvertSwingY2Dto3D(float y2d)
+    {
+        // 2D y:0～Screen.height → MIN_Y～(MIN_Y + RANGE_Y)に変換
+        return y2d / Screen.height * SWING_Y_RANGE + SWING_MIN_Y;
     }
 }

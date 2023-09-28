@@ -9,6 +9,7 @@ using UnityEngine;
 public class AnimationKeyframe
 {
     // これが正規の書き方のはずだが、Jsonから値を設定できない
+    // https://docs.unity3d.com/jp/540/ScriptReference/JsonUtility.FromJson.html
     // public float time { get; set; }
     // public Vector3 position { get; set; }
 
@@ -16,12 +17,16 @@ public class AnimationKeyframe
     public Vector3 position;
     public Vector3 rotation;
 
+    // プログラム上はenumにすべきだが、数値でシリアライズされるのが微妙？要検討
+    public SwingType type;
+
     public AnimationKeyframe(){}
 
-    public AnimationKeyframe(float time, Vector3 position, Vector3 rotation)
+    public AnimationKeyframe(float time, Vector3 position, Vector3 rotation, SwingType type = SwingType.DEFAULT)
     {
         this.time = time;
         this.position = position;
         this.rotation = rotation;
+        this.type = type;
     }
 }
