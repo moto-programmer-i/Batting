@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public static class ResourceUtils
 {
@@ -13,6 +14,6 @@ public static class ResourceUtils
     public static T LoadJson<T>(string filepath)
     {
         string inputJson = Resources.Load<TextAsset>(filepath).ToString();
-        return JsonUtility.FromJson<T>(inputJson);
+        return JsonConvert.DeserializeObject<T>(inputJson);
     }
 }

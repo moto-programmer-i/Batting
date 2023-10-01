@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public static class FileUtils
 {
@@ -27,7 +28,7 @@ public static class FileUtils
         }
 
         using (StreamWriter sw = new StreamWriter(Path.Combine(directory, filename))) {
-            sw.WriteLine(JsonUtility.ToJson(json));
+            sw.WriteLine(JsonConvert.SerializeObject(json));
         }
     }
 
@@ -46,7 +47,7 @@ public static class FileUtils
         }
 
         using (StreamReader sr = new StreamReader(Path.Combine(directory, filename))) {
-            return JsonUtility.FromJson<T>(sr.ReadToEnd());
+            return JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
         }
     }
 }
