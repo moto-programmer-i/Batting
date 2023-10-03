@@ -14,15 +14,15 @@ public class AnimationKeyframe
     // public Vector3 position { get; set; }
 
     public float time;
-    public Vector3 position;
-    public Vector3 rotation;
+    public Vector3Data position;
+    public Vector3Data rotation;
 
     // プログラム上はenumにすべきだが、数値でシリアライズされるのが微妙？要検討
-    public SwingType type;
+    public SwingType? type;
 
     public AnimationKeyframe(){}
 
-    public AnimationKeyframe(float time, Vector3 position, Vector3 rotation, SwingType type = SwingType.DEFAULT)
+    public AnimationKeyframe(float time, Vector3Data position, Vector3Data rotation, SwingType? type)
     {
         this.time = time;
         this.position = position;

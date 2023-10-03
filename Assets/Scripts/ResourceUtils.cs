@@ -13,7 +13,8 @@ public static class ResourceUtils
     /// <returns></returns>
     public static T LoadJson<T>(string filepath)
     {
+        // resourcesのパスはビルドするとなくなるらしく、Loadで取得する必要があるらしい
         string inputJson = Resources.Load<TextAsset>(filepath).ToString();
-        return JsonConvert.DeserializeObject<T>(inputJson);
+        return JsonConvert.DeserializeObject<T>(inputJson, FileUtils.JSON_SETTINGS);
     }
 }

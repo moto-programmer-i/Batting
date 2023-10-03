@@ -82,8 +82,7 @@ public class PaintController : MonoBehaviour
     void Start()
     {
         // スイングの最小距離を設定
-        SWING_POINT_MIN_DISTANCE = Screen.width / SWING_POINT_SPRIT_FOR_MIN_DISTANCE;
-        
+        SWING_POINT_MIN_DISTANCE = Screen.width / SWING_POINT_SPRIT_FOR_MIN_DISTANCE;        
 
         // ファイルからスイング読み込み
         if (baseCurve == null) {
@@ -213,7 +212,7 @@ public class PaintController : MonoBehaviour
         json.keyframes.Reverse();
         
         // フォロースルーを追加（とりあえずフォロースルーの高さはインパクトと同じ）
-        float lastHeight = json.keyframes.Last().position.y;
+        float lastHeight = json.keyframes.Last().position.Y;
         for(baseSwingIndex = baseCurve.ImpactIndex + 1; baseSwingIndex < baseCurve.keyframes.Count; ++baseSwingIndex) {
             json.keyframes.Add(ToAnimationKeyframe(
                     baseCurve.keyframes[baseSwingIndex],
@@ -222,10 +221,10 @@ public class PaintController : MonoBehaviour
         return json;
     }
 
-    static AnimationKeyframe ToAnimationKeyframe(AnimationKeyframe baseFrame, float y, SwingType type = SwingType.DEFAULT) {
+    static AnimationKeyframe ToAnimationKeyframe(AnimationKeyframe baseFrame, float y, SwingType? type = null) {
         return new AnimationKeyframe(
                 baseFrame.time,
-                new Vector3(baseFrame.position.x, y, baseFrame.position.z),
+                baseFrame.position != null ? new Vector3Data(baseFrame.position.X, y, baseFrame.position.Z) : null,
                 baseFrame.rotation,
                 type
                 );

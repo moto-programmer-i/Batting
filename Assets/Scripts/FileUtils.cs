@@ -6,6 +6,14 @@ using Newtonsoft.Json;
 
 public static class FileUtils
 {
+
+    // JSON化の設定
+    // 参考 https://qiita.com/matchyy/items/b1cd6f3a2a93749774da#tldr
+    public static readonly JsonSerializerSettings JSON_SETTINGS = new JsonSerializerSettings
+    {
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+    };
+
     public static string GetCurrentDirectory()
     {
         // 開発中は C:/Users/%USERNAME%/AppData/LocalLow/DefaultCompany/Batting
@@ -27,8 +35,12 @@ public static class FileUtils
             directory = GetCurrentDirectory();
         }
 
-        using (StreamWriter sw = new StreamWriter(Path.Combine(directory, filename))) {
-            sw.WriteLine(JsonConvert.SerializeObject(json));
+        // 参考
+        // https://www.newtonsoft.com/json/help/html/SerializeWithJsonSerializerToFile.htm
+        using (StreamWriter file = File.CreateText(Path.Combine(directory, filename)))
+        {
+            JsonSerializer serializer = JsonSerializer.CreateDefault(JSON_SETTINGS);
+            serializer.Serialize(file, json);
         }
     }
 
@@ -46,8 +58,11 @@ public static class FileUtils
             directory = GetCurrentDirectory();
         }
 
-        using (StreamReader sr = new StreamReader(Path.Combine(directory, filename))) {
-            return JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
+        using (StreamReader file = File.OpenText(Path.Combine(directory, filename)))
+        {
+            JsonSerializer serializer = JsonSerializer.CreateDefault(JSON_SETTINGS);
+            // なぜかジェネリックのメソッドが用意されてない
+            return (T)serializer.Deserialize(file, typeof(T));
         }
     }
 }
