@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Linq;
+using System.IO;
 
 public class PaintController : MonoBehaviour
 {
@@ -87,7 +88,6 @@ public class PaintController : MonoBehaviour
         // ファイルからスイング読み込み
         if (baseCurve == null) {
             baseCurve = ResourceUtils.LoadJson<AnimationCurveJson>(BASE_SWING_RESOURCE_NAME);
-            baseCurve.initImpactIndex();
         }
         
 
@@ -196,26 +196,26 @@ public class PaintController : MonoBehaviour
         // インパクトから逆順に追加していく
         int baseSwingIndex = baseCurve.ImpactIndex;
         int swingPathIndex = swingPath.Count - 1;
-        json.keyframes.Add(ToAnimationKeyframe(
-                    baseCurve.keyframes[baseSwingIndex],
+        json.Keyframes.Add(ToAnimationKeyframe(
+                    baseCurve.Keyframes[baseSwingIndex],
                     ConvertSwingY2Dto3D(swingPath[swingPathIndex].y),
                     SwingType.IMPACT));
         
         // swingPathの最初の点を活かせない可能性がある、要調整
         for(--swingPathIndex; swingPathIndex >= 0 && baseSwingIndex >= 0; --swingPathIndex,--baseSwingIndex) {
             // List.Prependが存在せず、エラーもでなかった
-            // json.keyframes.Prepend(ToAnimationKeyframe(
-            json.keyframes.Add(ToAnimationKeyframe(
-                    baseCurve.keyframes[baseSwingIndex],
+            // json.Keyframes.Prepend(ToAnimationKeyframe(
+            json.Keyframes.Add(ToAnimationKeyframe(
+                    baseCurve.Keyframes[baseSwingIndex],
                     ConvertSwingY2Dto3D(swingPath[swingPathIndex].y)));
         }
-        json.keyframes.Reverse();
+        json.Keyframes.Reverse();
         
         // フォロースルーを追加（とりあえずフォロースルーの高さはインパクトと同じ）
-        float lastHeight = json.keyframes.Last().position.Y;
-        for(baseSwingIndex = baseCurve.ImpactIndex + 1; baseSwingIndex < baseCurve.keyframes.Count; ++baseSwingIndex) {
-            json.keyframes.Add(ToAnimationKeyframe(
-                    baseCurve.keyframes[baseSwingIndex],
+        float lastHeight = json.Keyframes.Last().Position.Y;
+        for(baseSwingIndex = baseCurve.ImpactIndex + 1; baseSwingIndex < baseCurve.Keyframes.Count; ++baseSwingIndex) {
+            json.Keyframes.Add(ToAnimationKeyframe(
+                    baseCurve.Keyframes[baseSwingIndex],
                     lastHeight));
         }
         return json;
@@ -223,9 +223,9 @@ public class PaintController : MonoBehaviour
 
     static AnimationKeyframe ToAnimationKeyframe(AnimationKeyframe baseFrame, float y, SwingType? type = null) {
         return new AnimationKeyframe(
-                baseFrame.time,
-                baseFrame.position != null ? new Vector3Data(baseFrame.position.X, y, baseFrame.position.Z) : null,
-                baseFrame.rotation,
+                baseFrame.Time,
+                baseFrame.Position != null ? new Vector3Data(baseFrame.Position.X, y, baseFrame.Position.Z) : null,
+                baseFrame.Rotation,
                 type
                 );
     }

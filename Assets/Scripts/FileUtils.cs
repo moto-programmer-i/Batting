@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 public static class FileUtils
 {
@@ -12,6 +13,7 @@ public static class FileUtils
     public static readonly JsonSerializerSettings JSON_SETTINGS = new JsonSerializerSettings
     {
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+        ContractResolver = new CamelCasePropertyNamesContractResolver()
     };
 
     public static string GetCurrentDirectory()

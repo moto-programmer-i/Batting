@@ -60,7 +60,7 @@ public static class AnimationClipLoader
     /// <returns></returns>
     public static AnimationClip convertToAnimationClip(AnimationCurveJson curve)
     {
-        if (curve == null || ListUtils.IsEmpty(curve.keyframes)) {
+        if (curve == null || ListUtils.IsEmpty(curve.Keyframes)) {
             return null;
         }
 
@@ -75,17 +75,17 @@ public static class AnimationClipLoader
         AnimationCurve xRotationCurve = new AnimationCurve();
         AnimationCurve yRotationCurve = new AnimationCurve();
         AnimationCurve zRotationCurve = new AnimationCurve();
-        for(int i = 0; i < curve.keyframes.Count; ++i) {
-            if (curve.keyframes[i].position != null) {
-                xPositionCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.X);
-                yPositionCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.Y);
-                zPositionCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].position.Z);
+        for(int i = 0; i < curve.Keyframes.Count; ++i) {
+            if (curve.Keyframes[i].Position != null) {
+                xPositionCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Position.X);
+                yPositionCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Position.Y);
+                zPositionCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Position.Z);
             }
             
-            if (curve.keyframes[i].rotation != null) {
-                xRotationCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].rotation.X);
-                yRotationCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].rotation.Y);
-                zRotationCurve.AddKey(curve.keyframes[i].time, curve.keyframes[i].rotation.Z);
+            if (curve.Keyframes[i].Rotation != null) {
+                xRotationCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Rotation.X);
+                yRotationCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Rotation.Y);
+                zRotationCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Rotation.Z);
             }
         }
         clip.SetCurve("", typeof(Transform), LOCAL_POSITION_X_KEY, xPositionCurve);

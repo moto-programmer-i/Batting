@@ -1,31 +1,49 @@
 using System;
 using System.Collections;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class AnimationCurveJson
 {
-    // これが正規の書き方のはずだが、Jsonから値を設定できない
-    // public List<AnimationKeyframe> keyframes { get; set; }
-    public List<AnimationKeyframe> keyframes = new ();
+    
+    private List<AnimationKeyframe> _keyframes = new();
+    public List<AnimationKeyframe> Keyframes {
+        get {
+            return _keyframes;
+        }
+    
+        set
+        {
+            _keyframes = value;
+            initImpactIndex();
+        }
+    }
 
     /// <summary>
     /// インパクトの添え字
     /// </summary>
-    public int ImpactIndex {get; set;}
+    public int ImpactIndex {get; private set;}
 
     /// <summary>
-    /// インパクトの添え字を初期化。JSONから生成後などに呼び出すこと。
+    /// インパクトの添え字を初期化。リスト変更後などに呼び出すこと。
     /// </summary>
     public void initImpactIndex()
     {
-        for(int i = 0; i < keyframes.Count; ++i) {
-            if (SwingType.IMPACT == keyframes[i].type) {
+        for(int i = 0; i < _keyframes.Count; ++i) {
+            if (SwingType.IMPACT == _keyframes[i].Type) {
                 ImpactIndex = i;
                 return;
             }
         }
 
+    }
+
+    // 参考
+    // https://stackoverflow.com/a/49415723
+    [OnDeserialized()]
+    internal void OnDeserializedMethod(StreamingContext context)
+    {
+        initImpactIndex();
     }
 }
