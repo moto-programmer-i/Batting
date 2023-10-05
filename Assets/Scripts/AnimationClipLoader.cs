@@ -33,6 +33,10 @@ public static class AnimationClipLoader
     /// 回転z成分をSetCurveする場合のキー
     /// </summary>
     const string ROTATION_Z_KEY = "localRotation.z";
+    /// <summary>
+    /// 回転w成分をSetCurveする場合のキー
+    /// </summary>
+    const string ROTATION_W_KEY = "localRotation.w";
     
 
     /// <summary>
@@ -75,6 +79,7 @@ public static class AnimationClipLoader
         AnimationCurve xRotationCurve = new AnimationCurve();
         AnimationCurve yRotationCurve = new AnimationCurve();
         AnimationCurve zRotationCurve = new AnimationCurve();
+        AnimationCurve wRotationCurve = new AnimationCurve();
         for(int i = 0; i < curve.Keyframes.Count; ++i) {
             if (curve.Keyframes[i].Position != null) {
                 xPositionCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Position.X);
@@ -83,9 +88,14 @@ public static class AnimationClipLoader
             }
             
             if (curve.Keyframes[i].Rotation != null) {
-                xRotationCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Rotation.X);
-                yRotationCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Rotation.Y);
-                zRotationCurve.AddKey(curve.Keyframes[i].Time, curve.Keyframes[i].Rotation.Z);
+                // rotationは一度変換が必要
+                // 参考 https://monaski.hatenablog.com/entry/2015/11/15/172907
+                Quaternion angle = Quaternion.Euler(curve.Keyframes[i].Rotation.X, curve.Keyframes[i].Rotation.Y, curve.Keyframes[i].Rotation.Z);
+                
+                xRotationCurve.AddKey(curve.Keyframes[i].Time, angle.x);
+                yRotationCurve.AddKey(curve.Keyframes[i].Time, angle.y);
+                zRotationCurve.AddKey(curve.Keyframes[i].Time, angle.z);
+                wRotationCurve.AddKey(curve.Keyframes[i].Time, angle.w);
             }
         }
         clip.SetCurve("", typeof(Transform), LOCAL_POSITION_X_KEY, xPositionCurve);
@@ -95,7 +105,7 @@ public static class AnimationClipLoader
         clip.SetCurve("", typeof(Transform), ROTATION_X_KEY, xRotationCurve);
         clip.SetCurve("", typeof(Transform), ROTATION_Y_KEY, yRotationCurve);
         clip.SetCurve("", typeof(Transform), ROTATION_Z_KEY, zRotationCurve);
-
+        clip.SetCurve("", typeof(Transform), ROTATION_W_KEY, wRotationCurve);
 
         return clip;
     }

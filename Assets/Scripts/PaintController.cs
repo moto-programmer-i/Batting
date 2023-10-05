@@ -202,7 +202,14 @@ public class PaintController : MonoBehaviour
                     SwingType.IMPACT));
         
         // swingPathの最初の点を活かせない可能性がある、要調整
-        for(--swingPathIndex; swingPathIndex >= 0 && baseSwingIndex >= 0; --swingPathIndex,--baseSwingIndex) {
+        while(true) {
+            // 次の点へ
+            --swingPathIndex;
+            --baseSwingIndex;
+            if (swingPathIndex < 0 || baseSwingIndex < 0) {
+                break;
+            }
+
             // List.Prependが存在せず、エラーもでなかった
             // json.Keyframes.Prepend(ToAnimationKeyframe(
             json.Keyframes.Add(ToAnimationKeyframe(
