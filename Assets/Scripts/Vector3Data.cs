@@ -26,4 +26,8 @@ public class Vector3Data
     {
         return new Vector3(X, Y, Z);
     }
+
+    public static Vector3Data From(Vector2 v2) {
+        return new Vector3Data(v2.x, v2.y, 0);
+    }
 }

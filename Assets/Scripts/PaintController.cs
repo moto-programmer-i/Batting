@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Linq;
 using System.IO;
+using System;
+using Unity.VisualScripting;
 
 public class PaintController : MonoBehaviour
 {
@@ -13,16 +15,6 @@ public class PaintController : MonoBehaviour
     /// </summary>
     static readonly int PEN_WIDTH = 10;
     private static readonly Vector2Int PEN = new Vector2Int(PEN_WIDTH, PEN_WIDTH);
-
-    /// <summary>
-    /// スイングを保存するときの点同士の最小マンハッタン距離をだすための分割数
-    /// </summary>
-    public static readonly int SWING_POINT_SPRIT_FOR_MIN_DISTANCE = 10;
-
-    /// <summary>
-    /// スイングを保存するときの点同士の最小マンハッタン距離
-    /// </summary>
-    private static int SWING_POINT_MIN_DISTANCE;
 
     /// <summary>
     /// スイング軌道のJSONのファイル名
@@ -47,19 +39,39 @@ public class PaintController : MonoBehaviour
     private InputAction position;
 
     /// <summary>
+    /// スイングを保存するときの点の最小の傾きの違い
+    /// </summary>
+    [SerializeField]
+    private float swingMinSlopeDiff = 0.5f;
+
+    /// <summary>
+    /// 3D空間でスイングのy成分の最低値
+    /// </summary>
+    [SerializeField]
+    private float swingMinY = 3;
+    /// <summary>
+    /// 3D空間でスイングのy成分がとりうる値の幅
+    /// </summary>
+    [SerializeField]
+    private float swingYRange = 10;
+
+
+    /// <summary>
     /// 前回の入力座標
     /// </summary>
-    private Vector2 prePosition = Vector2.zero;
+    private Vector2Ex prePosition;
 
     /// <summary>
     /// スイング軌道を表す座標のリスト
     /// </summary>
-    private List<Vector2> swingPath = new ();
+    private List<Vector2Ex> swingPath = new ();
 
     /// <summary>
     /// Actionの有効を自分で管理するクラス
     /// </summary>
     private List<InputAction> actions = new ();
+
+    
 
     /// <summary>
     /// 基となるスイング軌道のJSONのファイル名
@@ -76,15 +88,11 @@ public class PaintController : MonoBehaviour
     /// </summary>
     private static int baseSwingImpactIndex;
 
-    static readonly float SWING_MIN_Y = 3;
-    static readonly float SWING_Y_RANGE = 10;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        // スイングの最小距離を設定
-        SWING_POINT_MIN_DISTANCE = Screen.width / SWING_POINT_SPRIT_FOR_MIN_DISTANCE;        
-
         // ファイルからスイング読み込み
         if (baseCurve == null) {
             baseCurve = ResourceUtils.LoadJson<AnimationCurveJson>(BASE_SWING_RESOURCE_NAME);
@@ -103,8 +111,7 @@ public class PaintController : MonoBehaviour
 
             // スイングを初期化
             swingPath.Clear();
-            // prePosition = null; // nullをいれられない
-            prePosition = Vector2.zero;
+            prePosition = null;
         };
 
         Debug.Log(FileUtils.GetCurrentDirectory());
@@ -134,19 +141,27 @@ public class PaintController : MonoBehaviour
     }
 
     private void addPenPosition() {
-        Vector2 penPosition = position.ReadValue<Vector2>();
-        drawPoint(penPosition);
+        Vector2Ex penPosition = Vector2Ex.From(position.ReadValue<Vector2>(), prePosition);
+        drawPoint(penPosition.Position);
 
         // 前回の入力がなければ最初の点として保存
-        if (prePosition == Vector2.zero) {
+        if (prePosition == null) {
             swingPath.Add(penPosition);
         }
         else {
             // 前回の入力があれば線を描く
-            VectorUtils.withLerpPoints(prePosition, penPosition, drawPoint);
+            VectorUtils.withLerpPoints(prePosition.Position, penPosition.Position, drawPoint);
 
-            // 最小距離より離れていればスイング軌道に追加
-            if (SWING_POINT_MIN_DISTANCE  < VectorUtils.ManhattanDistance(penPosition, swingPath.Last())) {
+            // 前回の傾きがなければスイング軌道に追加
+            if (!prePosition.Slope.HasValue) {
+                swingPath.Add(penPosition);
+            }
+            // x座標が同じであれば無視
+            else if (penPosition.Position.x == prePosition.Position.x) {
+                return;
+            }
+            // 傾きが閾値より変わっていればスイング軌道に追加
+            else if (swingMinSlopeDiff  <= Math.Abs(penPosition.Slope.Value - prePosition.Slope.Value)) {
                 swingPath.Add(penPosition);
             }
         }
@@ -189,7 +204,7 @@ public class PaintController : MonoBehaviour
         actions.ForEach(action => action.Disable());
     }
 
-    static AnimationCurveJson SwingPathToJson(List<Vector2> swingPath)
+    AnimationCurveJson SwingPathToJson(List<Vector2Ex> swingPath)
     {
         AnimationCurveJson json = new ();
         // 2Dから3D上のスイング軌道に変換
@@ -198,23 +213,48 @@ public class PaintController : MonoBehaviour
         int swingPathIndex = swingPath.Count - 1;
         json.Keyframes.Add(ToAnimationKeyframe(
                     baseCurve.Keyframes[baseSwingIndex],
-                    ConvertSwingY2Dto3D(swingPath[swingPathIndex].y),
+                    ConvertSwingY2Dto3D(swingPath[swingPathIndex].Position.y),
                     SwingType.IMPACT));
         
-        // swingPathの最初の点を活かせない可能性がある、要調整
+        // トップの位置からインパクトまでの前後の距離を保存
+        float swingWidth = swingPath.First().Position.x - swingPath.Last().Position.x;
+
+        // スイングの段階を都合上MAXで初期化
+        // 最初だけ必ず失敗する無駄な判定が入るが、2回目以降はこの方がきれいに動作する
+        float swingPercent = 0;
         while(true) {
             // 次の点へ
-            --swingPathIndex;
             --baseSwingIndex;
-            if (swingPathIndex < 0 || baseSwingIndex < 0) {
+            if (baseSwingIndex < 0) {
                 break;
             }
+
+            // 基のスイングの割合から、描かれたスイングの高さを調整する
+            float baseSwingPercent = (baseCurve.Keyframes[baseCurve.ImpactIndex].Time - baseCurve.Keyframes[baseSwingIndex].Time) / baseCurve.TimeToImpact;
+            while(true) {
+                if (baseSwingPercent <= swingPercent) {
+                    break;
+                }
+                --swingPathIndex;
+
+                
+                swingPercent = (swingPath[swingPathIndex].Position.x - swingPath.Last().Position.x) / swingWidth;
+                
+                // x座標が同じ点が入ってしまった場合など、スイングの割合が計算出来なくなってしまった場合は1にする
+                if (float.NaN.Equals(swingPercent)) {
+                    swingPercent = 1;
+                }
+            }
+            
+            // baseSwingの点をswingPathの点が超えているので、1つ前を使う
+            int preSwingPathIndex = swingPathIndex + 1;
+            float y = swingPath[preSwingPathIndex].Position.y + ((baseSwingPercent - swingPercent) * swingWidth * swingPath[preSwingPathIndex].Slope.Value); 
 
             // List.Prependが存在せず、エラーもでなかった
             // json.Keyframes.Prepend(ToAnimationKeyframe(
             json.Keyframes.Add(ToAnimationKeyframe(
                     baseCurve.Keyframes[baseSwingIndex],
-                    ConvertSwingY2Dto3D(swingPath[swingPathIndex].y)));
+                    ConvertSwingY2Dto3D(y)));
         }
         json.Keyframes.Reverse();
         
@@ -242,9 +282,9 @@ public class PaintController : MonoBehaviour
     /// </summary>
     /// <param name="y2d">2Dでのy成分（0～Screen.height）</param>
     /// <returns>3Dでのy成分</returns>
-    static float ConvertSwingY2Dto3D(float y2d)
+    float ConvertSwingY2Dto3D(float y2d)
     {
         // 2D y:0～Screen.height → MIN_Y～(MIN_Y + RANGE_Y)に変換
-        return y2d / Screen.height * SWING_Y_RANGE + SWING_MIN_Y;
+        return y2d / Screen.height * swingYRange + swingMinY;
     }
 }
