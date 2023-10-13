@@ -152,14 +152,16 @@ public class PaintController : MonoBehaviour
             // 前回の入力があれば線を描く
             VectorUtils.withLerpPoints(prePosition.Position, penPosition.Position, drawPoint);
 
-            // 前回の傾きがなければスイング軌道に追加
-            if (!prePosition.Slope.HasValue) {
-                swingPath.Add(penPosition);
-            }
             // x座標が同じであれば無視
-            else if (penPosition.Position.x == prePosition.Position.x) {
+            if (penPosition.Position.x == prePosition.Position.x) {
                 return;
             }
+
+            // 前回の傾きがなければスイング軌道に追加
+            else if (!prePosition.Slope.HasValue) {
+                swingPath.Add(penPosition);
+            }
+            
             // 傾きが閾値より変わっていればスイング軌道に追加
             else if (swingMinSlopeDiff  <= Math.Abs(penPosition.Slope.Value - prePosition.Slope.Value)) {
                 swingPath.Add(penPosition);
