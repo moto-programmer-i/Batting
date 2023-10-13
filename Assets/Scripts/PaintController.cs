@@ -42,7 +42,7 @@ public class PaintController : MonoBehaviour
     /// スイングを保存するときの点の最小の傾きの違い
     /// </summary>
     [SerializeField]
-    private float swingMinSlopeDiff = 0.5f;
+    private float swingMinSlopeDiff = 0.75f;
 
     /// <summary>
     /// 3D空間でスイングのy成分の最低値
@@ -59,7 +59,7 @@ public class PaintController : MonoBehaviour
     /// <summary>
     /// 前回の入力座標
     /// </summary>
-    private Vector2Ex prePosition;
+    private Vector2Ex prePenPosition;
 
     /// <summary>
     /// スイング軌道を表す座標のリスト
@@ -106,12 +106,15 @@ public class PaintController : MonoBehaviour
 
         // スイング描画終了時
         draw.canceled += context => {
+            // 最後の点を保存する
+            swingPath.Add(Vector2Ex.From(position.ReadValue<Vector2>(), swingPath.Last()));
+
             // 保存
             FileUtils.SaveJson(SWING_FILE_NAME, SwingPathToJson(swingPath));
 
             // スイングを初期化
             swingPath.Clear();
-            prePosition = null;
+            prePenPosition = null;
         };
 
         Debug.Log(FileUtils.GetCurrentDirectory());
@@ -141,35 +144,43 @@ public class PaintController : MonoBehaviour
     }
 
     private void addPenPosition() {
-        Vector2Ex penPosition = Vector2Ex.From(position.ReadValue<Vector2>(), prePosition);
-        drawPoint(penPosition.Position);
+        // 前回のスイングの代表点
+        Vector2Ex preSwingPositon = null;
+        if (!ListUtils.IsEmpty(swingPath)) {
+            preSwingPositon = swingPath.Last();
+        }
+
+        // 描画中の点
+        Vector2Ex penPosition = Vector2Ex.From(position.ReadValue<Vector2>(), preSwingPositon);
+        drawPoint(penPosition.Position);       
 
         // 前回の入力がなければ最初の点として保存
-        if (prePosition == null) {
+        if (preSwingPositon == null) {
             swingPath.Add(penPosition);
         }
         else {
             // 前回の入力があれば線を描く
-            VectorUtils.withLerpPoints(prePosition.Position, penPosition.Position, drawPoint);
+            VectorUtils.withLerpPoints(prePenPosition.Position, penPosition.Position, drawPoint);    
 
             // x座標が同じであれば無視
-            if (penPosition.Position.x == prePosition.Position.x) {
-                return;
+            if (penPosition.Position.x == prePenPosition.Position.x) {
+                // return; // ここでreturnすると下の処理を書くのが面倒になる
             }
 
             // 前回の傾きがなければスイング軌道に追加
-            else if (!prePosition.Slope.HasValue) {
+            else if (!preSwingPositon.Slope.HasValue) {
                 swingPath.Add(penPosition);
             }
             
             // 傾きが閾値より変わっていればスイング軌道に追加
-            else if (swingMinSlopeDiff  <= Math.Abs(penPosition.Slope.Value - prePosition.Slope.Value)) {
+            else if (swingMinSlopeDiff  <= Math.Abs(penPosition.Slope.Value - preSwingPositon.Slope.Value)) {
                 swingPath.Add(penPosition);
             }
         }
 
-        // 前回の座標を保存
-        prePosition = penPosition;
+        // 描画した点を、前回の座標として保存
+        prePenPosition = penPosition;
+        
     }
 
     public void drawPoint(Vector2 center) {
@@ -218,8 +229,9 @@ public class PaintController : MonoBehaviour
                     ConvertSwingY2Dto3D(swingPath[swingPathIndex].Position.y),
                     SwingType.IMPACT));
         
-        // トップの位置からインパクトまでの前後の距離を保存
-        float swingWidth = swingPath.First().Position.x - swingPath.Last().Position.x;
+        // トップの位置からインパクトまでの距離を保存
+        float swingLength = Vector2Ex.ManhattanDistance(swingPath.First(), swingPath.Last());
+        float swingWidth = Math.Abs(swingPath.First().Position.x - swingPath.Last().Position.x);
 
         // スイングの段階を都合上MAXで初期化
         // 最初だけ必ず失敗する無駄な判定が入るが、2回目以降はこの方がきれいに動作する
@@ -240,7 +252,7 @@ public class PaintController : MonoBehaviour
                 --swingPathIndex;
 
                 
-                swingPercent = (swingPath[swingPathIndex].Position.x - swingPath.Last().Position.x) / swingWidth;
+                swingPercent = Vector2Ex.ManhattanDistance(swingPath[swingPathIndex], swingPath.Last()) / swingLength;
                 
                 // x座標が同じ点が入ってしまった場合など、スイングの割合が計算出来なくなってしまった場合は1にする
                 if (float.NaN.Equals(swingPercent)) {
@@ -250,7 +262,7 @@ public class PaintController : MonoBehaviour
             
             // baseSwingの点をswingPathの点が超えているので、1つ前を使う
             int preSwingPathIndex = swingPathIndex + 1;
-            float y = swingPath[preSwingPathIndex].Position.y + ((baseSwingPercent - swingPercent) * swingWidth * swingPath[preSwingPathIndex].Slope.Value); 
+            float y = swingPath[preSwingPathIndex].Position.y + ((swingPercent - baseSwingPercent) * swingWidth * swingPath[preSwingPathIndex].Slope.Value); 
 
             // List.Prependが存在せず、エラーもでなかった
             // json.Keyframes.Prepend(ToAnimationKeyframe(

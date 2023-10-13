@@ -48,4 +48,14 @@ public class Vector2Ex
         
         return new Vector2Ex(v2, (v2.y - previous.Position.y) / (v2.x - previous.Position.x));
     }
+
+    /// <summary>
+    /// マンハッタン距離を返す
+    /// </summary>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <returns></returns>
+    public static float ManhattanDistance(Vector2Ex v1, Vector2Ex v2) {
+        return Math.Abs(v1.Position.x - v2.Position.x) + Math.Abs(v1.Position.y - v2.Position.y);
+    }
 }

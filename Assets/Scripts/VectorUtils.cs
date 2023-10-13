@@ -25,6 +25,16 @@ public static class VectorUtils
     /// <param name="midPointHandler"></param>
     public static void withLerpPoints(Vector2 start, Vector2 destination, Action<Vector2> midPointHandler, int precision = DEFAULT_LERP_PRECISION)
     {
+        // 点が片方しかないなら、補間しない
+        if(start == null) {
+            midPointHandler(destination);
+            return;
+        }
+        else if(destination == null) {
+            midPointHandler(start);
+            return;
+        }
+        
         // deltaずつ補間する
         float delta = LERP_MAX_RANGE / precision;
         for(float i = 0; i < precision; ++i) {

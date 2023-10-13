@@ -1429,7 +1429,7 @@ MonoBehaviour:
       m_Action: Position
       m_Flags: 0
     m_Flags: 0
-  swingMinSlopeDiff: 100
+  swingMinSlopeDiff: 0.75
   swingMinY: 3
   swingYRange: 10
 --- !u!4 &1793840358
