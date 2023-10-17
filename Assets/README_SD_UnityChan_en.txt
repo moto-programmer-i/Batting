@@ -1,12 +1,13 @@
-README_UnityChan.TXT
+README_SD_UnityChan.TXT
 
-Unity-Chan 3D Model Data Ver 1.4.0
+SD Unity-Chan 3D Model Data Ver 1.1.0
 
-2023/02/17 Unity Technologies Japan
+2023/02/15 Unity Technologies Japan
 
 History:
-Ver. 1.4.0 2023/02/17 Replaced shader with Unity Toon Shader and reconfigured.
-
+Ver. 1.1.0 2023/02/15 Replaced shaders with Unity Toon Shader and reconfigured.
+Ver. 1.0.1 2016/01/29 Replaced sample scenes with Unity5 & scripts with SD KohakuChanz.
+Ver. 1.0.0 2014/12/28 First release (for Unity4)
 
 Distribution License:
 This digital asset data is released based on the "Unity-Chan License Agreement (UCL)" (the latest version at the time of distribution is UCL 2.02).
@@ -49,10 +50,17 @@ How to use:
 
 
 Sample Scenes:
-\Assets\UnityChan\Scenes There are sample scenes below.
+\Assets\UnityChan\SD_unitychan\Scenes There are sample scenes for each model below.
+
+SD Unitychan Mecanim/Humanoid Sample Scenes
+SD_unitychan_Humanoid.unity
+
+SD Unitychan Mecanim/Generic Sample Scenes
+SD_unitychan_Generic.unity
+
 
 Components attached to the characters in the sample scenes:
-Each scene always has one Unity-chan character model.
+Each scene always has one SD Unity-chan character model.
 The main components attached to the character model are as follows
 
 Animator Component
@@ -65,8 +73,8 @@ Idle Changer Component
 Face Update component
 　This component switches faces.
 
-Auto Blink Component
-　This component performs auto blink.
+Auto Blink for SD Components
+　This component performs automatic blinking.
 
 Spring Manager Component
 　This component controls sway (dynamics).
@@ -75,8 +83,13 @@ Random Wind component
 　This component makes the shaking object sway as if it were blowing in the wind, even when the model is at rest.
 　It is initially inactive.
 
+IK Look At component
+　This component follows the line of sight by moving the Target.
+　It is initially inactive.
+　This component is attached only to the Mecanim/Humanoid version of SD Unity-Chan.
 
-Contact information for inquiries
+
+Contact information for inquiries:
 
 Unity Technologies Japan, G.K.
 unity-chan@unity3d.com

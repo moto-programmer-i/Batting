@@ -1,12 +1,13 @@
-﻿README_UnityChan.TXT
+﻿README_SD_UnityChan.TXT
 
-『ユニティちゃん 3Dモデルデータ』Ver 1.4.0
+『SDユニティちゃん 3Dモデルデータ』Ver 1.1.0
 
-2023/02/17 Unity Technologies Japan
+2023/02/15 Unity Technologies Japan
 
 【修正履歴】
-Ver. 1.4.0　2023/02/17　シェーダーをUnity Toon Shaderに置き換え、設定し直しました。
-
+Ver. 1.1.0　2023/02/15　シェーダーをUnity Toon Shaderに置き換え、設定し直しました。
+Ver. 1.0.1　2016/01/29　サンプルシーンをUnity5に差し替え＆スクリプトをSDこはくちゃんズのものに差し替え
+Ver. 1.0.0　2014/12/28　最初のリリース（Unity4向け）
 
 【配布ライセンス】
 本デジタルアセットデータは「ユニティちゃんライセンス条項（UCL）」（配布時点での最新版は、UCL 2.02）に基づき公開されるデジタルアセットデータです。
@@ -49,10 +50,17 @@ Unity Toon Shaderへの換装作業は、Unity 2020.3.44f1のBuiltIn環境で行
 
 
 【サンプルシーン】
-\Assets\UnityChan\Scenes　以下にサンプルシーンがあります。
+\Assets\UnityChan\SD_unitychan\Scenes　以下に、各モデルごとにサンプルシーンがあります。
+
+SDユニティちゃん Mecanim/Humanoidサンプルシーン
+SD_unitychan_Humanoid.unity
+
+SDユニティちゃん Mecanim/Genericサンプルシーン
+SD_unitychan_Generic.unity
+
 
 【サンプルシーンのキャラクターにアタッチされているコンポーネント】
-各シーンには、ユニティちゃんのキャラクターモデルが必ず１つあります。
+各シーンには、SDユニティちゃんのキャラクターモデルが必ず１つあります。
 キャラクタ－モデルにアタッチされている主なコンポーネントは以下のようになっています。
 
 ●Animatorコンポーネント
@@ -65,7 +73,7 @@ Unity Toon Shaderへの換装作業は、Unity 2020.3.44f1のBuiltIn環境で行
 ●Face Updateコンポーネント
 　フェイスを切り替えるコンポーネントです。
 
-●Auto Blinkコンポーネント
+●Auto Blink for SDコンポーネント
 　自動目パチ（オートブリンク）をするコンポーネントです。
 
 ●Spring Managerコンポーネント
@@ -74,6 +82,11 @@ Unity Toon Shaderへの換装作業は、Unity 2020.3.44f1のBuiltIn環境で行
 ●Random Windコンポーネント
 　モデルが静止している時にも、揺れものを風に吹かれているように揺らすコンポーネントです。
 　初期状態は非アクティブです。
+
+●IK Look Atコンポーネント
+　Targetを動かすことで、視線を追随されるコンポーネントです。
+　初期状態は非アクティブです。
+　このコンポーネントは、Mecanim/Humanoid版のSDユニティちゃんにのみアタッチされています。
 
 
 【お問い合わせ先】
