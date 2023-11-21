@@ -21,7 +21,7 @@ public class AnimationKeyframe
 
     public AnimationKeyframe(){}
 
-    public AnimationKeyframe(float time, Vector3Data position, Vector3Data rotation, SwingType? type)
+    public AnimationKeyframe(float time, Vector3Data position = null, Vector3Data rotation = null, SwingType? type = null)
     {
         this.Time = time;
         this.Position = position;

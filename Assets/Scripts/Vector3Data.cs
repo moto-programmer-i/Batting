@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class Vector3Data
 {
+    public const int X_INDEX = 0;
+    public const int Y_INDEX = 1;
+    public const int Z_INDEX = 2;
+
     public float X {get; set;}
     public float Y {get; set;}
     public float Z {get; set;}

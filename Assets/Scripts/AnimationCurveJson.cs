@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Security.Cryptography;
 
 public class AnimationCurveJson
 {
@@ -36,6 +37,9 @@ public class AnimationCurveJson
     /// </summary>
     public void Init()
     {
+        Sort();
+
+        // ImpactIndexの初期化
         for(int i = 0; i < _keyframes.Count; ++i) {
             if (SwingType.IMPACT == _keyframes[i].Type) {
                 ImpactIndex = i;
@@ -45,16 +49,23 @@ public class AnimationCurveJson
 
         // インパクトまでのスイングの時間を初期化
         TimeToImpact =  _keyframes[ImpactIndex].Time - _keyframes.First().Time;
-
     }
 
-    /// <summary>
-    /// 。
-    /// 事前にInitImpactIndex()を呼んでおくこと
-    /// </summary>
-    public void InitSwingXWidthToImpact()
+    public void Sort()
     {
-        
+        _keyframes.Sort((a, b) => {
+                // Math.Abs(a.Time - b.Time)の戻り値がなぜかintじゃない
+                float sign = a.Time - b.Time;
+                if (sign == 0) {
+                    return 0;
+                }
+                if (sign < 0) {
+                    return -1;
+                }
+                return 1;
+            }
+
+            );
     }
 
     // 参考

@@ -110,7 +110,7 @@ public class PaintController : MonoBehaviour
             swingPath.Add(Vector2Ex.From(position.ReadValue<Vector2>(), swingPath.Last()));
 
             // 保存
-            FileUtils.SaveJson(SWING_FILE_NAME, SwingPathToJson(swingPath));
+            FileUtils.SaveJson(SwingPathToJson(swingPath), SWING_FILE_NAME);
 
             // スイングを初期化
             swingPath.Clear();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +31,7 @@ public static class FileUtils
     /// <param name="filename">ファイル名</param>
     /// <param name="json"></param>
     /// /// <param name="directory">ディレクトリ（空の場合はカレントになる）</param>
-    public static void SaveJson<T>(string filename, T json, string directory = "")
+    public static void SaveJson<T>(T json, string filename, string directory = "")
     {
         // ディレクトリの指定がない場合はカレント
         if (string.IsNullOrEmpty(directory)) {
@@ -65,6 +66,25 @@ public static class FileUtils
             JsonSerializer serializer = JsonSerializer.CreateDefault(JSON_SETTINGS);
             // なぜかジェネリックのメソッドが用意されてない
             return (T)serializer.Deserialize(file, typeof(T));
+        }
+    }
+
+    /// <summary>
+    /// ファイル読み込み
+    /// </summary>
+    /// <param name="contentHandler"></param>
+    /// <param name="filename"></param>
+    /// <param name="directory">ディレクトリ（空の場合はカレントになる）</param>
+    public static void ReadFile(Action<StreamReader> contentHandler, string filename, string directory = "")
+    {
+        // ディレクトリの指定がない場合はカレント
+        if (string.IsNullOrEmpty(directory)) {
+            directory = GetCurrentDirectory();
+        }
+
+        using (StreamReader file = File.OpenText(Path.Combine(directory, filename)))
+        {
+            contentHandler.Invoke(file);
         }
     }
 }
