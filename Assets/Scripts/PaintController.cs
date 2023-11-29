@@ -45,11 +45,6 @@ public class PaintController : MonoBehaviour
     private float swingMinSlopeDiff = 0.75f;
 
     /// <summary>
-    /// 3D空間でスイングのy成分の最低値
-    /// </summary>
-    [SerializeField]
-    private float swingMinY = 3;
-    /// <summary>
     /// 3D空間でスイングのy成分がとりうる値の幅
     /// </summary>
     [SerializeField]
@@ -224,10 +219,7 @@ public class PaintController : MonoBehaviour
         // インパクトから逆順に追加していく
         int baseSwingIndex = baseCurve.ImpactIndex;
         int swingPathIndex = swingPath.Count - 1;
-        json.Keyframes.Add(ToAnimationKeyframe(
-                    baseCurve.Keyframes[baseSwingIndex],
-                    ConvertSwingY2Dto3D(swingPath[swingPathIndex].Position.y),
-                    SwingType.IMPACT));
+        json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes[baseSwingIndex], swingPath[swingPathIndex].Position.y));
         
         // トップの位置からインパクトまでの距離を保存
         float swingLength = Vector2Ex.ManhattanDistance(swingPath.First(), swingPath.Last());
@@ -266,39 +258,45 @@ public class PaintController : MonoBehaviour
 
             // List.Prependが存在せず、エラーもでなかった
             // json.Keyframes.Prepend(ToAnimationKeyframe(
-            json.Keyframes.Add(ToAnimationKeyframe(
-                    baseCurve.Keyframes[baseSwingIndex],
-                    ConvertSwingY2Dto3D(y)));
+            json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes[baseSwingIndex], y));
         }
         json.Keyframes.Reverse();
         
         // フォロースルーを追加（とりあえずフォロースルーの高さはインパクトと同じ）
         float lastHeight = json.Keyframes.Last().Position.Y;
         for(baseSwingIndex = baseCurve.ImpactIndex + 1; baseSwingIndex < baseCurve.Keyframes.Count; ++baseSwingIndex) {
-            json.Keyframes.Add(ToAnimationKeyframe(
-                    baseCurve.Keyframes[baseSwingIndex],
-                    lastHeight));
+            AnimationKeyframe newFrame = baseCurve.Keyframes[baseSwingIndex].Clone();
+            if (newFrame.Position != null) {
+                newFrame.Position.Y = lastHeight;
+            }
+            json.Keyframes.Add(newFrame);
         }
         return json;
     }
 
-    static AnimationKeyframe ToAnimationKeyframe(AnimationKeyframe baseFrame, float y, SwingType? type = null) {
-        return new AnimationKeyframe(
-                baseFrame.Time,
-                baseFrame.Position != null ? new Vector3Data(baseFrame.Position.X, y, baseFrame.Position.Z) : null,
-                baseFrame.Rotation,
-                type
-                );
+    /// <summary>
+    /// AnimationKeyframeを作成
+    /// </summary>
+    /// <param name="baseFrame">元のAnimationKeyframe</param>
+    /// <param name="y2d">高さ計算用の2Dのy（baseFrameにPosition自体がない場合は無視）</param>
+    /// <returns></returns>
+    AnimationKeyframe CreateAnimationKeyframe(AnimationKeyframe baseFrame, float y2d) {
+        AnimationKeyframe newFrame = baseFrame.Clone();
+        if(newFrame.Position != null) {
+            newFrame.Position.Y = ConvertSwingY2Dto3D(y2d, baseFrame.Position.Y);
+        }
+        return newFrame;
     }
 
     /// <summary>
     /// スイング軌道のY成分を2Dから3Dに変換
     /// </summary>
     /// <param name="y2d">2Dでのy成分（0～Screen.height）</param>
+    /// <param name="baseY3d">3Dでの元のスイング軌道のy成分</param>
     /// <returns>3Dでのy成分</returns>
-    float ConvertSwingY2Dto3D(float y2d)
+    float ConvertSwingY2Dto3D(float y2d, float baseY3d)
     {
-        // 2D y:0～Screen.height → MIN_Y～(MIN_Y + RANGE_Y)に変換
-        return y2d / Screen.height * swingYRange + swingMinY;
+        // 2D y:0～Screen.height → baseY3d ± (swingYRange / 2)に変換
+        return y2d / Screen.height * swingYRange - (swingYRange / 2.0f) + baseY3d;
     }
 }

@@ -28,4 +28,14 @@ public class AnimationKeyframe
         this.Rotation = rotation;
         this.Type = type;
     }
+
+    public AnimationKeyframe Clone()
+    {
+        return new AnimationKeyframe(
+            this.Time,
+            this.Position?.Clone(),
+            this.Rotation?.Clone(),
+            this.Type
+            );
+    }
 }
