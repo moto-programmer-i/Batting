@@ -111,8 +111,6 @@ public class PaintController : MonoBehaviour
             swingPath.Clear();
             prePenPosition = null;
         };
-
-        Debug.Log(FileUtils.GetCurrentDirectory());
     }
 
     // Update is called once per frame
