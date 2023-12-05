@@ -408,6 +408,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DestroyZone (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8638522638032863288, guid: e00bb274bcea6704a8e54340436d1c95,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -708,6 +713,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   distance: 10
+  amplifier: 2.5
 --- !u!54 &368529955
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -734,7 +740,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 3
+  m_CollisionDetection: 0
 --- !u!95 &368529956
 Animator:
   serializedVersion: 5
@@ -962,7 +968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
-  force: {x: 10000, y: -200, z: 1000}
+  force: {x: 10000, y: -300, z: 1200}
   idleSecond: 3
   releasePoint: {fileID: 1697684493}
 --- !u!1 &799589969
@@ -1561,7 +1567,6 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   swingMinSlopeDiff: 0.75
-  swingMinY: 3
   swingYRange: 10
 --- !u!4 &1793840358
 Transform:
@@ -1659,7 +1664,7 @@ PrefabInstance:
     - target: {fileID: 8638522638032863288, guid: e00bb274bcea6704a8e54340436d1c95,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -35,6 +35,9 @@ public class BatController : MonoBehaviour
 
     private Animator animator;
 
+    [SerializeField]
+    private float amplifier = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -100,5 +103,11 @@ public class BatController : MonoBehaviour
     void OnDisable()
     {
         actions.ForEach(action => action.Disable());
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        // 加速
+        collision.rigidbody.velocity *= amplifier;
     }
 }
