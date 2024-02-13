@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Codice.Client.BaseCommands;
 using UnityEngine;
 
 public class Pitcher : MonoBehaviour
@@ -38,9 +39,15 @@ public class Pitcher : MonoBehaviour
         // }
     }
 
-    void ThrowBall() {
+    public void ThrowBall() {
         GameObject ball = Instantiate(ballPrefab, releasePoint.position, Quaternion.identity);
         Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
         ballRigidbody.AddForce(force);
+
+        // 一旦地面に着いたときの距離
+        BallEventTrigger trigger = ball.GetComponent<BallEventTrigger>();
+        trigger.OnBounce(ball => {
+            Debug.Log("飛距離: " + DistanceManager.CalcBallDistance(ball));
+        });
     }
 }
