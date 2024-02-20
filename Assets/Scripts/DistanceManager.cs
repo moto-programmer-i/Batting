@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Unityの都合上一般クラスになっているが、staticにできるならするべき
 public class DistanceManager : MonoBehaviour
 {
     /// <summary>
@@ -19,6 +18,7 @@ public class DistanceManager : MonoBehaviour
 
     /// <summary>
     /// ホームベースの位置
+    /// （要修正：現状バットのインスタンスを置かないと距離がマイナスになってしまったりする）
     /// </summary>
     [SerializeField]
     private Transform homePlate;
@@ -33,20 +33,9 @@ public class DistanceManager : MonoBehaviour
     /// </summary>
     public static Vector3 forward {get; private set;}
 
-    /// <summary>
-    /// 静的インスタンス（この方が使う際は楽なため）
-    /// </summary>
-    public static DistanceManager instance {get; private set;}
-
     
     void Start()
-    {
-        // インスタンスをstaticにいれた方が、周りは楽なため初期化
-        // （Unity上この構成で良いのかは不明）
-        if (instance == null) {
-            instance = this;
-        }
-        
+    {        
         // 距離の初期設定
         distanceInCoordinate = Vector3.Distance(mound.position, homePlate.position);
 
@@ -67,13 +56,13 @@ public class DistanceManager : MonoBehaviour
     /// </summary>
     /// <param name="ball">現在のボールの位置</param>
     /// <returns>飛距離(m)</returns>
-    public static float CalcBallDistance(Vector3 ball)
+    public float CalcBallDistance(Vector3 ball)
     {
         if (ball == null) {
             return 0f;
         }
 
-        return TranslateToMeter(Vector3.Distance(ball, instance.homePlate.position));
+        return TranslateToMeter(Vector3.Distance(ball, homePlate.position));
     }
 
     /// <summary>
@@ -81,7 +70,7 @@ public class DistanceManager : MonoBehaviour
     /// </summary>
     /// <param name="distance">Unity上での距離</param>
     /// <returns>メートル</returns>
-    public static float TranslateToMeter(float distance)
+    public float TranslateToMeter(float distance)
     {
         return MOUND_TO_HOME_PLATE_DISTANCE * distance / distanceInCoordinate;
     }
@@ -94,7 +83,7 @@ public class DistanceManager : MonoBehaviour
     /// <param name="theta">角度（ラジアン）</param>
     /// <param name="k">空気抵抗</param>
     /// <returns>飛距離(m)</returns>
-    public static float CalcDistance(float m, float v0, float theta, float k)
+    public float CalcDistance(float m, float v0, float theta, float k)
     {
         // 飛距離は妥協して m * v0 * cosθ / k で求める
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html
@@ -106,7 +95,7 @@ public class DistanceManager : MonoBehaviour
     /// </summary>
     /// <param name="rigidbody">物体</param>
     /// <returns>飛距離(m)</returns>
-    public static float CalcDistance(Rigidbody rigidbody)
+    public float CalcDistance(Rigidbody rigidbody)
     {
         return CalcDistance(
             rigidbody.mass,
