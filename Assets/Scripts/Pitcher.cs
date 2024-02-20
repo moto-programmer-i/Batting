@@ -14,10 +14,8 @@ public class Pitcher : MonoBehaviour
     [SerializeField]
     private Vector3 force = new Vector3(1,0,0);
 
-    [SerializeField]
-    private float idleSecond = 3;
-
-    private float elapsedTime = 0;
+    // [SerializeField]
+    // private float idleSecond = 3;
 
     [SerializeField]
     private Transform releasePoint;
