@@ -85,7 +85,14 @@ public class DistanceManager : MonoBehaviour
     /// <returns>飛距離(m)</returns>
     public float CalcDistance(float m, float v0, float theta, float k)
     {
-        // 飛距離は妥協して m * v0 * cosθ / k で求める
+        // 空気抵抗が0の場合の0除算回避
+        // 参考 https://nekodamashi-math.blog.ss-blog.jp/2019-08-25
+        if (k == 0) {
+            // v0^2 sin2θ / g
+            return v0 * v0 * MathF.Sin(2 * theta) / Physics.gravity.y;
+        }
+        
+        // 空気抵抗がある場合の飛距離は妥協して m * v0 * cosθ / k で求める
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html
         return TranslateToMeter(m * v0 * MathF.Cos(theta) / k);
     }
