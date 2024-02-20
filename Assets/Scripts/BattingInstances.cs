@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Unityの制約上、クラス自体をstaticにできない
 public class BattingInstances : MonoBehaviour
 {
     private static DistanceManager DISTANCE_MANAGER;

@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mound: {fileID: 454958971}
-  homePlate: {fileID: 1615190859}
+  homePlate: {fileID: 368529953}
 --- !u!114 &289460920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,7 +773,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   distance: 10
-  amplifier: 0.1
+  amplifier: 0.5
 --- !u!54 &368529955
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1134,7 +1134,6 @@ MonoBehaviour:
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
   force: {x: 10000, y: -300, z: 1200}
-  idleSecond: 3
   releasePoint: {fileID: 1697684493}
 --- !u!1 &799589969
 GameObject:
