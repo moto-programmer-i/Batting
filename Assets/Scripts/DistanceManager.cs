@@ -41,8 +41,6 @@ public class DistanceManager : MonoBehaviour
 
         // 前のベクトルの初期設定
         forward = mound.position - homePlate.position;
-
-        Debug.Log("前のベクトル: " + forward.normalized);
     }
 
     
@@ -85,12 +83,17 @@ public class DistanceManager : MonoBehaviour
     /// <returns>飛距離(m)</returns>
     public float CalcDistance(float m, float v0, float theta, float k)
     {
+        Debug.Log("角度（ラジアン） " + (theta));
+        Debug.Log("角度（°） " + (Mathf.Rad2Deg * theta));
+        
         // 空気抵抗が0の場合の0除算回避
         // 参考 https://nekodamashi-math.blog.ss-blog.jp/2019-08-25
         if (k == 0) {
             // v0^2 sin2θ / g
             return v0 * v0 * MathF.Sin(2 * theta) / Physics.gravity.y;
         }
+
+
         
         // 空気抵抗がある場合の飛距離は妥協して m * v0 * cosθ / k で求める
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html
@@ -116,8 +119,31 @@ public class DistanceManager : MonoBehaviour
     /// 対象の速度の角度を返す
     /// </summary>
     /// <param name="target">対象の速度</param>
-    /// <returns></returns>
+    /// <returns>角度（ラジアン）</returns>
     public static float Angle(Vector3 velocity) {
-        return Vector3.Angle(forward, velocity);
+        return Angle(forward.normalized, velocity.normalized);
     }
+
+    /// <summary>
+    /// 一般の角度計算（なぜかVector3.Angleが度数法で角度を返すため用意）
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns>角度（ラジアン）</returns>
+    // なぜかVector3.Angleが度数法で角度を返すので、内部を拝借
+    // 公式にラジアンで返すメソッドができたら修正
+    // https://github.com/Unity-Technologies/UnityCsReference/blob/master/Runtime/Export/Math/Vector3.cs#L324
+    public static float Angle(Vector3 from, Vector3 to)
+        {
+            // sqrt(a) * sqrt(b) = sqrt(a * b) -- valid for real numbers
+            float denominator = (float)Math.Sqrt(from.sqrMagnitude * to.sqrMagnitude);
+            if (denominator < Vector3.kEpsilonNormalSqrt)
+                return 0F;
+
+            float dot = Mathf.Clamp(Vector3.Dot(from, to) / denominator, -1F, 1F);
+
+            // 元のソースでなぜか度数法にしているので、ラジアンで返す
+            // return ((float)Math.Acos(dot)) * Mathf.Rad2Deg;
+            return MathF.Acos(dot);
+        }
 }

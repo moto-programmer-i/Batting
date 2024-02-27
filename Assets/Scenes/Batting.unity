@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mound: {fileID: 454958971}
-  homePlate: {fileID: 368529953}
+  homePlate: {fileID: 1615190859}
 --- !u!114 &289460920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,7 +773,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   distance: 10
-  amplifier: 0.5
+  amplifier: 0.2
 --- !u!54 &368529955
 Rigidbody:
   m_ObjectHideFlags: 0
