@@ -83,8 +83,8 @@ public class DistanceManager : MonoBehaviour
     /// <returns>飛距離(m)</returns>
     public float CalcDistance(float m, float v0, float theta, float k)
     {
-        Debug.Log("角度（ラジアン） " + (theta));
-        Debug.Log("角度（°） " + (Mathf.Rad2Deg * theta));
+        // Debug.Log("角度（ラジアン） " + (theta));
+        // Debug.Log("角度（°） " + (Mathf.Rad2Deg * theta));
         
         // 空気抵抗が0の場合の0除算回避
         // 参考 https://nekodamashi-math.blog.ss-blog.jp/2019-08-25
