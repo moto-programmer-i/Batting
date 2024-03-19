@@ -18,7 +18,6 @@ public class DistanceManager : MonoBehaviour
 
     /// <summary>
     /// ホームベースの位置
-    /// （要修正：現状バットのインスタンスを置かないと距離がマイナスになってしまったりする）
     /// </summary>
     [SerializeField]
     private Transform homePlate;
@@ -90,14 +89,24 @@ public class DistanceManager : MonoBehaviour
         // 参考 https://nekodamashi-math.blog.ss-blog.jp/2019-08-25
         if (k == 0) {
             // v0^2 sin2θ / g
-            return v0 * v0 * MathF.Sin(2 * theta) / Physics.gravity.y;
+            return v0 * v0 * MathF.Sin(2 * theta) / -Physics.gravity.y;
         }
 
 
         
-        // 空気抵抗がある場合の飛距離は妥協して m * v0 * cosθ / k で求める
+        // 空気抵抗がある場合の飛距離は妥協して求める
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html
+        // return TranslateToMeter(m * v0 * MathF.Cos(theta) / k);
+
+        // return TranslateToMeter(
+        //     m * v0 
+        //     // Unityの重力加速度は-9.8なので、符号を+にする
+        //      * (1 - MathF.Exp(-k * 2 * v0 * MathF.Sin(theta) / (m * -Physics.gravity.y)))
+        //      * MathF.Cos(theta)
+        //      / k);
+
         return TranslateToMeter(m * v0 * MathF.Cos(theta) / k);
+        
     }
 
     /// <summary>
