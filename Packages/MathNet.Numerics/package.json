@@ -1,0 +1,27 @@
+{
+    "name": "org.nuget.mathnet.numerics",
+    "version": "5.0.0",
+    "displayName": "Math.NET Numerics",
+    "description": "Math.NET Numerics is the numerical foundation of the Math.NET project, aiming to provide methods and algorithms for numerical computations in science, engineering and every day use. Supports .NET 5.0 or higher, .NET Standard 2.0 and .NET Framework 4.6.1 or higher, on Windows, Linux and Mac.",
+    "unity": "2018.3",
+    "keywords": [
+        "math",
+        "numeric",
+        "statistics",
+        "probability",
+        "integration",
+        "interpolation",
+        "regression",
+        "solve",
+        "fit",
+        "linear",
+        "algebra",
+        "matrix",
+        "fft"
+    ],
+    "author": {
+        "name": "Christoph Ruegg, Marcus Cuda, Jurgen Van Gael",
+        "email": "",
+        "url": "https://numerics.mathdotnet.com/"
+    }
+}
