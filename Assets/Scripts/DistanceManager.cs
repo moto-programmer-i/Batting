@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MathNet.Numerics.RootFinding;
+using MathNet.Numerics.LinearAlgebra.Solvers;
 
 public class DistanceManager : MonoBehaviour
 {
@@ -31,10 +33,16 @@ public class DistanceManager : MonoBehaviour
     /// ホームベースから見た前のベクトル（マウンドへの向き）
     /// </summary>
     public static Vector3 forward {get; private set;}
-
     
     void Start()
-    {        
+    {
+        
+        double theta = Math.PI / 3;
+        Debug.Log("theta " + theta);
+        ProjectionDistance distance = new ProjectionDistance(1, 10000, theta, 0.012, -Physics.gravity.y, 0.1);
+
+        Debug.Log("計算飛距離: " + distance.GetDistance());
+        
         // 距離の初期設定
         distanceInCoordinate = Vector3.Distance(mound.position, homePlate.position);
 
