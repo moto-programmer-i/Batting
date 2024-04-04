@@ -55,6 +55,10 @@ public class ProjectionDistance
         // （どれくらいずらすべきかは不明、今はとりあえず精度の3倍）
         lowerBound = 3 * accuracy;
 
+        // Math.NETのFindRootのaccuracyがfxと比較してしまうため。他に良い対策があるかも
+        // (本当はxをaccuracy以下の精度でだしたい)
+        accuracy = F(accuracy);
+
         // 最大値は t -> ∞ のときのx
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html#upperBound
         upperBound = m * v0 * Math.Cos(theta) / k;    
@@ -69,7 +73,10 @@ public class ProjectionDistance
     /// <returns>-mv0cosθ/k + (mv0cosθ/k - x) e^{(1 + kv0sinθ/mg)kx/mv0cosθ}</returns>
     public double F(double x)
     {
-        return -mv0cos_k + (mv0cos_k - x) * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
+        // return -mv0cos_k + (mv0cos_k - x) * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
+        double fx = -mv0cos_k + (mv0cos_k - x) * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
+        Debug.Log("fx " + fx);
+        return fx;
     }
 
     /// <summary>
@@ -79,8 +86,12 @@ public class ProjectionDistance
     /// <returns>(-1 + (1 + kv0sinθ/mg) (1 - kx/mv0cosθ)) e^{(1 + kv0sinθ/mg)kx/mv0cosθ}</returns>
     public double Df(double x)
     {
-        return (-1 + onePluskv0sin_mg * (1 - k_mv0cos * x))
+        // return (-1 + onePluskv0sin_mg * (1 - k_mv0cos * x))
+        //  * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
+        double dfx = (-1 + onePluskv0sin_mg * (1 - k_mv0cos * x))
          * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
+        Debug.Log("dfx " + dfx);
+        return dfx;
     }
 
     public double GetDistance()
