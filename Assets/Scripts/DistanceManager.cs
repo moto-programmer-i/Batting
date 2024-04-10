@@ -39,7 +39,7 @@ public class DistanceManager : MonoBehaviour
         
         double theta = Math.PI / 3;
         Debug.Log("theta " + theta);
-        ProjectionDistance distance = new ProjectionDistance(1, 10, theta, 0.012, -Physics.gravity.y, 0, 0.1);
+        ProjectionDistance distance = new ProjectionDistance(1, 10, theta, 0.012, -Physics.gravity.y, 100, 0.1);
 
         Debug.Log("計算飛距離: " + distance.GetDistance());
         

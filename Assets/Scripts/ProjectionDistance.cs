@@ -12,7 +12,7 @@ public class ProjectionDistance
     /// <summary>
     /// 初期高さ
     /// </summary>
-    private double h0;
+    private double y0;
 
     /// <summary>
     /// k/mv0cosθ
@@ -23,6 +23,11 @@ public class ProjectionDistance
     /// mv0cosθ/k
     /// </summary>
     private double mv0cos_k;
+
+    /// <summary>
+    /// mv0cosθe^{-k^2y0/m^2g}/k
+    /// </summary>
+    private double mv0cose__minusKKy0_mmg__k;
 
     /// <summary>
     /// 1 + kv0sinθ/mg
@@ -52,12 +57,12 @@ public class ProjectionDistance
     /// <param name="v0">初速</param>
     /// <param name="theta">角度（ラジアン）</param>
     /// <param name="k">空気抵抗</param>
-    /// <param name="h0">初期高さ</param>
+    /// <param name="y0">初期高さ</param>
     /// <param name="g">重力加速度</param>
     /// <exception cref="NonConvergenceException">不正な値、または計算に失敗したとき</exception>
-    public ProjectionDistance(double m, double v0, double theta, double k, double g, double h0, double accuracy)
+    public ProjectionDistance(double m, double v0, double theta, double k, double g, double y0, double accuracy)
     {
-        this.h0 = h0;
+        this.y0 = y0;
 
         // 値チェック
         if (m <= 0) {
@@ -83,6 +88,7 @@ public class ProjectionDistance
         // 係数を計算して保存しておく
         k_mv0cos = k / (m * v0 * Math.Cos(theta));
         mv0cos_k = m * v0 * Math.Cos(theta) / k;
+        mv0cose__minusKKy0_mmg__k = mv0cos_k * Math.Exp(-k * k * y0 / m * m * g);
         onePluskv0sin_mg = 1 + (k * v0 * Math.Sin(theta) / (m * g));
         onePluskv0sin_mgXk_mv0cos = onePluskv0sin_mg * k_mv0cos;
 
@@ -90,9 +96,8 @@ public class ProjectionDistance
         lowerBound = accuracy;
 
         // Math.NETのFindRootのaccuracyがfxと比較してしまうため対策。他に良いのがあるかも
-        // F(accuracy)だとlowerBoundで値が確定しまう可能性があるため、半分にする
-        // (これでいいかは不明、本当はxをaccuracy以下の精度でだしたい)
-        double fAccuracy = F(accuracy) / 2;
+        // (Df(accuracy)でいいかは不明、本当はxをaccuracy以下の精度でだしたい)
+        double fAccuracy = Df(accuracy);
 
         // F(accuracy)がマイナスになる場合はそもそも小さすぎて飛距離をだせない
         if (fAccuracy < 0) {
@@ -110,10 +115,10 @@ public class ProjectionDistance
     /// f(x)
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>-mv0cosθ/k + (mv0cosθ/k - x) e^{(1 + kv0sinθ/mg)kx/mv0cosθ}</returns>
+    /// <returns>-mv0cosθe^{-k^2y0/m^2g}/k + (mv0cosθ/k - x) e^{(1 + kv0sinθ/mg)kx/mv0cosθ}</returns>
     public double F(double x)
     {
-        return -mv0cos_k + (mv0cos_k - x) * Math.Exp(onePluskv0sin_mgXk_mv0cos * x) + h0;
+        return -mv0cose__minusKKy0_mmg__k + (mv0cos_k - x) * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
     }
 
     /// <summary>
