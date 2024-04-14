@@ -57,8 +57,9 @@ public class ProjectionDistance
     /// <param name="v0">初速</param>
     /// <param name="theta">角度（ラジアン）</param>
     /// <param name="k">空気抵抗</param>
-    /// <param name="y0">初期高さ</param>
     /// <param name="g">重力加速度</param>
+    /// <param name="y0">初期高さ</param>
+    /// <param name="accuracy">精度（RobustNewtonRaphsonがF(x)と比較してしまうため、厳密な精度にできない。現在はF(accuracy) - F(0)をとりあえず値として使う</param>
     /// <exception cref="NonConvergenceException">不正な値、または計算に失敗したとき</exception>
     public ProjectionDistance(double m, double v0, double theta, double k, double g, double y0, double accuracy)
     {
@@ -96,8 +97,8 @@ public class ProjectionDistance
         lowerBound = accuracy;
 
         // Math.NETのFindRootのaccuracyがfxと比較してしまうため対策。他に良いのがあるかも
-        // (Df(accuracy)でいいかは不明、本当はxをaccuracy以下の精度でだしたい)
-        double fAccuracy = Df(accuracy);
+        // (これでいいかは不明、本当はxをaccuracy以下の精度でだしたい)
+        double fAccuracy = F(accuracy) - F(0);
 
         // F(accuracy)がマイナスになる場合はそもそも小さすぎて飛距離をだせない
         if (fAccuracy < 0) {
