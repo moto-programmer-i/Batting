@@ -15,8 +15,7 @@ public class BattingInstances : MonoBehaviour
 
     
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         DISTANCE_MANAGER = distanceManager;
     }

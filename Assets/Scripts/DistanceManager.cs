@@ -13,6 +13,11 @@ public class DistanceManager : MonoBehaviour
     const float MOUND_TO_HOME_PLATE_DISTANCE = 18.44f;
 
     /// <summary>
+    /// 距離計算の精度
+    /// </summary>
+    const float DISTANCE_ACCURACY = 0.1f;
+
+    /// <summary>
     /// マウンドの位置
     /// </summary>
     [SerializeField]
@@ -37,10 +42,10 @@ public class DistanceManager : MonoBehaviour
     void Start()
     {
         
-        double theta = Math.PI / 3;
-        ProjectionDistance distance = new ProjectionDistance(1, 10, theta, 0.012, -Physics.gravity.y, 0, 0.1);
+        // double theta = Math.PI / 3;
+        // ProjectionDistance distance = new ProjectionDistance(1, 10, theta, 0.3, -Physics.gravity.y, 0, 0.1);
 
-        Debug.Log("計算飛距離: " + distance.GetDistance());
+        // Debug.Log("計算飛距離: " + distance.GetDistance());
         
         // 距離の初期設定
         distanceInCoordinate = Vector3.Distance(mound.position, homePlate.position);
@@ -66,7 +71,11 @@ public class DistanceManager : MonoBehaviour
             return 0f;
         }
 
-        return TranslateToMeter(Vector3.Distance(ball, homePlate.position));
+        // return TranslateToMeter(Vector3.Distance(ball, homePlate.position));
+
+        float distance = Vector3.Distance(ball, homePlate.position);
+        Debug.Log("飛距離（座標値） " + distance);
+        return TranslateToMeter(distance);
     }
 
     /// <summary>
@@ -87,7 +96,7 @@ public class DistanceManager : MonoBehaviour
     /// <param name="theta">角度（ラジアン）</param>
     /// <param name="k">空気抵抗</param>
     /// <returns>飛距離(m)</returns>
-    public float CalcDistance(float m, float v0, float theta, float k)
+    public float CalcDistance(float m, float v0, float theta, float k, float y0 = 0)
     {
         // Debug.Log("角度（ラジアン） " + (theta));
         // Debug.Log("角度（°） " + (Mathf.Rad2Deg * theta));
@@ -101,18 +110,11 @@ public class DistanceManager : MonoBehaviour
 
 
         
-        // 空気抵抗がある場合の飛距離は妥協して求める
+        // 空気抵抗がある場合の飛距離を求める
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html
-        // return TranslateToMeter(m * v0 * MathF.Cos(theta) / k);
-
-        // return TranslateToMeter(
-        //     m * v0 
-        //     // Unityの重力加速度は-9.8なので、符号を+にする
-        //      * (1 - MathF.Exp(-k * 2 * v0 * MathF.Sin(theta) / (m * -Physics.gravity.y)))
-        //      * MathF.Cos(theta)
-        //      / k);
-
-        return TranslateToMeter(m * v0 * MathF.Cos(theta) / k);
+        ProjectionDistance distance = new ProjectionDistance(m, v0, theta, k, -Physics.gravity.y, y0, DISTANCE_ACCURACY);
+        Debug.Log("計算飛距離（座標値） " +  distance.GetDistance());
+        return TranslateToMeter((float)distance.GetDistance());
         
     }
 
@@ -127,7 +129,8 @@ public class DistanceManager : MonoBehaviour
             rigidbody.mass,
             rigidbody.velocity.magnitude,
             Angle(rigidbody.velocity),
-            rigidbody.drag
+            rigidbody.drag,
+            rigidbody.transform.position.y
             );
     }
 

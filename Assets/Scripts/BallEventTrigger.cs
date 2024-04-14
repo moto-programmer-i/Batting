@@ -18,8 +18,8 @@ public class BallEventTrigger : MonoBehaviour
     
     void Update()
     {
-        // 一旦適当にY <= 0 なら地面に着いたものとする
-        if (ball.position.y <= 0) {
+        // 一旦適当にY < 0 なら地面に着いたものとする
+        if (ball.position.y < 0) {
             onBounceListeners.ForEach(listener => listener.Invoke(ball.position));
 
             // とりあえず1回きりで
