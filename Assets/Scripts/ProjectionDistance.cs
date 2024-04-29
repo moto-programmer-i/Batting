@@ -98,12 +98,7 @@ public class ProjectionDistance
 
         // Math.NETのFindRootのaccuracyがfxと比較してしまうため対策。他に良いのがあるかも
         // (これでいいかは不明、本当はxをaccuracy以下の精度でだしたい)
-        double fAccuracy = F(accuracy) - F(0);
-
-        // F(accuracy)がマイナスになる場合はそもそも小さすぎて飛距離をだせない
-        if (fAccuracy < 0) {
-            throw new NonConvergenceException("飛距離が精度の値" + accuracy + "未満のため、計算できません");
-        }
+        double fAccuracy = Math.Abs(F(accuracy) - F(0));
 
         // 最大値は t -> ∞ のときのx
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html#upperBound
