@@ -94,14 +94,10 @@ public class ProjectionDistance
         // 最大値は n -> ∞ のときのx
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html#upperBound
         upperBound = vx0 * one_kdt / k;
-        Debug.Log("upper " + upperBound);
+        // Debug.Log("upper " + upperBound);
 
         // 最低値の最適な決め方が不明、とりあえず最大値の半分にしておく
         lowerBound = upperBound / 2;
-        
-
-        // Debug.Log(reciprocalOfCoefficientOfX  + " "  + one_kdt + " " + coefficient2OfX + " " + y0Term);
-
         
         distance = Bisection.FindRoot(F, lowerBound, upperBound);
     }
@@ -114,22 +110,6 @@ public class ProjectionDistance
     public double F(double x)
     {
         return  -reciprocalOfCoefficientOfX + (reciprocalOfCoefficientOfX - x)
-        * Math.Pow(one_kdt, coefficient2OfX * x + y0Term);
-
-        // double fx =   -reciprocalOfCoefficientOfX + (reciprocalOfCoefficientOfX - x)
-        // * Math.Pow(one_kdt, coefficient2OfX * x + y0Term);
-        // Debug.Log("fx " + fx);
-        // return fx;
-    }
-
-    /// <summary>
-    /// df(x)
-    /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
-    public double Df(double x)
-    {
-        return  (-1 + (reciprocalOfCoefficientOfX - x) * Math.Log(one_kdt))
         * Math.Pow(one_kdt, coefficient2OfX * x + y0Term);
     }
 
