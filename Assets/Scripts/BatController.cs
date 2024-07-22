@@ -111,6 +111,6 @@ public class BatController : MonoBehaviour
         collision.rigidbody.velocity *= amplifier;
 
         // 事前に計算した飛距離を出力
-        Debug.Log("予想飛距離: " + BattingInstances.GetDistanceManager().CalcDistance(collision.rigidbody));
+        Debug.Log("予想飛距離: " + BattingInstances.GetDistanceManager().CalcDistanceMeter(collision.rigidbody));
     }
 }

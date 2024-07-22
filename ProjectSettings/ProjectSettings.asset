@@ -802,7 +802,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: UNITY_PIPELINE_URP
+    Standalone: UNITY_PIPELINE_URP;ZIP_AVAILABLE;NUGET_PACKAGE_READY
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

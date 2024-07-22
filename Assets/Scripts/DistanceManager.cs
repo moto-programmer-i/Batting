@@ -60,28 +60,38 @@ public class DistanceManager : MonoBehaviour
         
     }
 
+    
+
     /// <summary>
     /// ボールの飛距離を返す
     /// </summary>
     /// <param name="ball">現在のボールの位置</param>
-    /// <returns>飛距離(m)</returns>
+    /// <returns>飛距離(座標値)</returns>
     public float CalcBallDistance(Vector3 ball)
     {
         if (ball == null) {
             return 0f;
         }
 
-        // return TranslateToMeter(Vector3.Distance(ball, homePlate.position));
-
-        float distance = Vector3.Distance(ball, homePlate.position);
-        Debug.Log("飛距離（座標値） " + distance);
-        return TranslateToMeter(distance);
+        // ホームベースからの距離
+        return Vector3.Distance(ball, homePlate.position);
     }
+
+    /// <summary>
+    /// ボールの飛距離を返す
+    /// </summary>
+    /// <param name="ball">現在のボールの位置</param>
+    /// <returns>飛距離(m)</returns>
+    public float CalcBallDistanceMeter(Vector3 ball)
+    {
+        return TranslateToMeter(CalcBallDistance(ball));
+    }
+
 
     /// <summary>
     /// メートルに変換
     /// </summary>
-    /// <param name="distance">Unity上での距離</param>
+    /// <param name="distance">Unity上での距離(座標値)</param>
     /// <returns>メートル</returns>
     public float TranslateToMeter(float distance)
     {
@@ -91,12 +101,24 @@ public class DistanceManager : MonoBehaviour
     /// <summary>
     /// 物体の飛距離を計算
     /// </summary>
-    /// <param name="m">質量</param>
     /// <param name="v0">初速</param>
     /// <param name="theta">角度（ラジアン）</param>
     /// <param name="k">空気抵抗</param>
     /// <returns>飛距離(m)</returns>
-    public float CalcDistance(float m, float v0, float theta, float k, float y0 = 0)
+    public float CalcDistanceMeter(float v0, float theta, float k, float y0 = 0)
+    {
+        float distance = CalcDistance(v0, theta, k, y0);
+        return TranslateToMeter(distance);
+    }
+
+    /// <summary>
+    /// 物体の飛距離を計算
+    /// </summary>
+    /// <param name="v0">初速</param>
+    /// <param name="theta">角度（ラジアン）</param>
+    /// <param name="k">空気抵抗</param>
+    /// <returns>飛距離(座標値)</returns>
+    public float CalcDistance(float v0, float theta, float k, float y0 = 0)
     {
         // Debug.Log("角度（ラジアン） " + (theta));
         // Debug.Log("角度（°） " + (Mathf.Rad2Deg * theta));
@@ -105,6 +127,7 @@ public class DistanceManager : MonoBehaviour
         // 参考 https://nekodamashi-math.blog.ss-blog.jp/2019-08-25
         if (k == 0) {
             // v0^2 sin2θ / g
+// y0の考慮がされてない、要修正
             return v0 * v0 * MathF.Sin(2 * theta) / -Physics.gravity.y;
         }
 
@@ -112,10 +135,23 @@ public class DistanceManager : MonoBehaviour
         
         // 空気抵抗がある場合の飛距離を求める
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html
-        ProjectionDistance distance = new ProjectionDistance(m, v0, theta, k, -Physics.gravity.y, y0, DISTANCE_ACCURACY);
-        Debug.Log("計算飛距離（座標値） " +  distance.GetDistance());
-        return TranslateToMeter((float)distance.GetDistance());
-        
+        ProjectionDistance distance = new ProjectionDistance(Time.fixedDeltaTime, v0, theta, k, -Physics.gravity.y, y0, DISTANCE_ACCURACY);
+        return (float)distance.GetDistance();
+    }
+
+    /// <summary>
+    /// 物体の飛距離を計算
+    /// </summary>
+    /// <param name="rigidbody">物体</param>
+    /// <returns>飛距離(座標値)</returns>
+    public float CalcDistance(Rigidbody rigidbody)
+    {
+        return CalcDistance(
+            rigidbody.velocity.magnitude,
+            Angle(rigidbody.velocity),
+            rigidbody.drag,
+            rigidbody.transform.position.y
+            );
     }
 
     /// <summary>
@@ -123,10 +159,9 @@ public class DistanceManager : MonoBehaviour
     /// </summary>
     /// <param name="rigidbody">物体</param>
     /// <returns>飛距離(m)</returns>
-    public float CalcDistance(Rigidbody rigidbody)
+    public float CalcDistanceMeter(Rigidbody rigidbody)
     {
-        return CalcDistance(
-            rigidbody.mass,
+        return CalcDistanceMeter(
             rigidbody.velocity.magnitude,
             Angle(rigidbody.velocity),
             rigidbody.drag,

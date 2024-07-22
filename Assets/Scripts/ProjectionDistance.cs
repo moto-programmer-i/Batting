@@ -1,6 +1,5 @@
 using System;
-using MathNet.Numerics;
-using MathNet.Numerics.RootFinding;
+
 using UnityEngine;
 
 /// <summary>
@@ -15,29 +14,26 @@ public class ProjectionDistance
     private double y0;
 
     /// <summary>
-    /// k/mv0cosθ
+    /// xの係数の逆数 
     /// </summary>
-    private double k_mv0cos;
+    private double reciprocalOfCoefficientOfX;
 
     /// <summary>
-    /// mv0cosθ/k
+    /// xの係数 
     /// </summary>
-    private double mv0cos_k;
+    private double coefficient2OfX;
 
     /// <summary>
-    /// mv0cosθe^{-k^2y0/m^2g}/k
+    /// 1 - kdt
     /// </summary>
-    private double mv0cose__minusKKy0_mmg__k;
+    private double one_kdt;
 
     /// <summary>
-    /// 1 + kv0sinθ/mg
+    /// y0とか
     /// </summary>
-    private double onePluskv0sin_mg;
+    private double y0Term;
 
-    /// <summary>
-    /// (1 + kv0sinθ/mg) * k/mv0cosθ
-    /// </summary>
-    private double onePluskv0sin_mgXk_mv0cos;
+    
 
     private double distance;
 
@@ -53,7 +49,7 @@ public class ProjectionDistance
     /// <summary>
     /// 物体の飛距離を計算
     /// </summary>
-    /// <param name="m">質量</param>
+    /// <param name="dt">（UnityではFixed Timestep）</param>
     /// <param name="v0">初速</param>
     /// <param name="theta">角度（ラジアン）</param>
     /// <param name="k">空気抵抗</param>
@@ -61,19 +57,19 @@ public class ProjectionDistance
     /// <param name="y0">初期高さ</param>
     /// <param name="accuracy">精度（RobustNewtonRaphsonがF(x)と比較してしまうため、厳密な精度にできない。現在はF(accuracy) - F(0)をとりあえず値として使う</param>
     /// <exception cref="NonConvergenceException">不正な値、または計算に失敗したとき</exception>
-    public ProjectionDistance(double m, double v0, double theta, double k, double g, double y0, double accuracy)
+    public ProjectionDistance(double dt, double v0, double theta, double k, double g, double y0, double accuracy)
     {
         this.y0 = y0;
 
         // 値チェック
-        if (m <= 0) {
-            throw new NonConvergenceException("不正な質量：" + m);
+        if (dt <= 0) {
+            throw new ArgumentException("不正なdt：" + dt);
         }
         if (v0 <= 0) {
-            throw new NonConvergenceException("不正な速度：" + v0);
+            throw new ArgumentException("不正な速度：" + v0);
         }
         if (theta >= maxTheta || theta <= minTheta) {
-            throw new NonConvergenceException("不正な角度：" + maxTheta);
+            throw new ArgumentException("不正な角度：" + maxTheta);
         }
         // 空気抵抗が0の場合の0除算回避
         // 参考 https://nekodamashi-math.blog.ss-blog.jp/2019-08-25
@@ -83,49 +79,58 @@ public class ProjectionDistance
             return;
         }
 
-        // gはUnity上マイナスのまま入る可能性があるので、便宜上+にする
-        g = Math.Abs(g);
+        // gは計算上、必ず負
+        g = -Math.Abs(g);
         
         // 係数を計算して保存しておく
-        k_mv0cos = k / (m * v0 * Math.Cos(theta));
-        mv0cos_k = m * v0 * Math.Cos(theta) / k;
-        mv0cose__minusKKy0_mmg__k = mv0cos_k * Math.Exp(-k * k * y0 / m * m * g);
-        onePluskv0sin_mg = 1 + (k * v0 * Math.Sin(theta) / (m * g));
-        onePluskv0sin_mgXk_mv0cos = onePluskv0sin_mg * k_mv0cos;
+        one_kdt = 1 - k * dt;
+        double gdt = g * dt;
+        double vx0 = v0 * Math.Cos(theta);
+        double vy0 = v0 * Math.Sin(theta);
+        reciprocalOfCoefficientOfX = vx0 * one_kdt / k;
+        coefficient2OfX = (vy0 - g * one_kdt/k) * k / (gdt * vx0 * one_kdt);
+        y0Term = k * y0 / (gdt * one_kdt);
 
-        // 最低値は0だと解になってしまうため、精度分ずらす
-        lowerBound = accuracy;
-
-        // Math.NETのFindRootのaccuracyがfxと比較してしまうため対策。他に良いのがあるかも
-        // (これでいいかは不明、本当はxをaccuracy以下の精度でだしたい)
-        double fAccuracy = Math.Abs(F(accuracy) - F(0));
-
-        // 最大値は t -> ∞ のときのx
+        // 最大値は n -> ∞ のときのx
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html#upperBound
-        upperBound = m * v0 * Math.Cos(theta) / k;    
+        upperBound = vx0 * one_kdt / k;
+        Debug.Log("upper " + upperBound);
 
-        distance = RobustNewtonRaphson.FindRoot(F, Df, lowerBound, upperBound, fAccuracy);
+        // 最低値の最適な決め方が不明、とりあえず最大値の半分にしておく
+        lowerBound = upperBound / 2;
+        
+
+        // Debug.Log(reciprocalOfCoefficientOfX  + " "  + one_kdt + " " + coefficient2OfX + " " + y0Term);
+
+        
+        distance = Bisection.FindRoot(F, lowerBound, upperBound);
     }
 
     /// <summary>
     /// f(x)
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>-mv0cosθe^{-k^2y0/m^2g}/k + (mv0cosθ/k - x) e^{(1 + kv0sinθ/mg)kx/mv0cosθ}</returns>
+    /// <returns> TBD </returns>
     public double F(double x)
     {
-        return -mv0cose__minusKKy0_mmg__k + (mv0cos_k - x) * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
+        return  -reciprocalOfCoefficientOfX + (reciprocalOfCoefficientOfX - x)
+        * Math.Pow(one_kdt, coefficient2OfX * x + y0Term);
+
+        // double fx =   -reciprocalOfCoefficientOfX + (reciprocalOfCoefficientOfX - x)
+        // * Math.Pow(one_kdt, coefficient2OfX * x + y0Term);
+        // Debug.Log("fx " + fx);
+        // return fx;
     }
 
     /// <summary>
     /// df(x)
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>(-1 + (1 + kv0sinθ/mg) (1 - kx/mv0cosθ)) e^{(1 + kv0sinθ/mg)kx/mv0cosθ}</returns>
+    /// <returns></returns>
     public double Df(double x)
     {
-        return (-1 + onePluskv0sin_mg * (1 - k_mv0cos * x))
-         * Math.Exp(onePluskv0sin_mgXk_mv0cos * x);
+        return  (-1 + (reciprocalOfCoefficientOfX - x) * Math.Log(one_kdt))
+        * Math.Pow(one_kdt, coefficient2OfX * x + y0Term);
     }
 
     public double GetDistance()
