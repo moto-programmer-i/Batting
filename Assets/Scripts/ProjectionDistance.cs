@@ -55,9 +55,9 @@ public class ProjectionDistance
     /// <param name="k">空気抵抗</param>
     /// <param name="g">重力加速度</param>
     /// <param name="y0">初期高さ</param>
-    /// <param name="accuracy">精度（RobustNewtonRaphsonがF(x)と比較してしまうため、厳密な精度にできない。現在はF(accuracy) - F(0)をとりあえず値として使う</param>
+    /// <param name="accuracy">精度</param>
     /// <exception cref="ArgumentException">不正な引数の場合</exception>
-    public ProjectionDistance(double dt, double v0, double theta, double k, double g, double y0, double accuracy)
+    public ProjectionDistance(double dt, double v0, double theta, double k, double g, double y0, double accuracy = Bisection.DEFAULT_ACCURACY)
     {
         this.y0 = y0;
 
@@ -99,7 +99,7 @@ public class ProjectionDistance
         // 最低値の最適な決め方が不明、とりあえず最大値の半分にしておく
         lowerBound = upperBound / 2;
         
-        distance = Bisection.FindRoot(F, lowerBound, upperBound);
+        distance = Bisection.FindRoot(F, lowerBound, upperBound, accuracy);
     }
 
     /// <summary>
