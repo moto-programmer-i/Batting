@@ -5,13 +5,34 @@ using UnityEngine;
 
 // https://numerics.mathdotnet.com/api/MathNet.Numerics.RootFinding/Bisection.htm
 // が希望通りに動作しないため自作。よい子は真似しないこと。
+
+/// <summary>
+/// 二分法 （参考 https://risalc.info/src/bisection-method.html ）により近似解を求めるクラス
+/// </summary>
 public static class Bisection
 {
-    const double DEFAULT_ACCURACY = 0.1;
+    /// <summary>
+    /// デフォルトの精度
+    /// </summary>
+    public const double DEFAULT_ACCURACY = 0.1;
 
     // doubleのビット数64より大きい数字にとりあえずした
-    const int DEFAULT_MAX_ITERATIONS = 100;
+    /// <summary>
+    /// デフォルトの計算回数
+    /// </summary>
+    public const int DEFAULT_MAX_ITERATIONS = 100;
 
+    /// <summary>
+    /// 二分法による解の近似値を求める。
+    /// </summary>
+    /// <param name="f">f(x)</param>
+    /// <param name="lowerBound">解の最低値</param>
+    /// <param name="upperBound">解の最大値</param>
+    /// <param name="accuracy">精度（既存ライブラリとは違い、解の精度）</param>
+    /// <param name="maxIterations">最大計算回数</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="RootNotFoundException"></exception>
     public static double FindRoot(Func<double, double> f, double lowerBound, double upperBound, double accuracy = DEFAULT_ACCURACY, int maxIterations = DEFAULT_MAX_ITERATIONS)
     {
         if (f == null) {
