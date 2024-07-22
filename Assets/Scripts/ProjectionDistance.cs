@@ -106,7 +106,6 @@ public class ProjectionDistance
     /// f(x)
     /// </summary>
     /// <param name="x"></param>
-    /// <returns> TBD </returns>
     public double F(double x)
     {
         return  -reciprocalOfCoefficientOfX + (reciprocalOfCoefficientOfX - x)
