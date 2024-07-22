@@ -56,7 +56,7 @@ public class ProjectionDistance
     /// <param name="g">重力加速度</param>
     /// <param name="y0">初期高さ</param>
     /// <param name="accuracy">精度（RobustNewtonRaphsonがF(x)と比較してしまうため、厳密な精度にできない。現在はF(accuracy) - F(0)をとりあえず値として使う</param>
-    /// <exception cref="NonConvergenceException">不正な値、または計算に失敗したとき</exception>
+    /// <exception cref="ArgumentException">不正な引数の場合</exception>
     public ProjectionDistance(double dt, double v0, double theta, double k, double g, double y0, double accuracy)
     {
         this.y0 = y0;

@@ -28,11 +28,11 @@ public static class Bisection
     /// <param name="f">f(x)</param>
     /// <param name="lowerBound">解の最低値</param>
     /// <param name="upperBound">解の最大値</param>
-    /// <param name="accuracy">精度（既存ライブラリとは違い、解の精度）</param>
+    /// <param name="accuracy">0より大きい精度（既存ライブラリとは違い、解の精度）</param>
     /// <param name="maxIterations">最大計算回数</param>
     /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="RootNotFoundException"></exception>
+    /// <exception cref="ArgumentException">lowerBound > upperBoundの場合など</exception>
+    /// <exception cref="RootNotFoundException">最大計算回数を超えても解がでなかったとき</exception>
     public static double FindRoot(Func<double, double> f, double lowerBound, double upperBound, double accuracy = DEFAULT_ACCURACY, int maxIterations = DEFAULT_MAX_ITERATIONS)
     {
         if (f == null) {
