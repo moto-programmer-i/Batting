@@ -49,6 +49,9 @@ public class DistanceTester : MonoBehaviour
 
     private List<String> lines = new ();
 
+    [SerializeField]
+    private DistanceManager distanceManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -105,7 +108,9 @@ public class DistanceTester : MonoBehaviour
         ballRigidbody.velocity = Quaternion.Euler(0, 0, -theta * Mathf.Rad2Deg) * Vector3.left * v0;
         float distance = BattingInstances.GetDistanceManager().CalcDistance(ballRigidbody);
         Debug.Log("計算飛距離（座標値） " +  distance);
-            
+
+        // 飛距離表示
+        distanceManager.ShowDistance(distance);
         
         // 一旦地面に着いたときの距離
         BallEventTrigger trigger = ball.GetComponent<BallEventTrigger>();

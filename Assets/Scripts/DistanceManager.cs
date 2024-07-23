@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using MathNet.Numerics.RootFinding;
-using MathNet.Numerics.LinearAlgebra.Solvers;
+using TMPro;
+using System.Threading.Tasks;
 
 public class DistanceManager : MonoBehaviour
 {
@@ -38,6 +36,12 @@ public class DistanceManager : MonoBehaviour
     /// ホームベースから見た前のベクトル（マウンドへの向き）
     /// </summary>
     public static Vector3 forward {get; private set;}
+
+    [SerializeField]
+    private TextMeshProUGUI distanceText;
+
+    [SerializeField]
+    private int distanceDisplayMiliSeconds = 1000;
     
     void Start()
     {
@@ -53,11 +57,9 @@ public class DistanceManager : MonoBehaviour
         // 前のベクトルの初期設定
         forward = mound.position - homePlate.position;
     }
-
     
     void Update()
     {
-        
     }
 
     
@@ -188,16 +190,39 @@ public class DistanceManager : MonoBehaviour
     // 公式にラジアンで返すメソッドができたら修正
     // https://github.com/Unity-Technologies/UnityCsReference/blob/master/Runtime/Export/Math/Vector3.cs#L324
     public static float Angle(Vector3 from, Vector3 to)
-        {
-            // sqrt(a) * sqrt(b) = sqrt(a * b) -- valid for real numbers
-            float denominator = (float)Math.Sqrt(from.sqrMagnitude * to.sqrMagnitude);
-            if (denominator < Vector3.kEpsilonNormalSqrt)
-                return 0F;
+    {
+        // sqrt(a) * sqrt(b) = sqrt(a * b) -- valid for real numbers
+        float denominator = (float)Math.Sqrt(from.sqrMagnitude * to.sqrMagnitude);
+        if (denominator < Vector3.kEpsilonNormalSqrt)
+            return 0F;
 
-            float dot = Mathf.Clamp(Vector3.Dot(from, to) / denominator, -1F, 1F);
+        float dot = Mathf.Clamp(Vector3.Dot(from, to) / denominator, -1F, 1F);
 
-            // 元のソースでなぜか度数法にしているので、ラジアンで返す
-            // return ((float)Math.Acos(dot)) * Mathf.Rad2Deg;
-            return MathF.Acos(dot);
-        }
+        // 元のソースでなぜか度数法にしているので、ラジアンで返す
+        // return ((float)Math.Acos(dot)) * Mathf.Rad2Deg;
+        return MathF.Acos(dot);
+    }
+
+    public async void ShowDistance(float distance)
+    {
+        ShowDistanceCanvas(true);
+        distanceText.text = $"{MathF.Round(distance)}m";
+
+        // メソッド全体をasyncにしなければ、enabledが反映されなかった
+        // // 指定時間後に非表示にする
+        // Task.Run(async()  => {
+        //     await Task.Delay(distanceDisplayMiliSeconds);
+        //     ShowDistanceCanvas(false);
+        //     distanceText.enabled = false;
+        //     });
+
+        await Task.Delay(distanceDisplayMiliSeconds);
+        ShowDistanceCanvas(false);
+        
+    }
+
+    public void ShowDistanceCanvas(bool show)
+    {
+        distanceText.enabled = show;    
+    }
 }
