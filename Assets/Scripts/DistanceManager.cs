@@ -218,11 +218,14 @@ public class DistanceManager : MonoBehaviour
 
         await Task.Delay(distanceDisplayMiliSeconds);
         ShowDistanceCanvas(false);
-        
     }
 
     public void ShowDistanceCanvas(bool show)
     {
-        distanceText.enabled = show;    
+        // キャンバスごと非表示にしたいが、方法不明
+        distanceText.enabled = show;
+
+        // 再度ONにしようとすると、NullReferenceエラーになる
+        // distanceText.canvas.enabled = show;
     }
 }

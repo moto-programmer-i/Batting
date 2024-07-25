@@ -1590,7 +1590,7 @@ MonoBehaviour:
   mound: {fileID: 454958971}
   homePlate: {fileID: 1615190859}
   distanceText: {fileID: 2014270694}
-  distanceDisplayMiliSeconds: 3000
+  distanceDisplayMiliSeconds: 2000
 --- !u!114 &289460920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2827,7 +2827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
-  v0: 4000
+  v0: 40
   numeratorOfPi: 1
   denominatorOfPi: 6
   releasePoint: {fileID: 1605716761}
