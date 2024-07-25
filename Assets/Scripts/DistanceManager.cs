@@ -213,10 +213,9 @@ public class DistanceManager : MonoBehaviour
         distanceText.text = $"{integerDistance}m";
 
         // テキスト設定変更
-        TextSettingsList.TextSetting setting = textSettings.SettingMap[TextSettingEnumUtils.Of(integerDistance)];
+        TextSetting setting = textSettings.SettingMap[TextSettingEnumUtils.Of(integerDistance)];
         distanceText.fontSize = setting.Size;
         distanceText.color = setting.Color;
-        Debug.Log($"色 {setting.Color == null} あれば {setting.Color}");
         
         
         
