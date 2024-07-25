@@ -42,6 +42,9 @@ public class DistanceManager : MonoBehaviour
 
     [SerializeField]
     private int distanceDisplayMiliSeconds = 1000;
+
+    [SerializeField]
+    private TextSettingsList textSettings;
     
     void Start()
     {
@@ -206,7 +209,18 @@ public class DistanceManager : MonoBehaviour
     public async void ShowDistance(float distance)
     {
         ShowDistanceCanvas(true);
-        distanceText.text = $"{MathF.Round(distance)}m";
+        int integerDistance = (int)MathF.Round(distance);
+        distanceText.text = $"{integerDistance}m";
+
+        // テキスト設定変更
+        TextSettingsList.TextSetting setting = textSettings.SettingMap[TextSettingEnumUtils.Of(integerDistance)];
+        distanceText.fontSize = setting.Size;
+        distanceText.color = setting.Color;
+        Debug.Log($"色 {setting.Color == null} あれば {setting.Color}");
+        
+        
+        
+        
 
         // メソッド全体をasyncにしなければ、enabledが反映されなかった
         // // 指定時間後に非表示にする
