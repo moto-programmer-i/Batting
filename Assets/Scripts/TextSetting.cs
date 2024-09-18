@@ -9,8 +9,11 @@ public class TextSetting
 {
     // fieldをつけないとInspector上で中身が見えない
     // 参考 https://waken.hatenablog.com/entry/2022/03/17/151205
+    // [field: SerializeField]
+    // public string Key { get; set; }
+
     [field: SerializeField]
-    public TextSettingEnum Key { get; set; }
+    public int Distance { get; set; }
 
 
     [field: SerializeField]

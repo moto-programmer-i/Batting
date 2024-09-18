@@ -40,11 +40,6 @@ public class DistanceManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI distanceText;
 
-    [SerializeField]
-    private int distanceDisplayMiliSeconds = 1000;
-
-    [SerializeField]
-    private TextSettingsList textSettings;
     
     void Start()
     {
@@ -213,9 +208,16 @@ public class DistanceManager : MonoBehaviour
         distanceText.text = $"{integerDistance}m";
 
         // テキスト設定変更
-        TextSetting setting = textSettings.SettingMap[TextSettingEnumUtils.Of(integerDistance)];
-        distanceText.fontSize = setting.Size;
-        distanceText.color = setting.Color;
+        try {
+            TextSetting setting = SettingsManager.TextSettings.fromDistance(integerDistance);
+            distanceText.fontSize = setting.Size;
+            distanceText.color = setting.Color;
+
+        // 飛距離が想定外の場合は表示しない
+        } catch (Exception e) {
+            Debug.LogError(e);
+        }
+
         
         
         
@@ -229,7 +231,7 @@ public class DistanceManager : MonoBehaviour
         //     distanceText.enabled = false;
         //     });
 
-        await Task.Delay(distanceDisplayMiliSeconds);
+        await Task.Delay(SettingsManager.TextSettings.DistanceDisplayMiliSeconds);
         ShowDistanceCanvas(false);
     }
 
