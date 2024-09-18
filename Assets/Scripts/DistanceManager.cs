@@ -212,6 +212,8 @@ public class DistanceManager : MonoBehaviour
             TextSetting setting = SettingsManager.TextSettings.fromDistance(integerDistance);
             distanceText.fontSize = setting.Size;
             distanceText.color = setting.Color;
+            distanceText.outlineColor = setting.OutlineColor;
+            distanceText.fontWeight = setting.FontWeight;
 
         // 飛距離が想定外の場合は表示しない
         } catch (Exception e) {

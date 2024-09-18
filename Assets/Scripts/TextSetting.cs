@@ -22,4 +22,11 @@ public class TextSetting
 
     [field: SerializeField]
     public Color Color { get; set; }
+
+    [field: SerializeField]
+    public Color OutlineColor { get; set; }
+
+    
+    [field: SerializeField]
+    public TMPro.FontWeight FontWeight { get; set; }
 }
