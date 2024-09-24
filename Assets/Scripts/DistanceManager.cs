@@ -254,12 +254,5 @@ public class DistanceManager : MonoBehaviour
 
         // 内部のキャンバスだけを非表示
         distanceCanvas.GetComponent<Canvas>().enabled = show;
-
-
-        // キャンバスごと非表示にしたいが、方法不明
-        // distanceText.enabled = distanceImage.enabled = show;
-
-        // 再度ONにしようとすると、NullReferenceエラーになる
-        // distanceText.canvas.enabled = show;
     }
 }
