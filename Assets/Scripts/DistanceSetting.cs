@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // SerializableがないとInspectorに表示されない
 // MonoBehaviourを継承するとリストにいれたとき、Inspectorに表示されない
 [System.Serializable]
-public class TextSetting
+public class DistanceSetting
 {
     // fieldをつけないとInspector上で中身が見えない
     // 参考 https://waken.hatenablog.com/entry/2022/03/17/151205
@@ -29,4 +30,7 @@ public class TextSetting
     
     [field: SerializeField]
     public TMPro.FontWeight FontWeight { get; set; }
+
+    [field: SerializeField]
+    public Sprite BackgroundSprite { get; set; }
 }

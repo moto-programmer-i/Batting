@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 public class DistanceManager : MonoBehaviour
 {
@@ -38,7 +39,13 @@ public class DistanceManager : MonoBehaviour
     public static Vector3 forward {get; private set;}
 
     [SerializeField]
+    private Canvas distanceCanvas;
+
+    [SerializeField]
     private TextMeshProUGUI distanceText;
+
+    [SerializeField]
+    private Image distanceImage;
 
     
     void Start()
@@ -209,20 +216,20 @@ public class DistanceManager : MonoBehaviour
 
         // テキスト設定変更
         try {
-            TextSetting setting = SettingsManager.TextSettings.fromDistance(integerDistance);
+            DistanceSetting setting = SettingsManager.DistanceSettings.fromDistance(integerDistance);
             distanceText.fontSize = setting.Size;
             distanceText.color = setting.Color;
             distanceText.outlineColor = setting.OutlineColor;
             distanceText.fontWeight = setting.FontWeight;
 
+            // 距離に応じた画像表示、ない場合は非表示に戻す
+            distanceImage.sprite = setting.BackgroundSprite;
+            distanceImage.enabled = distanceImage.sprite != null;
+
         // 飛距離が想定外の場合は表示しない
         } catch (Exception e) {
             Debug.LogError(e);
-        }
-
-        
-        
-        
+        }  
         
 
         // メソッド全体をasyncにしなければ、enabledが反映されなかった
@@ -233,14 +240,24 @@ public class DistanceManager : MonoBehaviour
         //     distanceText.enabled = false;
         //     });
 
-        await Task.Delay(SettingsManager.TextSettings.DistanceDisplayMiliSeconds);
+        // 指定時間後に非表示にする
+        await Task.Delay(SettingsManager.DistanceSettings.DistanceDisplayMiliSeconds);
         ShowDistanceCanvas(false);
     }
 
     public void ShowDistanceCanvas(bool show)
     {
+        
+        // distanceCanvas.enabled = show; 
+        // これだとGameObjectをいじるので、nullエラーが発生する
+        // 参考 https://discussions.unity.com/t/how-to-enable-and-disable-a-canvas-window-by-scripting/117242/3
+
+        // 内部のキャンバスだけを非表示
+        distanceCanvas.GetComponent<Canvas>().enabled = show;
+
+
         // キャンバスごと非表示にしたいが、方法不明
-        distanceText.enabled = show;
+        // distanceText.enabled = distanceImage.enabled = show;
 
         // 再度ONにしようとすると、NullReferenceエラーになる
         // distanceText.canvas.enabled = show;
