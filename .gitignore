@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # ユニティちゃんはリポジトリに含めない
 /[Aa]ssets/UnityChan/
+
+# Particle Packはリポジトリに含めない
+/[Aa]ssets/UnityTechnologies
