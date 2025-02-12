@@ -1,0 +1,31 @@
+.bat-button {
+    height: auto;
+    overflow: hidden;
+}
+
+.unity-list-view__item--selected {
+    border-width: 4;
+    border-color: rgb(255, 0, 0);
+    background-color: rgb(255, 0, 0);
+}
+
+.bat-button .unity-radio-button__input {
+    opacity: 0;
+    visibility: visible;
+    display: flex;
+}
+
+.bat-button:checked {
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-left-color: rgb(255, 9, 0);
+    border-right-color: rgb(255, 9, 0);
+    border-top-color: rgb(255, 9, 0);
+    border-bottom-color: rgb(255, 9, 0);
+}
+
+.bat-list {
+    height: 90%;
+}

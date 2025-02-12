@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIs/BatSelector.uss?fileID=7433441132597879392&amp;guid=6124a8b2224bb7b49ae84188f588cdfe&amp;type=3#BatSelector" />
+    <ui:ListView focusable="true" fixed-item-height="100" show-border="true" virtualization-method="FixedHeight" name="ListView" class="bat-list" style="height: auto;" />
+    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" class="bat-button" style="background-image: url(&apos;project://database/Assets/Images/%E6%9C%A8%E8%A3%BD%E3%83%90%E3%83%83%E3%83%88%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3.png?fileID=2800000&amp;guid=195dcd3627f5d6a468c0ad65cbf862c0&amp;type=3#木製バットアイコン&apos;); -unity-background-scale-mode: scale-to-fit; display: none; height: 100px;" />
+    <ui:RadioButton label="竹" class="bat-button" style="opacity: 1; display: none;" />
+    <ui:RadioButton label="ボロボロバット&#10;" class="bat-button" style="opacity: 1; display: none;" />
+</ui:UXML>
