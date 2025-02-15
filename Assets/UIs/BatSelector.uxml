@@ -1,10 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UIs/BatSelector.uss?fileID=7433441132597879392&amp;guid=6124a8b2224bb7b49ae84188f588cdfe&amp;type=3#BatSelector" />
-    <ui:Button text="バット選択" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bat-list-display-button" class="bat-menu-button" />
-    <ui:ScrollView name="bat-list" style="display: none;">
-        <ui:RadioButtonGroup label="Radio Button Group" value="-1" choices="UnityEngine.UIElements.RadioButtonGroup+&lt;get_choices&gt;d__7" class="bat-button-group" />
-    </ui:ScrollView>
+    <Style src="project://database/Assets/UIs/CloseArea/CloseArea.uss?fileID=7433441132597879392&amp;guid=d65afb240c9b83145b757d3318d0fc6b&amp;type=3#CloseArea" />
+    <ui:Button text="バット選択" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bat-list-display-button" class="bat-menu-button" style="display: flex;" />
+    <CloseArea name="close-area" style="display: none;">
+        <ui:ScrollView name="bat-list" style="display: flex; height: 80%; width: 90%; margin-left: auto; margin-bottom: auto; margin-right: auto; margin-top: auto; max-height: none;">
+            <ui:RadioButtonGroup label="Radio Button Group" value="-1" choices="UnityEngine.UIElements.RadioButtonGroup+&lt;get_choices&gt;d__7" class="bat-button-group" />
+        </ui:ScrollView>
+    </CloseArea>
     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" class="bat-button" style="background-image: url(&apos;project://database/Assets/Images/%E6%9C%A8%E8%A3%BD%E3%83%90%E3%83%83%E3%83%88%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3.png?fileID=2800000&amp;guid=195dcd3627f5d6a468c0ad65cbf862c0&amp;type=3#木製バットアイコン&apos;); -unity-background-scale-mode: scale-to-fit; display: none; height: 100px;" />
-    <ui:RadioButton label="竹" class="bat-button" style="opacity: 1; display: flex;" />
+    <ui:RadioButton label="竹" class="bat-button" style="opacity: 1; display: none;" />
     <ui:RadioButton label="ボロボロバット&#10;" class="bat-button" style="opacity: 1; display: none;" />
 </ui:UXML>

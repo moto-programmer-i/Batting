@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIs/CloseArea/CloseArea.uss?fileID=7433441132597879392&amp;guid=d65afb240c9b83145b757d3318d0fc6b&amp;type=3#CloseArea" />
+    <ui:VisualElement name="close-area" class="close-area" />
+</ui:UXML>
