@@ -11,15 +11,17 @@ public class BatManager : MonoBehaviour
     public const string BatListDisplayButtonName = "bat-list-display-button";
     
     [SerializeField]
-    private List<BatSetting> BatSettings = new();
+    private List<BatSetting> batSettings = new();
 
     [SerializeField]
-    private UIDocument BatSelector;
+    private UIDocument batSelector;
 
     [SerializeField]
-    private GameObject CurrentBatParent;
+    private GameObject currentBatParent;
 
     private Button batListDisplayButton;
+
+    private RadioButtonGroup radioButtonGroup;
 
     private CloseArea closeArea;
     /// <summary>
@@ -27,67 +29,61 @@ public class BatManager : MonoBehaviour
     /// </summary>
     private ScrollView batListView;
 
-    private int selectedBatIndex = 0;
+    [SerializeField]
+    private SaveDataManager saveDataManager;
 
     void Awake()
     {
         // バットリスト表示ボタン初期化
-        batListDisplayButton = BatSelector.rootVisualElement.Q<Button>(BatListDisplayButtonName);
+        batListDisplayButton = batSelector.rootVisualElement.Q<Button>(BatListDisplayButtonName);
         batListDisplayButton.clicked += () => ShowBatList(true);
 
         // 閉じる用の画面初期化
-        closeArea = BatSelector.rootVisualElement.Q<CloseArea>();
+        closeArea = batSelector.rootVisualElement.Q<CloseArea>();
         closeArea.Closed = () => ShowBatList(false);
         // 非表示でもなぜかデフォルトがFlexになっているので、Noneにしておく
         closeArea.style.display = DisplayStyle.None;
 
         // バットリスト初期化
-        batListView = BatSelector.rootVisualElement.Q<ScrollView>();
+        batListView = batSelector.rootVisualElement.Q<ScrollView>();
         
 
-        var radioButtonGroup = batListView.Q<RadioButtonGroup>();
+        radioButtonGroup = batListView.Q<RadioButtonGroup>();
         radioButtonGroup.choices = GetBatNames();
-        selectedBatIndex = radioButtonGroup.value = 0;
+        radioButtonGroup.value = 0;
 
         radioButtonGroup.RegisterCallback<ChangeEvent<int>>((e) =>
         {
-            selectedBatIndex = e.newValue;
+            radioButtonGroup.value = e.newValue;
 
             // 選択されたらリスト非表示
             ShowBatList(false);
+
+            ChangeBat(GetCurrentBatSetting());
         });
 
         // ラジオボタンの設定
         var radioButtons = radioButtonGroup.Children();
-        for (int i = 0; i < BatSettings.Count; ++i) {
+        for (int i = 0; i < batSettings.Count; ++i) {
             var radioButton = radioButtons.ElementAt(i) as RadioButton;
-            radioButton.style.backgroundImage = BatSettings[i].Icon;
+            radioButton.style.backgroundImage = batSettings[i].Icon;
         }
+
+        
+        // セーブデータから現在のバット設定を適用
+        saveDataManager.AddAfterLoad((saveData) => {
+            radioButtonGroup.value = saveDataManager.SaveData.CurrentBatIndex;
+            ChangeBat(GetCurrentBatSetting());
+        });
+        
     }
+
 
     public List<BatSetting> GetBatSettings()
     {
-        return BatSettings;
+        return batSettings;
     }
 
-    /// <summary>
-    /// バット選択画面の表示切り替え
-    /// </summary>
-    // public void ToggleBatSelector()
-    // {        
-    //     switch(closeArea.style.display.value) {
-    //         case DisplayStyle.None:
-    //             closeArea.style.display = DisplayStyle.Flex;
-    //             batListDisplayButton.style.display = DisplayStyle.None;
-    //         break;
-
-    //         // デフォルトはバット選択画面非表示
-    //         default:
-    //             closeArea.style.display = DisplayStyle.None;
-    //             batListDisplayButton.style.display = DisplayStyle.Flex;
-    //         break;
-    //     }
-    // }
 
     public void ShowBatList(bool visible)
     {        
@@ -103,12 +99,31 @@ public class BatManager : MonoBehaviour
 
     public List<string> GetBatNames()
     {
-        return BatSettings.ConvertAll(e => e.Name);
+        return batSettings.ConvertAll(e => e.Name);
     }
 
     public BatSetting GetCurrentBatSetting()
     {
-        return BatSettings[selectedBatIndex];
+        return batSettings[radioButtonGroup.value];
+    }
+
+    public void ChangeBat(BatSetting setting)
+    {
+        if (setting == null) {
+            return;
+        }
+
+        // 現在のバットを消す（一応全て消す）
+        for (int i = currentBatParent.transform.childCount - 1; i >= 0; --i) {
+            Destroy(currentBatParent.transform.GetChild(i).gameObject);
+        }
+
+        // 新しいバットを追加、オブジェクトプールとかした方がいいのかとかは不明
+        Instantiate(setting.Bat, currentBatParent.transform);
+
+        // セーブデータ更新
+        saveDataManager.SaveData.CurrentBatIndex = radioButtonGroup.value;
+        saveDataManager.Save();
     }
     
 
