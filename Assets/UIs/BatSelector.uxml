@@ -2,8 +2,8 @@
     <Style src="project://database/Assets/UIs/BatSelector.uss?fileID=7433441132597879392&amp;guid=6124a8b2224bb7b49ae84188f588cdfe&amp;type=3#BatSelector" />
     <Style src="project://database/Assets/UIs/CloseArea/CloseArea.uss?fileID=7433441132597879392&amp;guid=d65afb240c9b83145b757d3318d0fc6b&amp;type=3#CloseArea" />
     <ui:Button text="バット選択" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bat-list-display-button" class="bat-menu-button" style="display: flex;" />
-    <CloseArea name="close-area" style="display: none;">
-        <ui:ScrollView name="bat-list" style="display: flex; height: 80%; width: 90%; margin-left: auto; margin-bottom: auto; margin-right: auto; margin-top: auto; max-height: none;">
+    <CloseArea name="close-area" style="display: flex;">
+        <ui:ScrollView name="bat-list" style="display: flex; height: auto; width: 90%; margin-left: auto; margin-bottom: auto; margin-right: auto; margin-top: auto; max-height: 80%;">
             <ui:RadioButtonGroup label="Radio Button Group" value="-1" choices="UnityEngine.UIElements.RadioButtonGroup+&lt;get_choices&gt;d__7" class="bat-button-group" />
         </ui:ScrollView>
     </CloseArea>
