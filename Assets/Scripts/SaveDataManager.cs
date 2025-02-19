@@ -39,6 +39,7 @@ public class SaveDataManager : MonoBehaviour
         afterLoads.Clear();
     }
 
+    // 非同期にした方がいいかも？
     public void Save()
     {
         FileUtils.SaveJson(SaveData, SAVEDATA_FILENAME);
