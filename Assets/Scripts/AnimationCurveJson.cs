@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Numerics;
 
 public class AnimationCurveJson
 {
@@ -53,26 +54,43 @@ public class AnimationCurveJson
 
     public void Sort()
     {
-        _keyframes.Sort((a, b) => {
-                // Math.Abs(a.Time - b.Time)の戻り値がなぜかintじゃない
-                float sign = a.Time - b.Time;
-                if (sign == 0) {
-                    return 0;
-                }
-                if (sign < 0) {
-                    return -1;
-                }
-                return 1;
-            }
-
-            );
+        _keyframes.Sort((a, b) => Math.Sign(a.Time - b.Time));
     }
 
+    // デシリアライズ時にメソッド呼び出し
     // 参考
     // https://stackoverflow.com/a/49415723
     [OnDeserialized()]
     internal void OnDeserializedMethod(StreamingContext context)
     {
         Init();
+    }
+
+    /// <summary>
+    /// toが起点になるようにずらす
+    /// </summary>
+    /// <param name="to">新しい起点</param>
+    public void Offset(Transform to)
+    {
+       
+        
+        
+        AnimationKeyframe first = _keyframes.First();
+
+        // toが起点になるように差を作成
+        Vector3Data offset = Vector3Data.From(to.position) - first.Position;
+
+        Debug.Log("from: " + first.Position);
+        Debug.Log("to: " + to.position);
+        Debug.Log("offset: " + offset);
+
+        // toを起点に設定
+        first.Position = Vector3Data.From(to.position);
+
+        // 全ての要素に差を適用
+        for (int i = 1; i < _keyframes.Count; ++i) {
+            _keyframes[i].Position += offset;
+            Debug.Log($"{i}: {_keyframes[i].Position}");
+        }
     }
 }

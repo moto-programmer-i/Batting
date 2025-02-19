@@ -38,6 +38,9 @@ public class BatController : MonoBehaviour
     [SerializeField]
     private float amplifier = 1.0f;
 
+    [SerializeField]
+    private Transform bat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,10 @@ public class BatController : MonoBehaviour
 
         // ファイルからスイング読み込み
         AnimationCurveJson curve = FileUtils.LoadJson<AnimationCurveJson>(DEFAULT_SWING_FILENAME);
+
+        // バットの位置に合わせて補正
+        // curve.Offset(bat.transform);
+
         AnimationClipLoader.setClip(curve, SWING_CLIPNAME, animator);
     }
 
@@ -81,6 +88,8 @@ public class BatController : MonoBehaviour
 
         // 押した位置にバットを移動
         // this.transform.position = CameraUtils.ScreenToWorldPoint(mainCamera, screenPosition, distance);
+
+        // スイング
         animator.SetTrigger(AnimatorConstants.SWING);
     }
 

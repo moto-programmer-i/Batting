@@ -34,8 +34,28 @@ public class Vector3Data
         return new Vector3Data(v2.x, v2.y, 0);
     }
 
+    public static Vector3Data From(Vector3 v3)
+    {
+        return new Vector3Data(v3.x, v3.y, v3.z);
+    }
+
     public Vector3Data Clone()
     {
         return new Vector3Data(this.X, this.Y, this.Z);
+    }
+
+    public static Vector3Data operator +(Vector3Data a, Vector3Data b)
+    {
+        return new Vector3Data(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+    }
+
+    public static Vector3Data operator -(Vector3Data a, Vector3Data b)
+    {    
+        return new Vector3Data(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+    }
+
+    override public string ToString()
+    {
+        return $"{X}, {Y}, {Z}";
     }
 }
