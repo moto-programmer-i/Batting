@@ -20,10 +20,18 @@ public class Pitcher : MonoBehaviour
     [SerializeField]
     private Transform releasePoint;
 
+    /// <summary>
+    /// 手に持ってるダミー用のボール
+    /// </summary>
+    [SerializeField]
+    private GameObject ballOnHand;
+
+    private MeshRenderer ballMesh;
+
     // Start is called before the first frame update
     void Start()
     {
-        // throwBall();
+        ballMesh = ballOnHand.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -37,7 +45,16 @@ public class Pitcher : MonoBehaviour
         // }
     }
 
+    public void ShowBall() {
+        // 手に持ってるボールを表示する
+        ballMesh.enabled = true;
+    }
+
     public void ThrowBall() {
+        // 手に持ってるボールを非表示にする
+        ballMesh.enabled = false;
+
+        // ボールを投げる
         GameObject ball = Instantiate(ballPrefab, releasePoint.position, Quaternion.identity);
         Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
         ballRigidbody.AddForce(force);
