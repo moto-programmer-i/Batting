@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIs/SwingDrawer.uss?fileID=7433441132597879392&amp;guid=c0d7f645f950bfa4db579822f8d73e4d&amp;type=3#SwingDrawer" />
+    <ui:Button text="スイング変更" parse-escape-sequences="true" display-tooltip-when-elided="true" name="swing-drawer-button" class="swing-button" />
+</ui:UXML>

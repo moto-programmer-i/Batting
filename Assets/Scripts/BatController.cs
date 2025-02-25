@@ -52,6 +52,11 @@ public class BatController : MonoBehaviour
         // バットの位置に合わせて補正
         // curve.Offset(bat.transform);
 
+        SetSwing(curve);
+    }
+
+    public void SetSwing(AnimationCurveJson curve)
+    {
         AnimationClipLoader.setClip(curve, SWING_CLIPNAME, animator);
     }
 

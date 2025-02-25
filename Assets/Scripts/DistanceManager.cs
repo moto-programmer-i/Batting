@@ -245,14 +245,14 @@ public class DistanceManager : MonoBehaviour
         ShowDistanceCanvas(false);
     }
 
-    public void ShowDistanceCanvas(bool show)
+    public void ShowDistanceCanvas(bool visible)
     {
         
-        // distanceCanvas.enabled = show; 
+        // distanceCanvas.enabled = visible; 
         // これだとGameObjectをいじるので、nullエラーが発生する
         // 参考 https://discussions.unity.com/t/how-to-enable-and-disable-a-canvas-window-by-scripting/117242/3
 
         // 内部のキャンバスだけを非表示
-        distanceCanvas.GetComponent<Canvas>().enabled = show;
+        distanceCanvas.GetComponent<Canvas>().enabled = visible;
     }
 }

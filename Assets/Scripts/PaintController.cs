@@ -7,6 +7,7 @@ using System.Linq;
 using System.IO;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.Assertions;
 
 public class PaintController : MonoBehaviour
 {
@@ -44,10 +45,23 @@ public class PaintController : MonoBehaviour
     [SerializeField]
     private float swingMinSlopeDiff = 0.75f;
 
+
+    /// <summary>
+    /// 3D空間でスイングのy成分の最大値
+    /// </summary>
+    [SerializeField]
+    private float swingMaxY = 1;
+
+    /// <summary>
+    /// 3D空間でスイングのy成分の最小値
+    /// </summary>
+    [SerializeField]
+    private float swingMinY = 0;
+
+
     /// <summary>
     /// 3D空間でスイングのy成分がとりうる値の幅
     /// </summary>
-    [SerializeField]
     private float swingYRange = 10;
 
 
@@ -78,10 +92,11 @@ public class PaintController : MonoBehaviour
     /// </summary>
     private static AnimationCurveJson baseCurve;
 
-    /// <summary>
-    /// 基となるスイングのインパクトの添え字
-    /// </summary>
-    private static int baseSwingImpactIndex;
+    [SerializeField]
+    private GameObject swingDrawerCanvas;
+
+    [SerializeField]
+    private BatController batController;
 
     
 
@@ -92,30 +107,62 @@ public class PaintController : MonoBehaviour
         if (baseCurve == null) {
             baseCurve = ResourceUtils.LoadJson<AnimationCurveJson>(BASE_SWING_RESOURCE_NAME);
         }
-        
-
-        // 画像の用意
-        Rect rect = image.gameObject.GetComponent<RectTransform>().rect;
-        texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
-        image.texture = texture;
 
         // スイング描画終了時
         draw.canceled += context => {
+            // スイング変更ボタンを押してから、離した後もここにきてしまうので対処
+            if (ListUtils.IsEmpty(swingPath)){
+                return;
+            }
+
+
             // 最後の点を保存する
             swingPath.Add(Vector2Ex.From(position.ReadValue<Vector2>(), swingPath.Last()));
 
+            
             // 保存
-            FileUtils.SaveJson(SwingPathToJson(swingPath), SWING_FILE_NAME);
+            AnimationCurveJson swingPathJson = SwingPathToJson(swingPath);
+            FileUtils.SaveJson(swingPathJson, SWING_FILE_NAME);
+
+            // スイング設定
+            batController.SetSwing(swingPathJson);
 
             // スイングを初期化
             swingPath.Clear();
             prePenPosition = null;
+            ShowSwingDrawer(false);
         };
+
+        // スイングの高さに関する初期化
+        Assert.IsTrue(swingMaxY > swingMinY, "スイングの高さの最大値と最低値が不正");
+        swingYRange = swingMaxY - swingMinY;
+    }
+    
+    /// <summary>
+    /// スイング変更画面表示
+    /// </summary>
+    /// <param name="visible"></param>
+    public void ShowSwingDrawer(bool visible)
+    {
+        // 内部のキャンバスだけを表示
+        swingDrawerCanvas.GetComponent<Canvas>().enabled = visible;
+
+        if (visible) {
+            // 画像の用意、enabledをtrueにした後でなければうまく実行されない
+            Rect rect = image.gameObject.GetComponent<RectTransform>().rect;
+            texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
+            image.texture = texture;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 画面が表示されてなければ何もしない
+        if (!swingDrawerCanvas.GetComponent<Canvas>().enabled) {
+            return;
+        }
+        
         OnDraw();
     }
 
@@ -131,12 +178,12 @@ public class PaintController : MonoBehaviour
             return;
         }
 
-        addPenPosition();
+        AddPenPosition();
  
         texture.Apply();
     }
 
-    private void addPenPosition() {
+    private void AddPenPosition() {
         // 前回のスイングの代表点
         Vector2Ex preSwingPositon = null;
         if (!ListUtils.IsEmpty(swingPath)) {
@@ -281,7 +328,7 @@ public class PaintController : MonoBehaviour
     AnimationKeyframe CreateAnimationKeyframe(AnimationKeyframe baseFrame, float y2d) {
         AnimationKeyframe newFrame = baseFrame.Clone();
         if(newFrame.Position != null) {
-            newFrame.Position.Y = ConvertSwingY2Dto3D(y2d, baseFrame.Position.Y);
+            newFrame.Position.Y = ConvertSwingY2Dto3D(y2d);
         }
         return newFrame;
     }
@@ -290,11 +337,10 @@ public class PaintController : MonoBehaviour
     /// スイング軌道のY成分を2Dから3Dに変換
     /// </summary>
     /// <param name="y2d">2Dでのy成分（0～Screen.height）</param>
-    /// <param name="baseY3d">3Dでの元のスイング軌道のy成分</param>
     /// <returns>3Dでのy成分</returns>
-    float ConvertSwingY2Dto3D(float y2d, float baseY3d)
+    float ConvertSwingY2Dto3D(float y2d)
     {
-        // 2D y:0～Screen.height → baseY3d ± (swingYRange / 2)に変換
-        return y2d / Screen.height * swingYRange - (swingYRange / 2.0f) + baseY3d;
+        // 2D y:0～Screen.height → swingMinY～swingMaxYに変換
+        return y2d / Screen.height * swingYRange + swingMinY;
     }
 }
