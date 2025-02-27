@@ -2113,7 +2113,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!95 &368529956
 Animator:
   serializedVersion: 5
@@ -2420,7 +2420,7 @@ Transform:
   m_GameObject: {fileID: 454958967}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.42, y: 0.059, z: -0.13}
+  m_LocalPosition: {x: -4.05, y: 0.059, z: -0.13}
   m_LocalScale: {x: 0.125, y: 0.03125, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2905,8 +2905,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 45, y: 19.41, z: 53.9}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.3183928, y: 1, z: 2.7769194}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3257,7 +3257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1605716760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3272,11 +3272,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
-  v0: 4000
+  v0: 400
   numeratorOfPi: 1
   denominatorOfPi: 6
   releasePoint: {fileID: 1605716761}
-  maxCount: 20
+  maxCount: 10
   drag: 3
   mass: 1
   distanceManager: {fileID: 289460919}

@@ -17,14 +17,30 @@ public class BallEventTrigger : MonoBehaviour
         onBounceListeners.Add(listener);
     }
 
+    void FixedUpdate()
+    {
+        // グラウンドのサイズが限られているので、yが0以下のときも地面についたとする
+        if(ball.transform.position.y <= 0){
+            Invoke();
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         // グラウンドと接触で地面についたものとする
         if (GameObjectTags.GROUND.Equals(collision.gameObject.tag)) {
+            Invoke();
+        }
+    }
+
+    /// <summary>
+    /// 地面についた時の処理
+    /// </summary>
+    private void Invoke()
+    {
             onBounceListeners.ForEach(listener => listener.Invoke(ball.position));
 
             // とりあえず1回きりで
             onBounceListeners.Clear();
-        }
     }
 }

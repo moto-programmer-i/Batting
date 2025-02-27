@@ -133,7 +133,7 @@ public class BatController : MonoBehaviour
         var ballEvent = collision.gameObject.GetComponent<BallEventTrigger>();
         if (!ballEvent.Hit) {
             ballEvent.Hit = true;
-            Debug.Log("予想飛距離: " + BattingInstances.GetDistanceManager().CalcDistanceMeter(collision.rigidbody));
+            Debug.Log("予想飛距離(座標): " + BattingInstances.GetDistanceManager().CalcDistance(collision.rigidbody));
         }
 
         

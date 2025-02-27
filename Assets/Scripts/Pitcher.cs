@@ -62,7 +62,7 @@ public class Pitcher : MonoBehaviour
         // 一旦地面に着いたときの距離
         BallEventTrigger trigger = ball.GetComponent<BallEventTrigger>();
         trigger.OnBounce(ball => {
-            Debug.Log("飛距離: " + BattingInstances.GetDistanceManager().CalcBallDistance(ball));
+            Debug.Log("飛距離(座標): " + BattingInstances.GetDistanceManager().CalcBallDistance(ball));
         });
     }
 }

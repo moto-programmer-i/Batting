@@ -39,7 +39,7 @@ public class DistanceTester : MonoBehaviour
     private int count = 0;
 
     [SerializeField]
-    private int maxCount = 2;
+    private int maxCount;
 
     [SerializeField]
     private float drag;
@@ -65,12 +65,8 @@ public class DistanceTester : MonoBehaviour
         // if (sample == null || sample.transform.position.y < 0) {
         //     return;
         // }
-        if (count >= maxCount) {
-            if (lines.Any()) {
-                // Debug.Log(String.Join("\n", lines));
-                lines.Clear();
-            }
-            return;
+        if (lines.Count >= maxCount) {
+            lines.RemoveAt(0);
         }
         ++count;
         // Debug.Log(
@@ -82,8 +78,9 @@ public class DistanceTester : MonoBehaviour
         // lines.Add(time + "," + Mathf.Abs(sample.velocity.x) + "," + Mathf.Abs(sample.position.x)
         //  );
 
-         lines.Add(time + "," + sample.velocity.y + "," + sample.position.y
-         );
+        //  lines.Add(time + "," + sample.velocity.y + "," + sample.position.y
+        //  );
+        lines.Add($"y: {sample.position.y}");
     }
 
     public void Init()
@@ -118,11 +115,13 @@ public class DistanceTester : MonoBehaviour
             // Debug.Log("飛距離（m）: " + BattingInstances.GetDistanceManager().CalcBallDistance(ball));
             float realDistance = BattingInstances.GetDistanceManager().CalcBallDistance(ball);
             Debug.Log("飛距離（座標値）: " + realDistance);
+            Debug.Log($"x:{ball.x}, y:{ball.y}, z:{ball.z}");
 
             // もう1度投げる
             // ThrowBall();
 
             // Debug.Log("t," + time);
+            Debug.Log(string.Join("\n", lines));
         });
 
         time = 0;
