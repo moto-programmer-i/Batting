@@ -32,6 +32,9 @@ public class BatManager : MonoBehaviour
     [SerializeField]
     private SaveDataManager saveDataManager;
 
+    [SerializeField]
+    private BatController batController;
+
     void Awake()
     {
         // バットリスト表示ボタン初期化
@@ -120,6 +123,8 @@ public class BatManager : MonoBehaviour
 
         // 新しいバットを追加、オブジェクトプールとかした方がいいのかとかは不明
         Instantiate(setting.Bat, currentBatParent.transform);
+        batController.SetAmplifier(setting.Amplifier);
+
 
         // セーブデータ更新
         saveDataManager.SaveData.CurrentBatIndex = radioButtonGroup.value;

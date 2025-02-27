@@ -127,4 +127,9 @@ public class BatController : MonoBehaviour
         // 事前に計算した飛距離を出力
         Debug.Log("予想飛距離: " + BattingInstances.GetDistanceManager().CalcDistanceMeter(collision.rigidbody));
     }
+
+    public void SetAmplifier(float amplifier)
+    {
+        this.amplifier = amplifier;
+    }
 }
