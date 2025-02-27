@@ -121,11 +121,22 @@ public class BatController : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
+        // ボールと当たっていなければ無視
+        if(!GameObjectTags.BALL.Equals(collision.gameObject.tag)) {
+            return;
+        }
+        
         // 加速
         collision.rigidbody.velocity *= amplifier;
+        
+        // まだ当たっていないなら飛距離を出力
+        var ballEvent = collision.gameObject.GetComponent<BallEventTrigger>();
+        if (!ballEvent.Hit) {
+            ballEvent.Hit = true;
+            Debug.Log("予想飛距離: " + BattingInstances.GetDistanceManager().CalcDistanceMeter(collision.rigidbody));
+        }
 
-        // 事前に計算した飛距離を出力
-        Debug.Log("予想飛距離: " + BattingInstances.GetDistanceManager().CalcDistanceMeter(collision.rigidbody));
+        
     }
 
     public void SetAmplifier(float amplifier)

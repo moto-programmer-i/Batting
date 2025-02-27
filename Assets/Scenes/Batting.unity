@@ -1943,7 +1943,7 @@ GameObject:
   - component: {fileID: 368529956}
   m_Layer: 0
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Bat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2818,7 +2818,7 @@ GameObject:
   - component: {fileID: 927379222}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

@@ -10,25 +10,21 @@ public class BallEventTrigger : MonoBehaviour
     
     private List<Action<Vector3>> onBounceListeners = new ();
 
-    void Start()
+    public bool Hit {get; set;}
+
+    public void OnBounce(Action<Vector3> listener)
     {
-        
+        onBounceListeners.Add(listener);
     }
 
-    
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
-        // 一旦適当にY < 0 なら地面に着いたものとする
-        if (ball.position.y < 0) {
+        // グラウンドと接触で地面についたものとする
+        if (GameObjectTags.GROUND.Equals(collision.gameObject.tag)) {
             onBounceListeners.ForEach(listener => listener.Invoke(ball.position));
 
             // とりあえず1回きりで
             onBounceListeners.Clear();
         }
-    }
-
-    public void OnBounce(Action<Vector3> listener)
-    {
-        onBounceListeners.Add(listener);
     }
 }
