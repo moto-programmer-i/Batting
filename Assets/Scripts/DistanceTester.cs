@@ -61,10 +61,9 @@ public class DistanceTester : MonoBehaviour
 
     void FixedUpdate()
     {
-        
-        // if (sample == null || sample.transform.position.y < 0) {
-        //     return;
-        // }
+        if (sample == null || sample.transform.position.y < 0) {
+            return;
+        }
         if (lines.Count >= maxCount) {
             lines.RemoveAt(0);
         }

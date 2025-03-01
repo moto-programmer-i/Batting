@@ -2420,7 +2420,7 @@ Transform:
   m_GameObject: {fileID: 454958967}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.05, y: 0.059, z: -0.13}
+  m_LocalPosition: {x: -7.24, y: 0.059, z: -0.13}
   m_LocalScale: {x: 0.125, y: 0.03125, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3182,7 +3182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1605716760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3197,7 +3197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
-  v0: 400
+  v0: 10
   numeratorOfPi: 1
   denominatorOfPi: 6
   releasePoint: {fileID: 1605716761}
