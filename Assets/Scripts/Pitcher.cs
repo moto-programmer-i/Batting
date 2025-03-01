@@ -59,10 +59,10 @@ public class Pitcher : MonoBehaviour
         Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
         ballRigidbody.AddForce(force);
 
-        // 一旦地面に着いたときの距離
-        BallEventTrigger trigger = ball.GetComponent<BallEventTrigger>();
-        trigger.OnBounce(ball => {
-            Debug.Log("飛距離(座標): " + BattingInstances.GetDistanceManager().CalcBallDistance(ball));
-        });
+        // // 一旦地面に着いたときの距離
+        // BallEventTrigger trigger = ball.GetComponent<BallEventTrigger>();
+        // trigger.OnBounce(ball => {
+        //     Debug.Log("飛距離(座標): " + BattingInstances.GetDistanceManager().CalcBallDistance(ball));
+        // });
     }
 }

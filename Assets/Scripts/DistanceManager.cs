@@ -17,6 +17,11 @@ public class DistanceManager : MonoBehaviour
     const float DISTANCE_ACCURACY = 0.1f;
 
     /// <summary>
+    /// km 表示用
+    /// </summary>
+    const int KILO = 1000;
+
+    /// <summary>
     /// マウンドの位置
     /// </summary>
     [SerializeField]
@@ -29,9 +34,9 @@ public class DistanceManager : MonoBehaviour
     private Transform homePlate;
 
     /// <summary>
-    /// 座標上での距離（この値を18.44mとして換算）
+    /// 1座標が何mか
     /// </summary>
-    private static float distanceInCoordinate;
+    private static float meterInCoordinate;
 
     /// <summary>
     /// ホームベースから見た前のベクトル（マウンドへの向き）
@@ -44,11 +49,11 @@ public class DistanceManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI distanceText;
 
-    [SerializeField]
-    private Image distanceImage;
+    // [SerializeField]
+    // private float testDistance;
 
     
-    void Start()
+    void Awake()
     {
         
         // double theta = Math.PI / 3;
@@ -57,17 +62,17 @@ public class DistanceManager : MonoBehaviour
         // Debug.Log("計算飛距離: " + distance.GetDistance());
         
         // 距離の初期設定
-        distanceInCoordinate = Vector3.Distance(mound.position, homePlate.position);
+        meterInCoordinate = MOUND_TO_HOME_PLATE_DISTANCE / Vector3.Distance(mound.position, homePlate.position);
 
         // 前のベクトルの初期設定
         forward = mound.position - homePlate.position;
     }
-    
-    void Update()
-    {
-    }
 
-    
+    // void Start()
+    // {
+    //     ShowDistance(testDistance);
+    // }
+
 
     /// <summary>
     /// ボールの飛距離を返す
@@ -102,7 +107,7 @@ public class DistanceManager : MonoBehaviour
     /// <returns>メートル</returns>
     public float TranslateToMeter(float distance)
     {
-        return MOUND_TO_HOME_PLATE_DISTANCE * distance / distanceInCoordinate;
+        return distance * meterInCoordinate;
     }
 
     /// <summary>
@@ -134,7 +139,7 @@ public class DistanceManager : MonoBehaviour
         // 参考 https://nekodamashi-math.blog.ss-blog.jp/2019-08-25
         if (k == 0) {
             // v0^2 sin2θ / g
-// y0の考慮がされてない、要修正
+// y0の考慮がされてない、使う場合は要修正。このプロジェクトでは空気抵抗が0になることはない
             return v0 * v0 * MathF.Sin(2 * theta) / -Physics.gravity.y;
         }
 
@@ -211,25 +216,28 @@ public class DistanceManager : MonoBehaviour
     public async void ShowDistance(float distance)
     {
         ShowDistanceCanvas(true);
-        int integerDistance = (int)MathF.Round(distance);
-        distanceText.text = $"{integerDistance}m";
+        var rounded = MathF.Round(distance);
 
-        // テキスト設定変更
-        try {
-            DistanceSetting setting = SettingsManager.DistanceSettings.fromDistance(integerDistance);
-            distanceText.fontSize = setting.Size;
-            distanceText.color = setting.Color;
-            distanceText.outlineColor = setting.OutlineColor;
-            distanceText.fontWeight = setting.FontWeight;
+        // km表示
+        if (rounded >= KILO) {
+            distanceText.text = (rounded / KILO).ToString("N0") + "km";
+        } else {
+            distanceText.text = rounded.ToString("N0") + "m";
+        }
+        
 
-            // 距離に応じた画像表示、ない場合は非表示に戻す
-            distanceImage.sprite = setting.BackgroundSprite;
-            distanceImage.enabled = distanceImage.sprite != null;
+        // // テキスト設定変更
+        // try {
+        //     DistanceSetting setting = SettingsManager.DistanceSettings.fromDistance(integerDistance);
+        //     distanceText.fontSize = setting.Size;
+        //     distanceText.color = setting.Color;
+        //     distanceText.outlineColor = setting.OutlineColor;
+        //     distanceText.fontWeight = setting.FontWeight;
 
-        // 飛距離が想定外の場合は表示しない
-        } catch (Exception e) {
-            Debug.LogError(e);
-        }  
+        // // 飛距離が想定外の場合は表示しない
+        // } catch (Exception e) {
+        //     Debug.LogError(e);
+        // }  
         
 
         // メソッド全体をasyncにしなければ、enabledが反映されなかった

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,9 @@ public class BatController : MonoBehaviour
 
     [SerializeField]
     private Transform bat;
+
+    [SerializeField]
+    private DistanceManager distanceManager;
 
     // Start is called before the first frame update
     void Start()
@@ -133,7 +137,12 @@ public class BatController : MonoBehaviour
         var ballEvent = collision.gameObject.GetComponent<BallEventTrigger>();
         if (!ballEvent.Hit) {
             ballEvent.Hit = true;
-            Debug.Log("予想飛距離(座標): " + BattingInstances.GetDistanceManager().CalcDistance(collision.rigidbody));
+            // Debug.Log("予想飛距離(座標): " + BattingInstances.GetDistanceManager().CalcDistance(collision.rigidbody));
+            try {
+                distanceManager.ShowDistance(distanceManager.CalcDistanceMeter(collision.rigidbody));
+            // 飛距離が計算できなかった場合は何もしない
+            } catch(Exception e) {
+            }
         }
 
         
