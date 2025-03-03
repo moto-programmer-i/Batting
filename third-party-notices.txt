@@ -1,0 +1,15 @@
+他社の著作物のライセンス
+
+ユニティちゃんライセンス条項3.0 © Unity Technologies Japan/UCL
+https://unity-chan.com/contents/license_jp/
+
+
+
+↓を参考に追加する
+https://github.com/Unity-Technologies/UnityCsReference/blob/master/third-party-notices.txt
+
+
+
+
+
+
