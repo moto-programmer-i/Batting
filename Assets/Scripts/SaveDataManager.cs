@@ -16,7 +16,6 @@ public class SaveDataManager : MonoBehaviour
     void Awake()
     {
         // セーブデータを読み込み
-        // 非同期でやるべきかも？時間がかかる場合は検討
         try {
             SaveData = FileUtils.LoadJson<SaveData>(SAVEDATA_FILENAME);
         }
@@ -29,8 +28,6 @@ public class SaveDataManager : MonoBehaviour
         if (SaveData == null) {
             SaveData = SaveData.CreateDefault();
 
-            // ファイル更新は非同期で行う（意味不明の書き方だが、これで合っているらしい）
-            // _ = Save();
             Save();
         }
 
@@ -48,10 +45,13 @@ public class SaveDataManager : MonoBehaviour
     /// 非同期にセーブする
     /// </summary>
     /// <returns></returns>
-    // public async Task Save()
     public void Save()
     {
+        // メインスレッド以外でget_persistentDataPathが呼べないので、非同期は無理
         // await Task.Run(() => FileUtils.SaveJson(SaveData, SAVEDATA_FILENAME));
+
+        // 毎回ファイルを書くのではなく、ゲーム終了時にするべきかは要検討
+        
         FileUtils.SaveJson(SaveData, SAVEDATA_FILENAME);
     }
 
@@ -73,15 +73,12 @@ public class SaveDataManager : MonoBehaviour
     /// <returns>変更あり</returns>
     public bool UpdateMaxMeter(float maxMeter)
     {
-        Debug.Log($"更新{SaveData.MaxMeter} -> maxMeter");
         if (maxMeter <= SaveData.MaxMeter) {
             return false;
         }
-        Debug.Log("更新処理中・・・");
+        
         SaveData.MaxMeter = maxMeter;
 
-        // ファイル更新は非同期で行う（意味不明の書き方だが、これで合っているらしい）
-        // _ = Save();
         Save();
 
         return true;
