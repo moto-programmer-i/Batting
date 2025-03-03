@@ -1766,12 +1766,14 @@ MonoBehaviour:
       type: 3}
     <Name>k__BackingField: "\u7AF9"
     <Amplifier>k__BackingField: 1
+    <EnableMeter>k__BackingField: -1
   - <Bat>k__BackingField: {fileID: 7723837786093654576, guid: 7c6bba271f668574188c0cf3aafdd82c,
       type: 3}
     <Icon>k__BackingField: {fileID: 2800000, guid: 8ef516487e26d9840a8a9d7bf4a9408f,
       type: 3}
     <Name>k__BackingField: "\u30DC\u30ED\u30DC\u30ED\u30D0\u30C3\u30C8"
     <Amplifier>k__BackingField: 2
+    <EnableMeter>k__BackingField: 10
   batSelector: {fileID: 1558326581}
   currentBatParent: {fileID: 155297074}
   saveDataManager: {fileID: 289460923}
@@ -2087,6 +2089,7 @@ MonoBehaviour:
   amplifier: 1
   bat: {fileID: 368529953}
   distanceManager: {fileID: 289460919}
+  saveDataManager: {fileID: 289460923}
 --- !u!54 &368529955
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3043,7 +3046,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 02d6e5e64a36ad64aa6eda2c501a119c,
     type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 100
 --- !u!4 &1558326582
 Transform:
   m_ObjectHideFlags: 0
@@ -3182,7 +3185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1605716760
 MonoBehaviour:
   m_ObjectHideFlags: 0

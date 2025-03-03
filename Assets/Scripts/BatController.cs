@@ -45,6 +45,14 @@ public class BatController : MonoBehaviour
     [SerializeField]
     private DistanceManager distanceManager;
 
+    [SerializeField]
+    private SaveDataManager saveDataManager;
+
+    /// <summary>
+    /// 最大飛距離更新時の処理
+    /// </summary>
+    public List<Action<float>> OnMaxMeterChange {get; private set;} = new ();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -139,9 +147,21 @@ public class BatController : MonoBehaviour
             ballEvent.Hit = true;
             // Debug.Log("予想飛距離(座標): " + BattingInstances.GetDistanceManager().CalcDistance(collision.rigidbody));
             try {
-                distanceManager.ShowDistance(distanceManager.CalcDistanceMeter(collision.rigidbody));
+                float meter = MathF.Round(distanceManager.CalcDistanceMeter(collision.rigidbody));
+
+                // 飛距離を表示
+                distanceManager.ShowDistance(meter);
+
+                // 最大飛距離更新処理
+                if (saveDataManager.UpdateMaxMeter(meter)) {
+                    OnMaxMeterChange.ForEach(action => action.Invoke(meter));
+                }
+
+                
             // 飛距離が計算できなかった場合は何もしない
-            } catch(Exception e) {
+            } catch(ArgumentException e) {
+                // Debug.LogException(e);
+                _ = e;
             }
         }
 

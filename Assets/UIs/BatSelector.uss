@@ -46,3 +46,27 @@
 .bat-button-group .unity-radio-button {
     height: 100px;
 }
+
+.bat-disabled {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.97);
+    opacity: 1;
+    scale: 1 1;
+}
+
+.bat-disabled .unity-label {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-disabled {
+    opacity: 1;
+}

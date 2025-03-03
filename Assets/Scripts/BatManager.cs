@@ -35,6 +35,11 @@ public class BatManager : MonoBehaviour
     [SerializeField]
     private BatController batController;
 
+    /// <summary>
+    /// バットの無効化
+    /// </summary>
+    private List<DisabledBatMask> masks = new();
+
     void Awake()
     {
         // バットリスト表示ボタン初期化
@@ -70,7 +75,16 @@ public class BatManager : MonoBehaviour
         for (int i = 0; i < batSettings.Count; ++i) {
             var radioButton = radioButtons.ElementAt(i) as RadioButton;
             radioButton.style.backgroundImage = batSettings[i].Icon;
+            
+            // 最大飛距離が足りないなら使えなくしておく
+            var mask = new DisabledBatMask(radioButton, batSettings[i].EnableMeter);
+            saveDataManager.AddAfterLoad(savedata => {
+                mask.EnableByMeter(saveDataManager.SaveData.MaxMeter);
+            });
+            
+            masks.Add(mask);
         }
+        batController.OnMaxMeterChange.Add(meter => masks.ForEach(mask => mask.EnableByMeter(meter)));
 
         
         // セーブデータから現在のバット設定を適用
@@ -129,6 +143,10 @@ public class BatManager : MonoBehaviour
         // セーブデータ更新
         saveDataManager.SaveData.CurrentBatIndex = radioButtonGroup.value;
         saveDataManager.Save();
+    }
+
+    void OnChangeMaxMeter(float maxMeter) {
+        masks.ForEach(mask => mask.EnableByMeter(maxMeter));
     }
     
 

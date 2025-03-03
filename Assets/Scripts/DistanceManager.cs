@@ -216,13 +216,12 @@ public class DistanceManager : MonoBehaviour
     public async void ShowDistance(float distance)
     {
         ShowDistanceCanvas(true);
-        var rounded = MathF.Round(distance);
-
+        
         // km表示
-        if (rounded >= KILO) {
-            distanceText.text = (rounded / KILO).ToString("N0") + "km";
+        if (distance >= KILO) {
+            distanceText.text = (distance / KILO).ToString("N0") + "km";
         } else {
-            distanceText.text = rounded.ToString("N0") + "m";
+            distanceText.text = distance.ToString("N0") + "m";
         }
         
 

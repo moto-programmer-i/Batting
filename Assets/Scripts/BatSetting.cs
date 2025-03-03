@@ -30,4 +30,10 @@ public class BatSetting
     /// </summary>
     [field: SerializeField]
     public float Amplifier { get; set; }
+
+    /// <summary>
+    /// 有効にするメートル
+    /// </summary>
+    [field: SerializeField]
+    public int EnableMeter {get; set;}
 }
