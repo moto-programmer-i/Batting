@@ -31,9 +31,7 @@ public class ProjectionDistance
     /// <summary>
     /// y0とか
     /// </summary>
-    private double y0Term;
-
-    
+    private double y0Term; 
 
     private double distance;
 
@@ -42,8 +40,6 @@ public class ProjectionDistance
 
     private static double maxTheta = Math.PI / 2;
     private static double minTheta = -maxTheta;
-
-
     
 
     /// <summary>
@@ -94,10 +90,9 @@ public class ProjectionDistance
         // 最大値は n -> ∞ のときのx
         // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html#upperBound
         upperBound = vx0 * one_kdt / k;
-        // Debug.Log("upper " + upperBound);
 
-        // 最低値の最適な決め方が不明、とりあえず最大値の半分にしておく
-        lowerBound = upperBound / 2;
+        // 最低値の最適な決め方が不明、とりあえず0にしておく
+        lowerBound = 0;
         
         distance = Bisection.FindRoot(F, lowerBound, upperBound, accuracy);
     }
