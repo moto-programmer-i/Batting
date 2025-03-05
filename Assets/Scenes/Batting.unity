@@ -3201,11 +3201,11 @@ MonoBehaviour:
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
   v0: 10
-  numeratorOfPi: 1
+  numeratorOfPi: -1
   denominatorOfPi: 6
   releasePoint: {fileID: 1605716761}
   maxCount: 10
-  drag: 3
+  drag: 0.3
   mass: 1
   distanceManager: {fileID: 289460919}
 --- !u!4 &1605716761

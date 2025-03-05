@@ -52,9 +52,21 @@ public class DistanceTester : MonoBehaviour
     [SerializeField]
     private DistanceManager distanceManager;
 
+    private Vector3Data velocity0;
+
+    private float k;
+    private float g;
+    private float dt;
+
+    private float one_kdt;
+
     // Start is called before the first frame update
     void Start()
     {
+        k = drag;
+        g = -Math.Abs(Physics.gravity.y);
+        dt = Time.fixedDeltaTime;
+        one_kdt = 1 - k * dt;
         ThrowBall();
         
     }
@@ -64,9 +76,9 @@ public class DistanceTester : MonoBehaviour
         if (sample == null || sample.transform.position.y < 0) {
             return;
         }
-        if (lines.Count >= maxCount) {
-            lines.RemoveAt(0);
-        }
+        // if (lines.Count >= maxCount) {
+        //     lines.RemoveAt(0);
+        // }
         ++count;
         // Debug.Log(
         //     "t," + time
@@ -79,7 +91,31 @@ public class DistanceTester : MonoBehaviour
 
         //  lines.Add(time + "," + sample.velocity.y + "," + sample.position.y
         //  );
-        lines.Add($"y: {sample.position.y}");
+        // lines.Add($"y: {sample.position.y}");
+
+        // 速度xの一般項
+        // lines.Add($"vx: {sample.velocity.x}");
+        // float vx = velocity0.X  * MathF.Pow(one_kdt, count);
+        // lines.Add($"\ncalc vx: {vx}");
+
+        // 位置xの一般項
+        // lines.Add($"x: {sample.position.x}");
+        // float x = velocity0.X * one_kdt * (1 - MathF.Pow(one_kdt, count)) / k;
+        // lines.Add($"\ncalc x: {x}");
+        
+        
+        
+        
+        // 速度yの一般項
+        // lines.Add($"vy: {sample.velocity.y}");
+        // float vy = (velocity0.Y - g * (1 - k * dt)/k) * MathF.Pow(1 - k * dt, count) + g * (1 - k * dt) / k;
+        // lines.Add($"\ncalc vy: {vy}");
+
+        // 位置yの一般項
+        // lines.Add($"y: {sample.position.y}");
+        // 
+        // float y = (velocity0.Y - g * one_kdt/k) * one_kdt * (1- MathF.Pow(one_kdt, count))/ k + count * g * dt * one_kdt / k;
+        // lines.Add($"\ncalc y: {releasePoint.position.y + y}");
     }
 
     public void Init()
@@ -102,6 +138,7 @@ public class DistanceTester : MonoBehaviour
         // Debug.Log("time,vy,y");
 
         ballRigidbody.velocity = Quaternion.Euler(0, 0, -theta * Mathf.Rad2Deg) * Vector3.left * v0;
+        velocity0 = Vector3Data.From(ballRigidbody.velocity);
         float distance = BattingInstances.GetDistanceManager().CalcDistance(ballRigidbody);
         Debug.Log("計算飛距離（座標値） " +  distance);
 
