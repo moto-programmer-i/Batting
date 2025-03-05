@@ -210,7 +210,9 @@ public class DistanceManager : MonoBehaviour
 
         // 元のソースでなぜか度数法にしているので、ラジアンで返す
         // return ((float)Math.Acos(dot)) * Mathf.Rad2Deg;
-        return MathF.Acos(dot);
+
+        // Acosで符号が失われるので、y成分の符号をつける
+        return MathF.Sign(to.y) * MathF.Acos(dot);
     }
 
     public async void ShowDistance(float distance)
