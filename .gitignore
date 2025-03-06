@@ -76,3 +76,6 @@ crashlytics-build.properties
 
 # Particle Packはリポジトリに含めない
 /[Aa]ssets/UnityTechnologies
+
+# Fontsはリポジトリに含めない
+/[Aa]ssets/Fonts/*/*.ttf
