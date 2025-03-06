@@ -46,7 +46,21 @@ public class Vector2Ex
             return From(v2);
         }
         
-        return new Vector2Ex(v2, (v2.y - previous.Position.y) / (v2.x - previous.Position.x));
+        return new Vector2Ex(v2, CalcSlope(v2, previous.Position));
+    }
+
+    /// <summary>
+    /// 傾きを計算
+    /// </summary>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <returns>計算できない場合はnull</returns>
+    public static float? CalcSlope(Vector2 v1, Vector2 v2)
+    {
+        if (v1.x == v2.x) {
+            return null;
+        }
+        return (v2.y - v1.y) / (v2.x - v1.x);
     }
 
     /// <summary>
@@ -57,5 +71,10 @@ public class Vector2Ex
     /// <returns></returns>
     public static float ManhattanDistance(Vector2Ex v1, Vector2Ex v2) {
         return Math.Abs(v1.Position.x - v2.Position.x) + Math.Abs(v1.Position.y - v2.Position.y);
+    }
+
+    public override string ToString()
+    {
+        return $"({Position.x}, {Position.y}), 傾き：{Slope}";
     }
 }

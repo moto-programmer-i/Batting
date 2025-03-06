@@ -120,17 +120,26 @@ public class PaintController : MonoBehaviour
             swingPath.Add(Vector2Ex.From(position.ReadValue<Vector2>(), swingPath.Last()));
 
             
-            // 保存
-            AnimationCurveJson swingPathJson = SwingPathToJson(swingPath);
-            FileUtils.SaveJson(swingPathJson, SWING_FILE_NAME);
+            try {
+                // 傾きがなければスイングを作れないので、無視
+                if (ListUtils.IsEmpty(swingPath) || NumberUtils.IsNaN(swingPath.Last().Slope)) {
+                    return;
+                }
+                
+                // 保存
+                AnimationCurveJson swingPathJson = SwingPathToJson(swingPath);
+                FileUtils.SaveJson(swingPathJson, SWING_FILE_NAME);
 
-            // スイング設定
-            batController.SetSwing(swingPathJson);
-
-            // スイングを初期化
-            swingPath.Clear();
-            prePenPosition = null;
-            ShowSwingDrawer(false);
+                // スイング設定
+                batController.SetSwing(swingPathJson);
+            }
+            finally {
+                // スイングを初期化
+                swingPath.Clear();
+                Destroy(texture);
+                prePenPosition = null;
+                ShowSwingDrawer(false);
+            }
         };
 
         // スイングの高さに関する初期化
@@ -145,12 +154,17 @@ public class PaintController : MonoBehaviour
     public void ShowSwingDrawer(bool visible)
     {
         // 内部のキャンバスだけを表示
-        swingDrawerCanvas.GetComponent<Canvas>().enabled = visible;
+        Canvas canvas = swingDrawerCanvas.GetComponent<Canvas>();
+        canvas.enabled = visible;
 
         if (visible) {
             // 画像の用意、enabledをtrueにした後でなければうまく実行されない
             Rect rect = image.gameObject.GetComponent<RectTransform>().rect;
-            texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
+
+            // これのデフォルトが半透明の画像なのか？詳細は不明だが、都合は良いのでこのままいく
+            // TextureFormat.ARGB32だとエラーになるので注意
+            texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
+            
             image.texture = texture;
         }
     }
