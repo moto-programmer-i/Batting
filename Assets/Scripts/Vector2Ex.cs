@@ -64,6 +64,39 @@ public class Vector2Ex
     }
 
     /// <summary>
+    /// 傾きを設定
+    /// </summary>
+    /// <param name="from">nullの場合は何もしない</param>
+    public void SetSlope(Vector2Ex from)
+    {
+        if(from == null || from.Position == null) {
+            return;
+        }
+        Slope = CalcSlope(this.Position, from.Position);
+    }
+
+    /// <summary>
+    /// 傾きを設定
+    /// </summary>
+    /// <param name="list"></param>
+    public static void SetSlope(List<Vector2Ex> list)
+    {
+        // １つ前の要素から傾きを決定
+        for (int i = 1, pre = 0; i < list.Count; ++i,++pre) {
+            list[i].SetSlope(list[pre]);
+        }
+    }
+
+    /// <summary>
+    /// xの降順にソート
+    /// </summary>
+    /// <param name="list"></param>
+    public static void SortDesc(List<Vector2Ex> list)
+    {
+        list.Sort((a, b) => MathF.Sign(b.Position.x - a.Position.x));
+    }
+
+    /// <summary>
     /// マンハッタン距離を返す
     /// </summary>
     /// <param name="v1"></param>
@@ -76,5 +109,32 @@ public class Vector2Ex
     public override string ToString()
     {
         return $"({Position.x}, {Position.y}), 傾き：{Slope}";
+    }
+
+    public override bool Equals(object obj)
+    {
+        // 型が違ければfalse
+        Vector2Ex v = obj as Vector2Ex;
+        if (v == null) {
+            return false;
+        }
+
+        // null同士か、値が同じならtrue
+        if (Position == null && v.Position == null) {
+            if (Slope == null && v.Slope == null) {
+                return true;
+            }
+            return Slope == v.Slope;
+        }
+
+        return Position.Equals(v.Position) && Slope == v.Slope;
+    }
+
+    public override int GetHashCode()
+    {
+        // 参考 https://learn.microsoft.com/ja-jp/dotnet/fundamentals/runtime-libraries/system-object-gethashcode#code-try-1
+        int hash = Position != null ? Position.GetHashCode() : 0;
+        hash ^= Slope != null ? Slope.GetHashCode() : 0;
+        return hash;
     }
 }

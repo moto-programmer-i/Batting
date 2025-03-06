@@ -39,12 +39,6 @@ public class PaintController : MonoBehaviour
     [SerializeField]
     private InputAction position;
 
-    /// <summary>
-    /// スイングを保存するときの点の最小の傾きの違い
-    /// </summary>
-    [SerializeField]
-    private float swingMinSlopeDiff = 0.75f;
-
 
     /// <summary>
     /// 3D空間でスイングのy成分の最大値
@@ -115,16 +109,18 @@ public class PaintController : MonoBehaviour
                 return;
             }
 
-
             // 最後の点を保存する
-            swingPath.Add(Vector2Ex.From(position.ReadValue<Vector2>(), swingPath.Last()));
-
+            swingPath.Add(Vector2Ex.From(position.ReadValue<Vector2>()));
             
             try {
-                // 傾きがなければスイングを作れないので、無視
-                if (ListUtils.IsEmpty(swingPath) || NumberUtils.IsNaN(swingPath.Last().Slope)) {
+                // 最初と最後が同じ点ならばスイングを作れないので、無視
+                if (ListUtils.IsEmpty(swingPath) || swingPath.First().Equals(swingPath.Last())) {
                     return;
                 }
+
+                // リストの順番と傾きを設定
+                Vector2Ex.SortDesc(swingPath);
+                Vector2Ex.SetSlope(swingPath);
                 
                 // 保存
                 AnimationCurveJson swingPathJson = SwingPathToJson(swingPath);
@@ -164,7 +160,7 @@ public class PaintController : MonoBehaviour
             // これのデフォルトが半透明の画像なのか？詳細は不明だが、都合は良いのでこのままいく
             // TextureFormat.ARGB32だとエラーになるので注意
             texture = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
-            
+
             image.texture = texture;
         }
     }
@@ -198,43 +194,31 @@ public class PaintController : MonoBehaviour
     }
 
     private void AddPenPosition() {
-        // 前回のスイングの代表点
-        Vector2Ex preSwingPositon = null;
-        if (!ListUtils.IsEmpty(swingPath)) {
-            preSwingPositon = swingPath.Last();
-        }
-
         // 描画中の点
-        Vector2Ex penPosition = Vector2Ex.From(position.ReadValue<Vector2>(), preSwingPositon);
+        Vector2Ex penPosition = Vector2Ex.From(position.ReadValue<Vector2>());
         drawPoint(penPosition.Position);       
 
-        // 前回の入力がなければ最初の点として保存
-        if (preSwingPositon == null) {
-            swingPath.Add(penPosition);
-        }
-        else {
+        try {
+            // 前回の入力がなければ最初の点として保存
+            if (prePenPosition == null) {
+                swingPath.Add(penPosition);
+                return;
+            }
+            
             // 前回の入力があれば線を描く
             VectorUtils.withLerpPoints(prePenPosition.Position, penPosition.Position, drawPoint);    
 
             // x座標が同じであれば無視
             if (penPosition.Position.x == prePenPosition.Position.x) {
-                // return; // ここでreturnすると下の処理を書くのが面倒になる
+                return;
             }
 
-            // 前回の傾きがなければスイング軌道に追加
-            else if (!preSwingPositon.Slope.HasValue) {
-                swingPath.Add(penPosition);
-            }
-            
-            // 傾きが閾値より変わっていればスイング軌道に追加
-            else if (swingMinSlopeDiff  <= Math.Abs(penPosition.Slope.Value - preSwingPositon.Slope.Value)) {
-                swingPath.Add(penPosition);
-            }
+            swingPath.Add(penPosition);            
         }
-
         // 描画した点を、前回の座標として保存
-        prePenPosition = penPosition;
-        
+        finally {
+            prePenPosition = penPosition;
+        }
     }
 
     public void drawPoint(Vector2 center) {
