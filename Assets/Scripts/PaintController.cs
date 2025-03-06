@@ -260,7 +260,11 @@ public class PaintController : MonoBehaviour
         AnimationCurveJson json = new ();
         // 2Dから3D上のスイング軌道に変換
         // インパクトから逆順に追加していく
-        int baseSwingIndex = baseCurve.ImpactIndex;
+
+        // インパクトの次の点まで軌道変更可
+        int lastSwingIndex = baseCurve.ImpactIndex;
+
+        int baseSwingIndex = lastSwingIndex;
         int swingPathIndex = swingPath.Count - 1;
         json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes[baseSwingIndex], swingPath[swingPathIndex].Position.y));
         
@@ -279,14 +283,13 @@ public class PaintController : MonoBehaviour
             }
 
             // 基のスイングの割合から、描かれたスイングの高さを調整する
-            float baseSwingPercent = (baseCurve.Keyframes[baseCurve.ImpactIndex].Time - baseCurve.Keyframes[baseSwingIndex].Time) / baseCurve.TimeToImpact;
+            float baseSwingPercent = (baseCurve.Keyframes[lastSwingIndex].Time - baseCurve.Keyframes[baseSwingIndex].Time) / baseCurve.TimeToImpact;
             while(true) {
                 if (baseSwingPercent <= swingPercent) {
                     break;
                 }
                 --swingPathIndex;
 
-                
                 swingPercent = Vector2Ex.ManhattanDistance(swingPath[swingPathIndex], swingPath.Last()) / swingLength;
                 
                 // x座標が同じ点が入ってしまった場合など、スイングの割合が計算出来なくなってしまった場合は1にする
@@ -305,9 +308,9 @@ public class PaintController : MonoBehaviour
         }
         json.Keyframes.Reverse();
         
-        // フォロースルーを追加（とりあえずフォロースルーの高さはインパクトと同じ）
+        // フォロースルーを追加（とりあえずフォロースルーの高さはインパクト+1と同じ）
         float lastHeight = json.Keyframes.Last().Position.Y;
-        for(baseSwingIndex = baseCurve.ImpactIndex + 1; baseSwingIndex < baseCurve.Keyframes.Count; ++baseSwingIndex) {
+        for(baseSwingIndex = lastSwingIndex + 1; baseSwingIndex < baseCurve.Keyframes.Count; ++baseSwingIndex) {
             AnimationKeyframe newFrame = baseCurve.Keyframes[baseSwingIndex].Clone();
             if (newFrame.Position != null) {
                 newFrame.Position.Y = lastHeight;

@@ -66,13 +66,13 @@ public class Vector2Ex
     /// <summary>
     /// 傾きを設定
     /// </summary>
-    /// <param name="from">nullの場合は何もしない</param>
-    public void SetSlope(Vector2Ex from)
+    /// <param name="to">nullの場合は何もしない</param>
+    public void SetSlope(Vector2Ex to)
     {
-        if(from == null || from.Position == null) {
+        if(to == null || to.Position == null) {
             return;
         }
-        Slope = CalcSlope(this.Position, from.Position);
+        Slope = CalcSlope(to.Position, this.Position);
     }
 
     /// <summary>
@@ -81,9 +81,9 @@ public class Vector2Ex
     /// <param name="list"></param>
     public static void SetSlope(List<Vector2Ex> list)
     {
-        // １つ前の要素から傾きを決定
-        for (int i = 1, pre = 0; i < list.Count; ++i,++pre) {
-            list[i].SetSlope(list[pre]);
+        // １つ後の要素から傾きを決定
+        for (int i = 0, next = 1; next < list.Count; ++i,++next) {
+            list[i].SetSlope(list[next]);
         }
     }
 
