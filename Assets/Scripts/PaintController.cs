@@ -259,64 +259,45 @@ public class PaintController : MonoBehaviour
     {
         AnimationCurveJson json = new ();
         // 2Dから3D上のスイング軌道に変換
-        // インパクトから逆順に追加していく
 
-        // インパクトの次の点まで軌道変更可
-        int lastSwingIndex = baseCurve.ImpactIndex;
+        // 描かれたスイングの情報
+        float firstSwingX = swingPath.First().Position.x;
+        float swingWidth = Math.Abs(firstSwingX - swingPath.Last().Position.x);
 
-        int baseSwingIndex = lastSwingIndex;
-        int swingPathIndex = swingPath.Count - 1;
-        json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes[baseSwingIndex], swingPath[swingPathIndex].Position.y));
-        
-        // トップの位置からインパクトまでの距離を保存
-        float swingLength = Vector2Ex.ManhattanDistance(swingPath.First(), swingPath.Last());
-        float swingWidth = Math.Abs(swingPath.First().Position.x - swingPath.Last().Position.x);
+        // 元のスイングの情報
+        int baseCount = baseCurve.Keyframes.Count;
+        int baseLastIndex = baseCount - 1;
+        float baseTime = baseCurve.Keyframes.Last().Time;
 
-        // スイングの段階を都合上MAXで初期化
-        // 最初だけ必ず失敗する無駄な判定が入るが、2回目以降はこの方がきれいに動作する
-        float swingPercent = 0;
-        while(true) {
-            // 次の点へ
-            --baseSwingIndex;
-            if (baseSwingIndex < 0) {
-                break;
+        // スイングの最初の高さを設定
+        json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes[0], swingPath[0].Position.y));
+
+        // 2番目以降の高さを描かれた点に応じて設定していく
+        for(int baseIndex = 1, swingPathIndex = 1; baseIndex < baseLastIndex; ++baseIndex){
+            // 元のスイングの割合
+            float basePercent = baseCurve.Keyframes[baseIndex].Time / baseTime;
+
+            // 元のスイングの点に対応する、描かれたスイングの点を決定
+            float swingPercent = 0;
+            for(;swingPercent < basePercent; ++swingPathIndex) {
+                swingPercent = MathF.Abs(swingPath[swingPathIndex].Position.x - firstSwingX) / swingWidth;
             }
 
-            // 基のスイングの割合から、描かれたスイングの高さを調整する
-            float baseSwingPercent = (baseCurve.Keyframes[lastSwingIndex].Time - baseCurve.Keyframes[baseSwingIndex].Time) / baseCurve.TimeToImpact;
-            while(true) {
-                if (baseSwingPercent <= swingPercent) {
-                    break;
-                }
-                --swingPathIndex;
+            // 1つ先の点まで行ってしまっているので、直前の点が必要
+            int preSwingPathIndex = swingPathIndex - 1;
 
-                swingPercent = Vector2Ex.ManhattanDistance(swingPath[swingPathIndex], swingPath.Last()) / swingLength;
-                
-                // x座標が同じ点が入ってしまった場合など、スイングの割合が計算出来なくなってしまった場合は1にする
-                if (float.NaN.Equals(swingPercent)) {
-                    swingPercent = 1;
-                }
+            // 直前の点の高さを設定、傾きがわかる場合は間の高さを補正
+            float y = swingPath[preSwingPathIndex].Position.y;
+            if (!NumberUtils.IsNaN(swingPath[preSwingPathIndex].Slope)) {
+                y += (swingPercent - basePercent) * swingWidth * swingPath[preSwingPathIndex].Slope.Value; 
             }
-            
-            // baseSwingの点をswingPathの点が超えているので、1つ前を使う
-            int preSwingPathIndex = swingPathIndex + 1;
-            float y = swingPath[preSwingPathIndex].Position.y + ((swingPercent - baseSwingPercent) * swingWidth * swingPath[preSwingPathIndex].Slope.Value); 
-
-            // List.Prependが存在せず、エラーもでなかった
-            // json.Keyframes.Prepend(ToAnimationKeyframe(
-            json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes[baseSwingIndex], y));
+             
+            json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes[baseIndex], y));
         }
-        json.Keyframes.Reverse();
-        
-        // フォロースルーを追加（とりあえずフォロースルーの高さはインパクト+1と同じ）
-        float lastHeight = json.Keyframes.Last().Position.Y;
-        for(baseSwingIndex = lastSwingIndex + 1; baseSwingIndex < baseCurve.Keyframes.Count; ++baseSwingIndex) {
-            AnimationKeyframe newFrame = baseCurve.Keyframes[baseSwingIndex].Clone();
-            if (newFrame.Position != null) {
-                newFrame.Position.Y = lastHeight;
-            }
-            json.Keyframes.Add(newFrame);
-        }
+
+        // スイングの最後の高さを設定する
+        json.Keyframes.Add(CreateAnimationKeyframe(baseCurve.Keyframes.Last(), swingPath.Last().Position.y));
+
         return json;
     }
 
