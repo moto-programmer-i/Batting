@@ -1,0 +1,14 @@
+Font: Zen Antique Soft  Style: Regular
+Point Size: 1910   SP/PD Ratio: 0.3%
+
+Characters included: 26/27
+Missing characters: 1
+Excluded characters: 0
+
+Characters missing from font file:
+----------------------------------------
+ID: 10	Hex: A	Char [
+]
+
+Characters excluded from packing:
+----------------------------------------

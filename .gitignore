@@ -78,4 +78,5 @@ crashlytics-build.properties
 /[Aa]ssets/UnityTechnologies
 
 # Fontsはリポジトリに含めない
-/[Aa]ssets/Fonts/*/*.ttf
+/[Aa]ssets/Fonts/*/*.ttf*
+/[Aa]ssets/Fonts/*/*.asset*
