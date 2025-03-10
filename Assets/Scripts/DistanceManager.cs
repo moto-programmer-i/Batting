@@ -17,6 +17,11 @@ public class DistanceManager : MonoBehaviour
     const float DISTANCE_ACCURACY = 0.1f;
 
     /// <summary>
+    /// 100メガメートルはさすがにキロメートルとして表示用
+    /// </summary>
+    const int MEGA = 1000000;
+
+    /// <summary>
     /// km 表示用
     /// </summary>
     const int KILO = 1000;
@@ -219,11 +224,11 @@ public class DistanceManager : MonoBehaviour
     {
         ShowDistanceCanvas(true);
         
-        // km表示
-        if (distance >= KILO) {
-            distanceText.text = (distance / KILO).ToString("N0") + "km";
+        // メガメートルを超えればkm表示
+        if (distance >= MEGA) {
+            distanceText.text = (distance / KILO).ToString("F0") + "km";
         } else {
-            distanceText.text = distance.ToString("N0") + "m";
+            distanceText.text = distance.ToString("F0") + "m";
         }
         
 
