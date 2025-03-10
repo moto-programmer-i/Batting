@@ -53,9 +53,20 @@ public class BatManager : MonoBehaviour
         closeArea.style.display = DisplayStyle.None;
 
         // バットリスト初期化
-        batListView = batSelector.rootVisualElement.Q<ScrollView>();
-        
+        InitBatList();
 
+        
+        // セーブデータから現在のバット設定を適用
+        saveDataManager.AddAfterLoad((saveData) => {
+            radioButtonGroup.value = saveDataManager.SaveData.CurrentBatIndex;
+            ChangeBat(GetCurrentBatSetting());
+        });
+        
+    }
+
+    public void InitBatList()
+    {
+        batListView = batSelector.rootVisualElement.Q<ScrollView>();
         radioButtonGroup = batListView.Q<RadioButtonGroup>();
         radioButtonGroup.choices = GetBatNames();
         radioButtonGroup.value = 0;
@@ -75,6 +86,8 @@ public class BatManager : MonoBehaviour
         for (int i = 0; i < batSettings.Count; ++i) {
             var radioButton = radioButtons.ElementAt(i) as RadioButton;
             radioButton.style.backgroundImage = batSettings[i].Icon;
+            radioButton.style.color = batSettings[i].LabelColor;
+            radioButton.style.unityTextOutlineColor = batSettings[i].LabelOutlineColor;
             
             // 最大飛距離が足りないなら使えなくしておく
             var mask = new DisabledBatMask(radioButton, batSettings[i].EnableMeter);
@@ -85,14 +98,6 @@ public class BatManager : MonoBehaviour
             masks.Add(mask);
         }
         batController.OnMaxMeterChange.Add(meter => masks.ForEach(mask => mask.EnableByMeter(meter)));
-
-        
-        // セーブデータから現在のバット設定を適用
-        saveDataManager.AddAfterLoad((saveData) => {
-            radioButtonGroup.value = saveDataManager.SaveData.CurrentBatIndex;
-            ChangeBat(GetCurrentBatSetting());
-        });
-        
     }
 
 

@@ -36,4 +36,16 @@ public class BatSetting
     /// </summary>
     [field: SerializeField]
     public int EnableMeter {get; set;}
+
+    /// <summary>
+    /// 文字の色
+    /// </summary>
+    [field: SerializeField]
+    public Color LabelColor {get; set;}
+
+    /// <summary>
+    /// 文字の縁の色
+    /// </summary>
+    [field: SerializeField]
+    public Color LabelOutlineColor {get; set;}
 }
