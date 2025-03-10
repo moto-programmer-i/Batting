@@ -42,7 +42,6 @@
 .bat-button-group .unity-radio-button {
     min-height: 100px;
     -unity-background-scale-mode: scale-and-crop;
-    height: auto;
 }
 
 .bat-disabled {
