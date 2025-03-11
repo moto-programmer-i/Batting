@@ -3746,7 +3746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1605716760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3762,8 +3762,8 @@ MonoBehaviour:
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
   v0: 6030000
-  numeratorOfPi: -2
-  denominatorOfPi: 6
+  numeratorOfPi: -17
+  denominatorOfPi: 36
   releasePoint: {fileID: 1605716761}
   maxCount: 10
   drag: 0.3
