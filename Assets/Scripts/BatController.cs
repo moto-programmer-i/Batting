@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +9,8 @@ using UnityEngine.UIElements;
 
 public class BatController : MonoBehaviour
 {
-    public static readonly string DEFAULT_SWING_FILENAME = "swingPath.json";
+    public static readonly string DEFAULT_SWING_FILENAME = "Animations/defaultSwingPath";
+    public static readonly string SAVED_SWING_FILENAME = "swingPath.json";
 
     public static readonly string SWING_CLIPNAME = "Swing";
 
@@ -58,12 +60,16 @@ public class BatController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        // ファイルからスイング読み込み
-        AnimationCurveJson curve = FileUtils.LoadJson<AnimationCurveJson>(DEFAULT_SWING_FILENAME);
-
-        // バットの位置に合わせて補正
-        // curve.Offset(bat.transform);
-
+        // 保存されたスイング読み込み
+        AnimationCurveJson curve;
+        try {
+            curve = FileUtils.LoadJson<AnimationCurveJson>(SAVED_SWING_FILENAME);
+        }
+        // なければデフォルトのスイングを使用
+        catch(FileNotFoundException e) {
+            _ = e;
+            curve = ResourceUtils.LoadJson<AnimationCurveJson>(DEFAULT_SWING_FILENAME);
+        }
         SetSwing(curve);
     }
 
