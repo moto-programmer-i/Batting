@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,6 +11,8 @@ using UnityEngine.UIElements;
 public class BatManager : MonoBehaviour
 {
     public const string BatListDisplayButtonName = "bat-list-display-button";
+
+    public const int ScrollBarWidthPx = 24;
     
     [SerializeField]
     private List<BatSetting> batSettings = new();
@@ -97,6 +101,18 @@ public class BatManager : MonoBehaviour
             
             masks.Add(mask);
         }
+
+        // 画面サイズの変更に応じて、ラジオボタンのサイズを調整
+        batListView.RegisterCallback<GeometryChangedEvent>(e => {
+            var icon = batSettings.First().Icon;
+            var height = icon.height *
+                        (e.newRect.width - ScrollBarWidthPx) / icon.width;
+
+            foreach(var radioButton in radioButtons) {
+                radioButton.style.height = height;
+            }
+        });
+
         batController.OnMaxMeterChange.Add(meter => masks.ForEach(mask => mask.EnableByMeter(meter)));
     }
 
