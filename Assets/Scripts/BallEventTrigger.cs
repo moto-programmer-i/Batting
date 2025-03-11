@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class BallEventTrigger : MonoBehaviour
 {
+    /// <summary>
+    /// 飛んでいるボールのレイヤー
+    /// </summary>
+    public const int FLYING_BALL_LAYER = 8;
+
     [SerializeField]
     private Transform ball;
     

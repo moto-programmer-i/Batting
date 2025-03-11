@@ -1,5 +1,5 @@
 using System;
-
+using PlasticPipe.PlasticProtocol.Messages;
 using UnityEngine;
 
 /// <summary>
@@ -100,13 +100,14 @@ public class ProjectionDistance
         else {
             // 角度が下向きのとき、最大値は直線に飛んだとき
             upperBound = Math.Abs(vx0 / vy0 * y0);
-        }
-        
+        }        
 
         // 最低値の最適な決め方が不明、とりあえず0にしておく
         lowerBound = 0;
         
         distance = Bisection.FindRoot(F, lowerBound, upperBound, accuracy);
+
+        Debug.Log($"v0:{v0} theta:{theta} distance:{distance})");
     }
 
     /// <summary>

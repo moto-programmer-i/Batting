@@ -1707,7 +1707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 155297075}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CurrentBatParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2234,7 +2234,7 @@ GameObject:
   - component: {fileID: 368529955}
   - component: {fileID: 368529954}
   - component: {fileID: 368529956}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bat
   m_TagString: Bat
   m_Icon: {fileID: 0}
@@ -3761,9 +3761,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1630143324167300532, guid: f03b57fa0f13f5041a7c1c9bcc91bbdb,
     type: 3}
-  v0: 6030000
-  numeratorOfPi: -17
-  denominatorOfPi: 36
+  v0: 4
+  numeratorOfPi: -1
+  denominatorOfPi: 3
   releasePoint: {fileID: 1605716761}
   maxCount: 10
   drag: 0.3

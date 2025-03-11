@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Codice.CM.Client.Differences.Graphic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -137,6 +138,26 @@ public class BatController : MonoBehaviour
         actions.ForEach(action => action.Disable());
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        // ボールと当たっていなければ無視
+        if(!GameObjectTags.BALL.Equals(collision.gameObject.tag)) {
+            return;
+        }
+
+        // すでにバットに当たっているなら無視
+        var ballEvent = collision.gameObject.GetComponent<BallEventTrigger>();
+        if (ballEvent.Hit) {
+            return;
+        }
+        ballEvent.Hit = true;
+
+        // ２度打ちにならないよう、レイヤーを変える
+        // 参考 http://kan-kikuchi.hatenablog.com/entry/ChangeLayer
+        collision.gameObject.layer = BallEventTrigger.FLYING_BALL_LAYER;
+    }
+
+
     void OnCollisionExit(Collision collision)
     {
         // ボールと当たっていなければ無視
@@ -145,33 +166,26 @@ public class BatController : MonoBehaviour
         }
         
         // 加速
-        collision.rigidbody.velocity *= amplifier;
-        
+        collision.rigidbody.velocity *= amplifier;        
+
         // まだ当たっていないなら飛距離を出力
-        var ballEvent = collision.gameObject.GetComponent<BallEventTrigger>();
-        if (!ballEvent.Hit) {
-            ballEvent.Hit = true;
-            // Debug.Log("予想飛距離(座標): " + BattingInstances.GetDistanceManager().CalcDistance(collision.rigidbody));
-            try {
-                float meter = MathF.Round(distanceManager.CalcDistanceMeter(collision.rigidbody));
+        try {
+            float meter = MathF.Round(distanceManager.CalcDistanceMeter(collision.rigidbody));
 
-                // 飛距離を表示
-                distanceManager.ShowDistance(meter);
+            // 飛距離を表示
+            distanceManager.ShowDistance(meter);
 
-                // 最大飛距離更新処理
-                if (saveDataManager.UpdateMaxMeter(meter)) {
-                    OnMaxMeterChange.ForEach(action => action.Invoke(meter));
-                }
-
-                
-            // 飛距離が計算できなかった場合は何もしない
-            } catch(ArgumentException e) {
-                // Debug.LogException(e);
-                _ = e;
+            // 最大飛距離更新処理
+            if (saveDataManager.UpdateMaxMeter(meter)) {
+                OnMaxMeterChange.ForEach(action => action.Invoke(meter));
             }
-        }
 
-        
+            
+        // 飛距離が計算できなかった場合は何もしない
+        } catch(ArgumentException e) {
+            // Debug.LogException(e);
+            _ = e;
+        }
     }
 
     public void SetAmplifier(float amplifier)
