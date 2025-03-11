@@ -38,8 +38,8 @@ public class ProjectionDistance
     private double lowerBound;
     private double upperBound;
 
-    private static double maxTheta = Math.PI / 2;
-    private static double minTheta = -maxTheta;
+    private const double maxTheta = Math.PI / 2;
+    private const double minTheta = -maxTheta;
     
 
     /// <summary>
@@ -82,14 +82,26 @@ public class ProjectionDistance
         one_kdt = 1 - k * dt;
         double gdt = g * dt;
         double vx0 = v0 * Math.Cos(theta);
+        if (vx0 == 0) {
+            distance = 0;
+            return;
+        }
         double vy0 = v0 * Math.Sin(theta);
         reciprocalOfCoefficientOfX = vx0 * one_kdt / k;
         coefficient2OfX = (vy0 - g * one_kdt/k) * k / (gdt * vx0 * one_kdt);
         y0Term = k * y0 / (gdt * one_kdt);
 
-        // 最大値は n -> ∞ のときのx
-        // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html#upperBound
-        upperBound = vx0 * one_kdt / k;
+
+        if (theta >= 0) {
+            // 角度が上向きのとき、最大値は n -> ∞ のときのx
+            // 参考 https://moto-programmer-i-unity.blogspot.com/2023/12/tbd.html#upperBound
+            upperBound = vx0 * one_kdt / k;
+        }
+        else {
+            // 角度が下向きのとき、最大値は直線に飛んだとき
+            upperBound = Math.Abs(vx0 / vy0 * y0);
+        }
+        
 
         // 最低値の最適な決め方が不明、とりあえず0にしておく
         lowerBound = 0;
