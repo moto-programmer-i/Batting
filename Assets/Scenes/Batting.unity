@@ -1972,11 +1972,11 @@ MonoBehaviour:
     <Hit>k__BackingField:
       <Clip>k__BackingField: {fileID: 8300000, guid: 1d57bf1b7eff0fe439698f7f72e7a522,
         type: 3}
-      <Volume>k__BackingField: 1
+      <Volume>k__BackingField: 0.7
     <Hardhit>k__BackingField:
       <Clip>k__BackingField: {fileID: 8300000, guid: 23c210acf69f47a47ab0db1a9229b918,
         type: 3}
-      <Volume>k__BackingField: 1
+      <Volume>k__BackingField: 0.7
     <HardHitMeter>k__BackingField: 165
   - <Bat>k__BackingField: {fileID: 2561202071525869870, guid: 071390f880a352f41aa16c87d55e3240,
       type: 3}
@@ -2008,7 +2008,7 @@ MonoBehaviour:
     <Hit>k__BackingField:
       <Clip>k__BackingField: {fileID: 8300000, guid: d4123a229bed6f24481f5bbf513e6999,
         type: 3}
-      <Volume>k__BackingField: 0.3
+      <Volume>k__BackingField: 0.2
     <Hardhit>k__BackingField:
       <Clip>k__BackingField: {fileID: 8300000, guid: d540d8dec8494cc4dabe84bb5437ae25,
         type: 3}
