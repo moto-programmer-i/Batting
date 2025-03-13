@@ -56,6 +56,12 @@ public class BatController : MonoBehaviour
     /// </summary>
     public List<Action<float>> OnMaxMeterChange {get; private set;} = new ();
 
+    [SerializeField]
+    private AudioSource se;
+
+    private BatSetting currentBat;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -175,21 +181,47 @@ public class BatController : MonoBehaviour
             // 飛距離を表示
             distanceManager.ShowDistance(meter);
 
+            // 効果音再生
+            PlayHitSound(meter);
+
             // 最大飛距離更新処理
             if (saveDataManager.UpdateMaxMeter(meter)) {
                 OnMaxMeterChange.ForEach(action => action.Invoke(meter));
             }
 
             
-        // 飛距離が計算できなかった場合は何もしない
+        // 飛距離が計算できなかった場合
         } catch(ArgumentException e) {
             // Debug.LogException(e);
             _ = e;
+
+            // 一応当たってはいるので音を出す
+            PlayHitSound(0);
         }
     }
 
     public void SetAmplifier(float amplifier)
     {
         this.amplifier = amplifier;
+    }
+
+    public void SetCurrentBat(BatSetting currentBat)
+    {
+        this.currentBat = currentBat;
+    }
+
+    public void PlayHitSound(float meter) {
+        if (currentBat == null || currentBat.Hit == null || currentBat.Hardhit == null) {
+            return;
+        }
+
+        // ジャストミートの距離ならジャストミートとする
+        if (meter >= currentBat.HardHitMeter) {
+            currentBat.Hardhit.Play(se);
+            return;
+        }
+
+        // それ以外なら根っこ
+        currentBat.Hit.Play(se);
     }
 }

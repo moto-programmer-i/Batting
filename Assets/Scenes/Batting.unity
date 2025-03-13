@@ -1915,6 +1915,15 @@ MonoBehaviour:
     <EnableMeter>k__BackingField: -1
     <LabelColor>k__BackingField: {r: 0, g: 1, b: 0.10753989, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
+    <Hit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: 4fe421a05066f5a4bb551d9960f8d7b5,
+        type: 3}
+      <Volume>k__BackingField: 1
+    <Hardhit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: 91452d05373504046829deb0bc269d99,
+        type: 3}
+      <Volume>k__BackingField: 1
+    <HardHitMeter>k__BackingField: 10
   - <Bat>k__BackingField: {fileID: 7723837786093654576, guid: 7c6bba271f668574188c0cf3aafdd82c,
       type: 3}
     <Icon>k__BackingField: {fileID: 2800000, guid: 0e392316e6172a84fb3e15a6b358370d,
@@ -1924,6 +1933,15 @@ MonoBehaviour:
     <EnableMeter>k__BackingField: 10
     <LabelColor>k__BackingField: {r: 0.8301887, g: 0.8190001, b: 0.8190001, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
+    <Hit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: a7184261bc7d1f849b92be5d119e0ee7,
+        type: 3}
+      <Volume>k__BackingField: 1
+    <Hardhit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: 3484855ffa5b6e84c847d4cf5c84bfc9,
+        type: 3}
+      <Volume>k__BackingField: 1
+    <HardHitMeter>k__BackingField: 20
   - <Bat>k__BackingField: {fileID: 2786667378521790976, guid: 15eb6dfa642b0884bac5a0c2a2b909d5,
       type: 3}
     <Icon>k__BackingField: {fileID: 2800000, guid: 22a2697fea7b3e44abdb79b91b4e3965,
@@ -1933,6 +1951,15 @@ MonoBehaviour:
     <EnableMeter>k__BackingField: 20
     <LabelColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 1, g: 0.046127945, b: 0, a: 1}
+    <Hit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: 29968dfd92b2fa94f9f9fa40a2e12ef3,
+        type: 3}
+      <Volume>k__BackingField: 0.3
+    <Hardhit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: a263fc88d74277e4abdea331a8872616,
+        type: 3}
+      <Volume>k__BackingField: 0.3
+    <HardHitMeter>k__BackingField: 120
   - <Bat>k__BackingField: {fileID: 1720289238102449518, guid: cd1d84666fe3cc64b843c3c72e32ae3d,
       type: 3}
     <Icon>k__BackingField: {fileID: 2800000, guid: c067677accb308144bd0716c729967d3,
@@ -1942,6 +1969,15 @@ MonoBehaviour:
     <EnableMeter>k__BackingField: 120
     <LabelColor>k__BackingField: {r: 0.9716981, g: 0.9127676, b: 0.9127676, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
+    <Hit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: 1d57bf1b7eff0fe439698f7f72e7a522,
+        type: 3}
+      <Volume>k__BackingField: 1
+    <Hardhit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: 23c210acf69f47a47ab0db1a9229b918,
+        type: 3}
+      <Volume>k__BackingField: 1
+    <HardHitMeter>k__BackingField: 165
   - <Bat>k__BackingField: {fileID: 2561202071525869870, guid: 071390f880a352f41aa16c87d55e3240,
       type: 3}
     <Icon>k__BackingField: {fileID: 2800000, guid: 7bc403fc52754654db2dd03f52669d76,
@@ -1951,6 +1987,15 @@ MonoBehaviour:
     <EnableMeter>k__BackingField: 165
     <LabelColor>k__BackingField: {r: 0, g: 0.13698149, b: 1, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
+    <Hit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: 28b2978f24af3354da179f36a6318e88,
+        type: 3}
+      <Volume>k__BackingField: 0.6
+    <Hardhit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: d125abd6bb2f03e46934dc0a76eaed86,
+        type: 3}
+      <Volume>k__BackingField: 0.6
+    <HardHitMeter>k__BackingField: 5555
   - <Bat>k__BackingField: {fileID: 4784341120700137531, guid: 9dc8d1805d7110f4b9da900db7964aa3,
       type: 3}
     <Icon>k__BackingField: {fileID: 2800000, guid: 3b5f9b8d453ab664aab0ca634fd753a9,
@@ -1960,6 +2005,15 @@ MonoBehaviour:
     <EnableMeter>k__BackingField: 5555
     <LabelColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
+    <Hit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: d4123a229bed6f24481f5bbf513e6999,
+        type: 3}
+      <Volume>k__BackingField: 0.3
+    <Hardhit>k__BackingField:
+      <Clip>k__BackingField: {fileID: 8300000, guid: d540d8dec8494cc4dabe84bb5437ae25,
+        type: 3}
+      <Volume>k__BackingField: 1
+    <HardHitMeter>k__BackingField: 350000000
   batSelector: {fileID: 1558326581}
   currentBatParent: {fileID: 155297074}
   saveDataManager: {fileID: 289460923}
@@ -2234,6 +2288,7 @@ GameObject:
   - component: {fileID: 368529955}
   - component: {fileID: 368529954}
   - component: {fileID: 368529956}
+  - component: {fileID: 368529957}
   m_Layer: 7
   m_Name: Bat
   m_TagString: Bat
@@ -2382,6 +2437,7 @@ MonoBehaviour:
   bat: {fileID: 368529953}
   distanceManager: {fileID: 289460919}
   saveDataManager: {fileID: 289460923}
+  se: {fileID: 368529957}
 --- !u!54 &368529955
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2430,6 +2486,102 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &368529957
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368529949}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

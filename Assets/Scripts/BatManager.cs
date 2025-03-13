@@ -159,6 +159,7 @@ public class BatManager : MonoBehaviour
         // 新しいバットを追加、オブジェクトプールとかした方がいいのかとかは不明
         Instantiate(setting.Bat, currentBatParent.transform);
         batController.SetAmplifier(setting.Amplifier);
+        batController.SetCurrentBat(setting);
 
 
         // セーブデータ更新

@@ -107,7 +107,7 @@ public class ProjectionDistance
         
         distance = Bisection.FindRoot(F, lowerBound, upperBound, accuracy);
 
-        Debug.Log($"v0:{v0} theta:{theta} distance:{distance})");
+        // Debug.Log($"v0:{v0} theta:{theta} distance:{distance})");
     }
 
     /// <summary>

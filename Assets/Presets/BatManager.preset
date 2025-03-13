@@ -37,7 +37,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[0].<Icon>k__BackingField
     value: 
-    objectReference: {fileID: 2800000, guid: 1a35195437f3ac14cbeaa83dcec0fbcc, type: 3}
+    objectReference: {fileID: 2800000, guid: 1056173fef787414b9d7ab7e0a67abdf, type: 3}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[0].<Name>k__BackingField
     value: "\u7AF9"
@@ -56,15 +56,15 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[0].<LabelColor>k__BackingField.g
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[0].<LabelColor>k__BackingField.b
-    value: 0
+    value: 0.10753989
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[0].<LabelColor>k__BackingField.a
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[0].<LabelOutlineColor>k__BackingField.r
@@ -80,7 +80,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[0].<LabelOutlineColor>k__BackingField.a
-    value: 0
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[0].<hit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: 4fe421a05066f5a4bb551d9960f8d7b5, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[0].<hardhit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: 91452d05373504046829deb0bc269d99, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[0].<HardHitMeter>k__BackingField
+    value: 10
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<Bat>k__BackingField
@@ -90,7 +102,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<Icon>k__BackingField
     value: 
-    objectReference: {fileID: 2800000, guid: 8ef516487e26d9840a8a9d7bf4a9408f, type: 3}
+    objectReference: {fileID: 2800000, guid: 0e392316e6172a84fb3e15a6b358370d, type: 3}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<Name>k__BackingField
     value: "\u30DC\u30ED\u30DC\u30ED\u30D0\u30C3\u30C8"
@@ -105,19 +117,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<LabelColor>k__BackingField.r
-    value: 0
+    value: 0.8301887
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<LabelColor>k__BackingField.g
-    value: 0
+    value: 0.8190001
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<LabelColor>k__BackingField.b
-    value: 0
+    value: 0.8190001
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<LabelColor>k__BackingField.a
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<LabelOutlineColor>k__BackingField.r
@@ -133,7 +145,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[1].<LabelOutlineColor>k__BackingField.a
-    value: 0
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[1].<hit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: a7184261bc7d1f849b92be5d119e0ee7, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[1].<hardhit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: 3484855ffa5b6e84c847d4cf5c84bfc9, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[1].<HardHitMeter>k__BackingField
+    value: 20
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<Bat>k__BackingField
@@ -143,7 +167,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<Icon>k__BackingField
     value: 
-    objectReference: {fileID: 2800000, guid: 8ef516487e26d9840a8a9d7bf4a9408f, type: 3}
+    objectReference: {fileID: 2800000, guid: 22a2697fea7b3e44abdb79b91b4e3965, type: 3}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<Name>k__BackingField
     value: "\u6728\u88FD\u30D0\u30C3\u30C8"
@@ -158,27 +182,27 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelColor>k__BackingField.r
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelColor>k__BackingField.g
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelColor>k__BackingField.b
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelColor>k__BackingField.a
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelOutlineColor>k__BackingField.r
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelOutlineColor>k__BackingField.g
-    value: 0
+    value: 0.046127945
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelOutlineColor>k__BackingField.b
@@ -186,7 +210,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[2].<LabelOutlineColor>k__BackingField.a
-    value: 0
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[2].<hit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: 29968dfd92b2fa94f9f9fa40a2e12ef3, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[2].<hardhit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: a263fc88d74277e4abdea331a8872616, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[2].<HardHitMeter>k__BackingField
+    value: 120
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<Bat>k__BackingField
@@ -196,7 +232,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<Icon>k__BackingField
     value: 
-    objectReference: {fileID: 2800000, guid: 8ef516487e26d9840a8a9d7bf4a9408f, type: 3}
+    objectReference: {fileID: 2800000, guid: c067677accb308144bd0716c729967d3, type: 3}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<Name>k__BackingField
     value: "\u65B0\u54C1\u30D0\u30C3\u30C8"
@@ -211,19 +247,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<LabelColor>k__BackingField.r
-    value: 0
+    value: 0.9716981
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<LabelColor>k__BackingField.g
-    value: 0
+    value: 0.9127676
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<LabelColor>k__BackingField.b
-    value: 0
+    value: 0.9127676
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<LabelColor>k__BackingField.a
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<LabelOutlineColor>k__BackingField.r
@@ -239,7 +275,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[3].<LabelOutlineColor>k__BackingField.a
-    value: 0
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[3].<hit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: 1d57bf1b7eff0fe439698f7f72e7a522, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[3].<hardhit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: 23c210acf69f47a47ab0db1a9229b918, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[3].<HardHitMeter>k__BackingField
+    value: 165
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<Bat>k__BackingField
@@ -249,7 +297,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<Icon>k__BackingField
     value: 
-    objectReference: {fileID: 2800000, guid: 8ef516487e26d9840a8a9d7bf4a9408f, type: 3}
+    objectReference: {fileID: 2800000, guid: 7bc403fc52754654db2dd03f52669d76, type: 3}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<Name>k__BackingField
     value: "\u30D6\u30E8\u30F3\u30C9"
@@ -268,15 +316,15 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<LabelColor>k__BackingField.g
-    value: 0
+    value: 0.13698149
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<LabelColor>k__BackingField.b
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<LabelColor>k__BackingField.a
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<LabelOutlineColor>k__BackingField.r
@@ -292,7 +340,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[4].<LabelOutlineColor>k__BackingField.a
-    value: 0
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[4].<hit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: 28b2978f24af3354da179f36a6318e88, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[4].<hardhit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: d125abd6bb2f03e46934dc0a76eaed86, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[4].<HardHitMeter>k__BackingField
+    value: 5555
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[5].<Bat>k__BackingField
@@ -317,7 +377,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[5].<LabelColor>k__BackingField.r
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[5].<LabelColor>k__BackingField.g
@@ -329,7 +389,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[5].<LabelColor>k__BackingField.a
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[5].<LabelOutlineColor>k__BackingField.r
@@ -345,7 +405,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSettings.Array.data[5].<LabelOutlineColor>k__BackingField.a
-    value: 0
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[5].<hit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: d4123a229bed6f24481f5bbf513e6999, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[5].<hardhit>k__BackingField
+    value: 
+    objectReference: {fileID: 8300000, guid: d540d8dec8494cc4dabe84bb5437ae25, type: 3}
+  - target: {fileID: 0}
+    propertyPath: batSettings.Array.data[5].<HardHitMeter>k__BackingField
+    value: 350000000
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: batSelector

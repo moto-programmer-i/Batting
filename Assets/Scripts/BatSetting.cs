@@ -48,4 +48,16 @@ public class BatSetting
     /// </summary>
     [field: SerializeField]
     public Color LabelOutlineColor {get; set;}
+
+    [field: SerializeField]
+    public AudioClipContainer Hit {get; set;}
+
+    [field: SerializeField]
+    public AudioClipContainer Hardhit {get; set;}
+
+    /// <summary>
+    /// ジャストミートだと判定するメートル
+    /// </summary>
+    [field: SerializeField]
+    public int HardHitMeter {get; set;}
 }
