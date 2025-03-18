@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIs/MuteButton/MuteButton.uss?fileID=7433441132597879392&amp;guid=358a560c64287314ba0239d036013879&amp;type=3#MuteButton" />
+    <ui:VisualElement name="mute-button" class="mute-button" style="display: flex; flex-grow: 0;">
+        <ui:Button text="\uf6a9" parse-escape-sequences="true" display-tooltip-when-elided="true" name="muted" class="circle-button" style="display: flex;" />
+        <ui:Button text="\uf028" parse-escape-sequences="true" display-tooltip-when-elided="true" name="not-muted" class="not-muted circle-button" />
+    </ui:VisualElement>
+</ui:UXML>

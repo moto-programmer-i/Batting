@@ -1,0 +1,14 @@
+.volume-label {
+    width: 70px;
+}
+
+.unity-slider__label {
+    display: none;
+}
+
+.volume {
+    width: auto;
+    flex-grow: 1;
+    margin-left: 20px;
+    margin-right: 20px;
+}

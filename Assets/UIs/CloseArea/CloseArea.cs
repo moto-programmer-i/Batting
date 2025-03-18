@@ -21,16 +21,7 @@ public class CloseArea : VisualElement
         // なぜかクラスはここでつけなければいけない、なぜUI Builderでつけたクラスが反映されないのか
         AddToClassList(CLASS_NAME);
 
-        // RegisterCallback<AttachToPanelEvent>(e =>
-        //     { /* do something here when element is added to UI */ 
-        //     });
-        // RegisterCallback<DetachFromPanelEvent>(e =>
-        //     { /* do something here when element is removed from UI */ });
-
-         // Register a click event to the visual element to change the background color to a new color
-        RegisterCallback<ClickEvent>(OnClicked);
-
-        
+        RegisterCallback<ClickEvent>(OnClicked);        
     }
 
     
@@ -50,8 +41,6 @@ public class CloseArea : VisualElement
         style.display = DisplayStyle.None;
 
         // 閉じた後の処理を実行
-        if (Closed != null) {
-            Closed.Invoke();
-        }
+        Closed?.Invoke();
     }
 }

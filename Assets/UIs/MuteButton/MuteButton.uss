@@ -1,0 +1,30 @@
+.mute-button {
+    flex-grow: 0;
+    width: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+    height: auto;
+    display: flex;
+}
+
+.circle-button {
+    -unity-font: url('project://database/Assets/ThirdParties/Fonts/Awesome/Font%20Awesome%206%20Free-Solid-900.otf?fileID=12800000&guid=fc1d44441d2803a40bd0b92c38f0bec2&type=3#Font Awesome 6 Free-Solid-900');
+    -unity-font-definition: initial;
+    background-color: rgb(255, 255, 255);
+    font-size: 20px;
+    width: 50px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    position: absolute;
+    color: rgb(0, 0, 0);
+    display: flex;
+    height: 50px;
+    -unity-text-align: middle-center;
+}
