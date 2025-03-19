@@ -31,7 +31,7 @@ public class MuteButton : VisualElement
         RegisterCallback<ClickEvent>(OnClicked);
         
 
-        // UI Builder作成したボタンは反映されない。意味不明だが、スクリプトで指定する必要がある
+        // UI Builderで作成したボタンは反映されない。意味不明だが、スクリプトで指定する必要がある
         mutedButton = new Button();
         mutedButton.AddToClassList(CIRCLE_BUTTON_CLASS_NAME);
         mutedButton.text = MUTED_TEXT;
