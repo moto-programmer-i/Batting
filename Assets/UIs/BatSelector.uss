@@ -9,15 +9,6 @@
     border-bottom-color: rgb(255, 9, 0);
 }
 
-.bat-list-button {
-    width: 100px;
-    height: 100px;
-    -unity-text-align: middle-center;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-}
-
 .unity-radio-button-group > .unity-label {
     display: none;
     opacity: 1;
@@ -25,14 +16,6 @@
 
 .unity-radio-button__input {
     opacity: 1;
-}
-
-.bat-menu-button {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
 }
 
 .unity-radio-button__checkmark-background {

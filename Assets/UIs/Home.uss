@@ -1,0 +1,13 @@
+.bat-menu-button {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.swing-button {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}

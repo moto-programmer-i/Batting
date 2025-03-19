@@ -18,6 +18,9 @@ public class BatManager : MonoBehaviour
     private List<BatSetting> batSettings = new();
 
     [SerializeField]
+    private UIDocument home;
+
+    [SerializeField]
     private UIDocument batSelector;
 
     [SerializeField]
@@ -47,7 +50,7 @@ public class BatManager : MonoBehaviour
     void Awake()
     {
         // バットリスト表示ボタン初期化
-        batListDisplayButton = batSelector.rootVisualElement.Q<Button>(BatListDisplayButtonName);
+        batListDisplayButton = home.rootVisualElement.Q<Button>(BatListDisplayButtonName);
         batListDisplayButton.clicked += () => ShowBatList(true);
 
         // 閉じる用の画面初期化
@@ -127,11 +130,9 @@ public class BatManager : MonoBehaviour
     {        
         if (visible) {
             closeArea.style.display = DisplayStyle.Flex;
-            batListDisplayButton.style.display = DisplayStyle.None;
         }
         else {
             closeArea.style.display = DisplayStyle.None;
-            batListDisplayButton.style.display = DisplayStyle.Flex;
         }
     }
 
