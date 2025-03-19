@@ -1762,7 +1762,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 134da46078a6bb64b825d838ba4c5769,
     type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 100
 --- !u!4 &176516854
 Transform:
   m_ObjectHideFlags: 0
@@ -1864,6 +1864,7 @@ GameObject:
   - component: {fileID: 289460921}
   - component: {fileID: 289460922}
   - component: {fileID: 289460923}
+  - component: {fileID: 289460924}
   m_Layer: 0
   m_Name: Instances
   m_TagString: Untagged
@@ -2079,6 +2080,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a85eb20a3e7b6649a020cd6be75c941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &289460924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289460917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb4c2cdb92e9264fab35ff4f4278693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  home: {fileID: 746919239}
+  config: {fileID: 176516853}
+  audioMixer: {fileID: 24100000, guid: 4baafd81d8dd4ea4a86d7a59e8e86983, type: 2}
+  saveDataManager: {fileID: 289460923}
 --- !u!1 &322425860
 GameObject:
   m_ObjectHideFlags: 0
@@ -2332,7 +2349,8 @@ AudioSource:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4653839835483727281, guid: 4baafd81d8dd4ea4a86d7a59e8e86983,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 9d1fe6fbe7e885d4ab850ed648f02cf7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.041
@@ -2641,7 +2659,8 @@ AudioSource:
   m_GameObject: {fileID: 368529949}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1094532189400669376, guid: 4baafd81d8dd4ea4a86d7a59e8e86983,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3192,7 +3211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &697847491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3314,6 +3333,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742236740}
   m_CullTransparentMesh: 1
+--- !u!1 &746919238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746919240}
+  - component: {fileID: 746919239}
+  m_Layer: 5
+  m_Name: HomeUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &746919239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746919238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 5e3015a3fb55f93409eb4ece80dc51bc, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: d2558de954fffa14190f4eafbcf9025d,
+    type: 3}
+  m_SortingOrder: 0
+--- !u!4 &746919240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746919238}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -4987,6 +5055,7 @@ SceneRoots:
   - {fileID: 1605716761}
   - {fileID: 1855912938}
   - {fileID: 1976898568}
+  - {fileID: 746919240}
   - {fileID: 1558326582}
-  - {fileID: 697847493}
   - {fileID: 176516854}
+  - {fileID: 697847493}

@@ -18,6 +18,9 @@ public class SaveDataManager : MonoBehaviour
         // セーブデータを読み込み
         try {
             SaveData = FileUtils.LoadJson<SaveData>(SAVEDATA_FILENAME);
+
+            // セーブデータがnullになってしまった場合に備えて、一応初期化する
+            SaveData.InitNullObjects();
         }
         // ファイルがなければログ出力
         catch(FileNotFoundException e) {
@@ -42,7 +45,7 @@ public class SaveDataManager : MonoBehaviour
 
     
     /// <summary>
-    /// 非同期にセーブする
+    /// セーブする
     /// </summary>
     /// <returns></returns>
     public void Save()

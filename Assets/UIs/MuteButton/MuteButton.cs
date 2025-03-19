@@ -13,33 +13,32 @@ public class MuteButton : VisualElement
     const string CIRCLE_BUTTON_CLASS_NAME = "circle-button";
     public new class UxmlFactory : UxmlFactory<MuteButton, UxmlTraits> {}
 
-    public bool IsMuted {private set; get;}
+    public bool IsMuted {private set; get;} = false;
 
     private Button notMutedButton;
     private Button mutedButton;
 
     /// <summary>
-    /// 閉じた後の処理
+    /// ミュートの処理
     /// </summary>
     public Action<bool> Muted;   
     
     public MuteButton()
     {
         // なぜかクラスはここでつけなければいけない、なぜUI Builderでつけたクラスが反映されないのか
-        AddToClassList(CLASS_NAME);
-
-        RegisterCallback<ClickEvent>(OnClicked);
-        
+        AddToClassList(CLASS_NAME);        
 
         // UI Builderで作成したボタンは反映されない。意味不明だが、スクリプトで指定する必要がある
         mutedButton = new Button();
         mutedButton.AddToClassList(CIRCLE_BUTTON_CLASS_NAME);
         mutedButton.text = MUTED_TEXT;
+        mutedButton.RegisterCallback<ClickEvent>(OnClicked);
         Add(mutedButton);
 
         notMutedButton = new Button();
         notMutedButton.AddToClassList(CIRCLE_BUTTON_CLASS_NAME);
         notMutedButton.text = NOT_MUTED_TEXT;
+        notMutedButton.RegisterCallback<ClickEvent>(OnClicked);
         Add(notMutedButton);
     }
 
@@ -59,6 +58,11 @@ public class MuteButton : VisualElement
         Mute(!IsMuted);
     }
 
+    /// <summary>
+    /// ミュートする。少なくともStart後に呼び出すこと
+    //  https://docs.unity3d.com/ja/2022.3/ScriptReference/Audio.AudioMixer.SetFloat.html
+    /// </summary>
+    /// <param name="isMuted"></param>
     public void Mute(bool isMuted)
     {
         IsMuted = isMuted;

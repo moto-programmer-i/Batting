@@ -21,6 +21,10 @@ BGMと効果音の音量設定
     https://fonts.google.com/specimen/Zen+Antique+Soft/license?lang=ja_Jpan&categoryFilters=Feeling:%2FExpressive%2FBusiness
     フォントファイルの場所移動、GitにUnity管理ファイルは残す
 
+WebGL ビルドだとAudio Mixerが機能しないかも？
+https://docs.unity3d.com/ja/2022.3/Manual/AudioMixer.html
+https://negi-lab.blog.jp/archives/build_for_wegGL.html
+
 -----------------------------------------------------------------------------------------
 その後の作業
 Gitに入れたくないパッケージが増えているのでinstallとかで対応できるようにならんか

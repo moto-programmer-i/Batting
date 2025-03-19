@@ -43,4 +43,13 @@ public class CloseArea : VisualElement
         // 閉じた後の処理を実行
         Closed?.Invoke();
     }
+
+    public void Show(bool visible)
+    {
+        if (visible) {
+            style.display = DisplayStyle.Flex;
+            return;
+        }
+        style.display = DisplayStyle.None;
+    }
 }
