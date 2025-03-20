@@ -84,4 +84,5 @@ crashlytics-build.properties
 # 他の権利元ファイルはリポジトリに含めない
 /[Aa]ssets/ThirdParties/**/*.mp3
 /[Aa]ssets/ThirdParties/**/*.otf
+/[Aa]ssets/ThirdParties/**/*.ttf
 /[Aa]ssets/ThirdParties/Fonts/**/*.asset
