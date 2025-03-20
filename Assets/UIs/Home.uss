@@ -1,9 +1,9 @@
 .bat-menu-button {
     width: 100px;
     height: 100px;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+    position: relative;
+    bottom: 0;
+    right: 0;
 }
 
 .swing-button {

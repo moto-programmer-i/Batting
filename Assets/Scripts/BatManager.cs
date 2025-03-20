@@ -10,7 +10,8 @@ using UnityEngine.UIElements;
 
 public class BatManager : MonoBehaviour
 {
-    public const string BatListDisplayButtonName = "bat-list-display-button";
+    public const string BAT_LIST_DISPLAY_BUTTON_NAME = "bat-list-display-button";
+    public const string NEW_BAT_NOTICE_NAME = "new-bat-notice";
 
     public const int ScrollBarWidthPx = 24;
     
@@ -36,6 +37,8 @@ public class BatManager : MonoBehaviour
     /// </summary>
     private ScrollView batListView;
 
+    private Label newBatNotice;
+
     [SerializeField]
     private SaveDataManager saveDataManager;
 
@@ -50,8 +53,13 @@ public class BatManager : MonoBehaviour
     void Awake()
     {
         // バットリスト表示ボタン初期化
-        batListDisplayButton = home.rootVisualElement.Q<Button>(BatListDisplayButtonName);
-        batListDisplayButton.clicked += () => ShowBatList(true);
+        batListDisplayButton = home.rootVisualElement.Q<Button>(BAT_LIST_DISPLAY_BUTTON_NAME);
+        batListDisplayButton.clicked += () => {
+            ShowBatList(true);
+            ShowNewBatNotice(false);
+        };
+        newBatNotice = home.rootVisualElement.Q<Label>(NEW_BAT_NOTICE_NAME);
+        ShowNewBatNotice(false);
 
         // 閉じる用の画面初期化
         closeArea = batSelector.rootVisualElement.Q<CloseArea>();
@@ -116,7 +124,22 @@ public class BatManager : MonoBehaviour
             }
         });
 
-        batController.OnMaxMeterChange.Add(meter => masks.ForEach(mask => mask.EnableByMeter(meter)));
+        // 飛距離に応じて新しいバットを入手
+        batController.OnMaxMeterChange.Add(meter => {
+            masks.ForEach(mask => {
+                // 入手していたら通知を出す
+                bool wasEnabled = mask.IsEnabled();
+                if(mask.EnableByMeter(meter) && !wasEnabled) {
+                    ShowNewBatNotice(true);
+                }
+            });
+        });
+        
+    }
+
+    private void ShowNewBatNotice(bool visible)
+    {
+        newBatNotice.style.visibility = visible? Visibility.Visible: Visibility.Hidden;
     }
 
 
@@ -166,12 +189,5 @@ public class BatManager : MonoBehaviour
         // セーブデータ更新
         saveDataManager.SaveData.CurrentBatIndex = radioButtonGroup.value;
         saveDataManager.Save();
-    }
-
-    void OnChangeMaxMeter(float maxMeter) {
-        masks.ForEach(mask => mask.EnableByMeter(maxMeter));
-    }
-    
-
-
+    } 
 }

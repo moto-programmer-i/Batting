@@ -41,17 +41,24 @@ public class DisabledBatMask : VisualElement
     /// 最大飛距離に応じて有効化
     /// </summary>
     /// <param name="maxMeter">最大飛距離</param>
-    public void EnableByMeter(float maxMeter)
-    {
+    /// <returns>有効になったらtrue</returns>
+    public bool EnableByMeter(float maxMeter)
+    {        
         // 有効にする
         if (maxMeter >= EnableMeter) {
             style.display = DisplayStyle.None;
             parent.SetEnabled(true);
+            return true;
         }
+
         // 無効にする
-        else {
-            style.display = DisplayStyle.Flex;
-            parent.SetEnabled(false);
-        }
+        style.display = DisplayStyle.Flex;
+        parent.SetEnabled(false);
+        return false;
+    }
+
+    public bool IsEnabled()
+    {
+        return parent.enabledSelf;
     }
 }
