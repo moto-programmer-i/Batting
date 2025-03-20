@@ -13,7 +13,15 @@ public class BatManager : MonoBehaviour
     public const string BAT_LIST_DISPLAY_BUTTON_NAME = "bat-list-display-button";
     public const string NEW_BAT_NOTICE_NAME = "new-bat-notice";
 
-    public const int ScrollBarWidthPx = 24;
+    /// <summary>
+    /// スクロールバーの幅。取得が面倒そうなので定義。
+    /// </summary>
+    public const int SCROLL_BAR_WIDTH_PX = 24;
+
+    /// <summary>
+    /// スクロールせずに表示できるバットの数（目安、必須ではない）
+    /// </summary>
+    public const float BAT_NUM_IN_PAGE = 2f;
     
     [SerializeField]
     private List<BatSetting> batSettings = new();
@@ -117,7 +125,7 @@ public class BatManager : MonoBehaviour
         batListView.RegisterCallback<GeometryChangedEvent>(e => {
             var icon = batSettings.First().Icon;
             var height = icon.height *
-                        (e.newRect.width - ScrollBarWidthPx) / icon.width;
+                        (e.newRect.width - SCROLL_BAR_WIDTH_PX) / icon.width / BAT_NUM_IN_PAGE;
 
             foreach(var radioButton in radioButtons) {
                 radioButton.style.height = height;
