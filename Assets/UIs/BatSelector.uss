@@ -44,6 +44,8 @@
     height: 100%;
     opacity: 1;
     background-color: rgba(0, 0, 0, 0);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
 }
 
 .unity-disabled {
