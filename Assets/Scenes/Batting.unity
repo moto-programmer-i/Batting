@@ -2612,6 +2612,14 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Swing
       m_Flags: 0
+    - m_Name: 
+      m_Id: 3aef70c9-6955-40e3-91c7-165655ffbedf
+      m_Path: <Touchscreen>/Press
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Swing
+      m_Flags: 0
     m_Flags: 0
   distance: 10
   amplifier: 1
