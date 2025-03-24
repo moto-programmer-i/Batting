@@ -2032,7 +2032,7 @@ MonoBehaviour:
       type: 3}
     <Icon>k__BackingField: {fileID: 2800000, guid: 7bc403fc52754654db2dd03f52669d76,
       type: 3}
-    <Name>k__BackingField: "\u30D6\u30E8\u30F3\u30C9"
+    <Name>k__BackingField: "\u30DC\u30E8\uFF5E\u30F3\u30C9"
     <Amplifier>k__BackingField: 100
     <EnableMeter>k__BackingField: 165
     <LabelColor>k__BackingField: {r: 0, g: 0.13698149, b: 1, a: 1}
@@ -2566,8 +2566,8 @@ MonoBehaviour:
   mainCamera: {fileID: 330585545}
   swing:
     m_Name: Swing
-    m_Type: 0
-    m_ExpectedControlType: 
+    m_Type: 1
+    m_ExpectedControlType: Button
     m_Id: 29e0974d-7fe3-48e4-96d0-b2b115134e6f
     m_Processors: 
     m_Interactions: 
@@ -2580,22 +2580,37 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Swing
       m_Flags: 0
-    m_Flags: 0
-  position:
-    m_Name: Position
-    m_Type: 0
-    m_ExpectedControlType: Vector2
-    m_Id: a017a981-c101-4619-b3c2-3489dd7eaa28
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 2e345418-b8d8-48e4-bbfd-541d902e7b44
-      m_Path: <Mouse>/position
+      m_Id: 08834419-1c27-4a27-a4e4-a52acff35811
+      m_Path: <Keyboard>/space
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Position
+      m_Action: Swing
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 56f11576-56bb-4ab6-b0e6-3ecd2bf186a9
+      m_Path: <Keyboard>/enter
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Swing
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 2b8e8ec1-bc74-4a67-ad34-577ed5c4ba95
+      m_Path: <Gamepad>/buttonEast
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Swing
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 51907012-7a42-4a3f-a50c-f7edcc5bea44
+      m_Path: <Gamepad>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Swing
       m_Flags: 0
     m_Flags: 0
   distance: 10

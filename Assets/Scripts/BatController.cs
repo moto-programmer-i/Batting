@@ -23,11 +23,6 @@ public class BatController : MonoBehaviour
     public InputAction swing;
 
     /// <summary>
-    /// 入力位置
-    /// </summary>
-    public InputAction position;
-
-    /// <summary>
     /// バットのカメラからの距離
     /// </summary>
     public float distance = 10;
@@ -78,6 +73,9 @@ public class BatController : MonoBehaviour
             curve = ResourceUtils.LoadJson<AnimationCurveJson>(DEFAULT_SWING_FILENAME);
         }
         SetSwing(curve);
+
+        // スイング入力設定
+        swing.performed += context => Swing(context);
     }
 
     public void SetSwing(AnimationCurveJson curve)
@@ -85,40 +83,9 @@ public class BatController : MonoBehaviour
         AnimationClipLoader.setClip(curve, SWING_CLIPNAME, animator);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Mouse current = Mouse.current;
-        // if (current == null) {
-        //     return;
-        // }
-        // if (current.leftButton.wasPressedThisFrame) {
-        //     current
-        // }
-        
-        Swing();
-    }
+    
 
-    void Swing() {
-        // スイングの入力がなければ何もしない
-        if (swing == null || position == null ) {
-            return;
-        }
-        if (!swing.triggered) {
-            return;
-        }
-
-        Vector2 screenPosition = position.ReadValue<Vector2>();
-        if (screenPosition == null) {
-            return;
-        }
-        if (mainCamera == null) {
-            return;
-        }
-
-        // 押した位置にバットを移動
-        // this.transform.position = CameraUtils.ScreenToWorldPoint(mainCamera, screenPosition, distance);
-
+    void Swing(InputAction.CallbackContext context) {
         // スイング
         animator.SetTrigger(AnimatorConstants.SWING);
     }
@@ -131,9 +98,6 @@ public class BatController : MonoBehaviour
                 actions.Add(swing);
             }
             
-            if (position != null) {
-                actions.Add(position);
-            }
         }
         
         actions.ForEach(action => action.Enable());

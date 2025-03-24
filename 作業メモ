@@ -1,5 +1,3 @@
-クリック以外の入力の設定
-
 全体的な見た目の調整
     Panel Settingsから、Reference Resolutionなど調整
     ボール
@@ -18,9 +16,16 @@
     https://fonts.google.com/specimen/Zen+Antique+Soft/license?lang=ja_Jpan&categoryFilters=Feeling:%2FExpressive%2FBusiness
     フォントファイルの場所移動、GitにUnity管理ファイルは残す
 
-WebGL ビルドだとAudio Mixerが機能しないかも？
-https://docs.unity3d.com/ja/2022.3/Manual/AudioMixer.html
-https://negi-lab.blog.jp/archives/build_for_wegGL.html
+WebGL ビルド
+    Audio Mixerが機能しないかも？
+        https://docs.unity3d.com/ja/2022.3/Manual/AudioMixer.html
+        https://negi-lab.blog.jp/archives/build_for_wegGL.html
+
+
+Androidビルド
+    画面チェック
+    ボタンチェック
+
 
 -----------------------------------------------------------------------------------------
 その後の作業
