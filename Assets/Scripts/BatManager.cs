@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UIElements;
 
 public class BatManager : MonoBehaviour
@@ -23,6 +24,8 @@ public class BatManager : MonoBehaviour
     /// </summary>
     public const float BAT_NUM_IN_PAGE = 2f;
     
+    public const int DOUBLE_CLICK = 2;
+
     [SerializeField]
     private List<BatSetting> batSettings = new();
 
@@ -102,6 +105,15 @@ public class BatManager : MonoBehaviour
             ShowBatList(false);
 
             ChangeBat(GetCurrentBatSetting());
+        });
+
+        // ダブルクリック時は閉じる
+        radioButtonGroup.RegisterCallback<ClickEvent>((e) =>
+        {
+            if (e.clickCount < DOUBLE_CLICK ){
+                return;
+            }
+            ShowBatList(false);
         });
 
         // ラジオボタンの設定
