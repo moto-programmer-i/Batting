@@ -2622,7 +2622,6 @@ MonoBehaviour:
       m_Action: Swing
       m_Flags: 0
     m_Flags: 0
-  distance: 10
   amplifier: 1
   bat: {fileID: 368529953}
   distanceManager: {fileID: 289460919}
