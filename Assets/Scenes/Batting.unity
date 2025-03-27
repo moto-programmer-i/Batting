@@ -1902,6 +1902,7 @@ MonoBehaviour:
   mound: {fileID: 454958971}
   homePlate: {fileID: 1780571332}
   ui: {fileID: 472610981}
+  saveDataManager: {fileID: 289460923}
 --- !u!114 &289460920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2068,6 +2069,7 @@ MonoBehaviour:
   currentBatParent: {fileID: 155297074}
   saveDataManager: {fileID: 289460923}
   batController: {fileID: 368529954}
+  distanceManager: {fileID: 289460919}
 --- !u!114 &289460923
 MonoBehaviour:
   m_ObjectHideFlags: 0

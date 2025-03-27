@@ -68,24 +68,4 @@ public class SaveDataManager : MonoBehaviour
 
         afterLoads.Add(afterLoad);
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="maxMeter"></param>
-    /// <returns>変更あり</returns>
-    public bool UpdateMaxMeter(float maxMeter)
-    {
-        if (maxMeter <= SaveData.MaxMeter) {
-            return false;
-        }
-        
-        SaveData.MaxMeter = maxMeter;
-
-        Save();
-
-        return true;
-    }
-
-   
 }

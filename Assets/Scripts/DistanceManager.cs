@@ -4,6 +4,7 @@ using TMPro;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class DistanceManager : MonoBehaviour
 {
@@ -60,6 +61,14 @@ public class DistanceManager : MonoBehaviour
     private Label distanceLabel;
     private Label maxDistanceLabel;
 
+    [SerializeField]
+    private SaveDataManager saveDataManager;
+
+    /// <summary>
+    /// 最大飛距離更新時の処理
+    /// </summary>
+    public List<Action<float>> OnMaxMeterChange {get; private set;} = new ();
+
 
     
     void Awake()
@@ -79,7 +88,9 @@ public class DistanceManager : MonoBehaviour
         // 距離の表示設定
         distanceLabel = ui.rootVisualElement.Q<Label>(DISTANCE_LABEL_NAME);
         maxDistanceLabel = ui.rootVisualElement.Q<Label>(MAX_DISTANCE_LABEL_NAME);
+        saveDataManager.AddAfterLoad(data => ShowMaxDistance(data.MaxMeter));
         ShowDistanceCanvas(false);
+        OnMaxMeterChange.Add(maxMeter => ShowMaxDistance(maxMeter));
     }
 
     // void Start()
@@ -232,28 +243,8 @@ public class DistanceManager : MonoBehaviour
     public async void ShowDistance(float distance)
     {
         ShowDistanceCanvas(true);
-        
-        // メガメートルを超えればkm表示
-        if (distance >= MEGA) {
-            distanceLabel.text = (distance / KILO).ToString("F0") + "km";
-        } else {
-            distanceLabel.text = distance.ToString("F0") + "m";
-        }
-        
+        distanceLabel.text = DistanceToText(distance);
 
-        // // テキスト設定変更
-        // try {
-        //     DistanceSetting setting = SettingsManager.DistanceSettings.fromDistance(integerDistance);
-        //     distanceText.fontSize = setting.Size;
-        //     distanceText.color = setting.Color;
-        //     distanceText.outlineColor = setting.OutlineColor;
-        //     distanceText.fontWeight = setting.FontWeight;
-
-        // // 飛距離が想定外の場合は表示しない
-        // } catch (Exception e) {
-        //     Debug.LogError(e);
-        // }  
-        
 
         // メソッド全体をasyncにしなければ、enabledが反映されなかった
         // // 指定時間後に非表示にする
@@ -268,6 +259,20 @@ public class DistanceManager : MonoBehaviour
         ShowDistanceCanvas(false);
     }
 
+    public void ShowMaxDistance(float distance)
+    {
+        maxDistanceLabel.text = DistanceToText(distance);
+    }
+
+    public string DistanceToText(float distance)
+    {
+        // メガメートルを超えればkm表示
+        if (distance >= MEGA) {
+            return (distance / KILO).ToString("F0") + "km";
+        }
+        return distance.ToString("F0") + "m";
+    }
+
     public void ShowDistanceCanvas(bool visible)
     {
         // Canvasだと上がきれることがあることがわかったので、UI toolkitに切り替え
@@ -279,5 +284,24 @@ public class DistanceManager : MonoBehaviour
         // distanceCanvas.GetComponent<Canvas>().enabled = visible;
 
         distanceLabel.style.visibility = visible? Visibility.Visible: Visibility.Hidden;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="maxMeter"></param>
+    /// <returns>変更あり</returns>
+    public bool UpdateMaxMeter(float maxMeter)
+    {
+        if (maxMeter <= saveDataManager.SaveData.MaxMeter) {
+            return false;
+        }
+
+        OnMaxMeterChange.ForEach(action => action.Invoke(maxMeter));
+
+        // セーブデータ更新
+        saveDataManager.SaveData.MaxMeter = maxMeter;
+        saveDataManager.Save();
+        return true;
     }
 }

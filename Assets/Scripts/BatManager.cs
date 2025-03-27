@@ -56,6 +56,9 @@ public class BatManager : MonoBehaviour
     [SerializeField]
     private BatController batController;
 
+    [SerializeField]
+    private DistanceManager distanceManager;
+
     /// <summary>
     /// バットの無効化
     /// </summary>
@@ -145,7 +148,7 @@ public class BatManager : MonoBehaviour
         });
 
         // 飛距離に応じて新しいバットを入手
-        batController.OnMaxMeterChange.Add(meter => {
+        distanceManager.OnMaxMeterChange.Add(meter => {
             masks.ForEach(mask => {
                 // 入手していたら通知を出す
                 bool wasEnabled = mask.IsEnabled();

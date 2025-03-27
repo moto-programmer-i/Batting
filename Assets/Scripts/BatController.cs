@@ -21,12 +21,6 @@ public class BatController : MonoBehaviour
     /// スイングの入力
     /// </summary>
     public InputAction swing;
-
-    /// <summary>
-    /// バットのカメラからの距離
-    /// </summary>
-    public float distance = 10;
-
     /// <summary>
     /// Actionの有効を自分で管理するクラス
     /// </summary>
@@ -45,11 +39,6 @@ public class BatController : MonoBehaviour
 
     [SerializeField]
     private SaveDataManager saveDataManager;
-
-    /// <summary>
-    /// 最大飛距離更新時の処理
-    /// </summary>
-    public List<Action<float>> OnMaxMeterChange {get; private set;} = new ();
 
     [SerializeField]
     private AudioSource se;
@@ -145,14 +134,11 @@ public class BatController : MonoBehaviour
             // 飛距離を表示
             distanceManager.ShowDistance(meter);
 
+            // 最大飛距離更新処理
+            distanceManager.UpdateMaxMeter(meter);
+
             // 効果音再生
             PlayHitSound(meter);
-
-            // 最大飛距離更新処理
-            if (saveDataManager.UpdateMaxMeter(meter)) {
-                OnMaxMeterChange.ForEach(action => action.Invoke(meter));
-            }
-
             
         // 飛距離が計算できなかった場合
         } catch(ArgumentException e) {
