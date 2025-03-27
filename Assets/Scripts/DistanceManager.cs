@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class DistanceManager : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class DistanceManager : MonoBehaviour
     /// </summary>
     const int KILO = 1000;
 
+    const string DISTANCE_LABEL_NAME = "distance";
+    const string MAX_DISTANCE_LABEL_NAME = "max-distance";
+
     /// <summary>
     /// マウンドの位置
     /// </summary>
@@ -48,14 +52,14 @@ public class DistanceManager : MonoBehaviour
     /// </summary>
     public static Vector3 forward {get; private set;}
 
-    [SerializeField]
-    private Canvas distanceCanvas;
-
-    [SerializeField]
-    private TextMeshProUGUI distanceText;
-
     // [SerializeField]
     // private float testDistance;
+
+    [SerializeField]
+    private UIDocument ui;
+    private Label distanceLabel;
+    private Label maxDistanceLabel;
+
 
     
     void Awake()
@@ -71,6 +75,11 @@ public class DistanceManager : MonoBehaviour
 
         // 前のベクトルの初期設定
         forward = mound.position - homePlate.position;
+
+        // 距離の表示設定
+        distanceLabel = ui.rootVisualElement.Q<Label>(DISTANCE_LABEL_NAME);
+        maxDistanceLabel = ui.rootVisualElement.Q<Label>(MAX_DISTANCE_LABEL_NAME);
+        ShowDistanceCanvas(false);
     }
 
     // void Start()
@@ -226,9 +235,9 @@ public class DistanceManager : MonoBehaviour
         
         // メガメートルを超えればkm表示
         if (distance >= MEGA) {
-            distanceText.text = (distance / KILO).ToString("F0") + "km";
+            distanceLabel.text = (distance / KILO).ToString("F0") + "km";
         } else {
-            distanceText.text = distance.ToString("F0") + "m";
+            distanceLabel.text = distance.ToString("F0") + "m";
         }
         
 
@@ -261,12 +270,14 @@ public class DistanceManager : MonoBehaviour
 
     public void ShowDistanceCanvas(bool visible)
     {
-        
+        // Canvasだと上がきれることがあることがわかったので、UI toolkitに切り替え
         // distanceCanvas.enabled = visible; 
         // これだとGameObjectをいじるので、nullエラーが発生する
         // 参考 https://discussions.unity.com/t/how-to-enable-and-disable-a-canvas-window-by-scripting/117242/3
 
         // 内部のキャンバスだけを非表示
-        distanceCanvas.GetComponent<Canvas>().enabled = visible;
+        // distanceCanvas.GetComponent<Canvas>().enabled = visible;
+
+        distanceLabel.style.visibility = visible? Visibility.Visible: Visibility.Hidden;
     }
 }

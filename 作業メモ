@@ -5,6 +5,7 @@
     強制再生は１回だけ、その後はオプションから見れるように？
 
 不要ライブラリ、不要オブジェクト（Destroy zoneなど）、不要コメント削除
+    メモリチェック
 
 他社ライセンス表記
     https://fonts.google.com/specimen/Zen+Antique+Soft/license?lang=ja_Jpan&categoryFilters=Feeling:%2FExpressive%2FBusiness
