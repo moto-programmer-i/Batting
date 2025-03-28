@@ -64,6 +64,10 @@ public class DistanceManager : MonoBehaviour
     [SerializeField]
     private SaveDataManager saveDataManager;
 
+
+    [SerializeField]
+    private EndingManager endingManager;
+
     /// <summary>
     /// 最大飛距離更新時の処理
     /// </summary>
@@ -91,6 +95,13 @@ public class DistanceManager : MonoBehaviour
         saveDataManager.AddAfterLoad(data => ShowMaxDistance(data.MaxMeter));
         ShowDistanceCanvas(false);
         OnMaxMeterChange.Add(maxMeter => ShowMaxDistance(maxMeter));
+
+        OnMaxMeterChange.Add(maxMeter => {
+            if(!endingManager.ReachEnds(maxMeter)){
+                return;
+            }
+            endingManager.StartEnding();
+        });
     }
 
     // void Start()

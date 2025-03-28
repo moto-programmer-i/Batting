@@ -23,8 +23,6 @@ public class BatManager : MonoBehaviour
     /// スクロールせずに表示できるバットの数（目安、必須ではない）
     /// </summary>
     public const float BAT_NUM_IN_PAGE = 2f;
-    
-    public const int DOUBLE_CLICK = 2;
 
     [SerializeField]
     private List<BatSetting> batSettings = new();
@@ -113,7 +111,7 @@ public class BatManager : MonoBehaviour
         // ダブルクリック時は閉じる
         radioButtonGroup.RegisterCallback<ClickEvent>((e) =>
         {
-            if (e.clickCount < DOUBLE_CLICK ){
+            if (!UIUtils.IsDoubleClick(e)){
                 return;
             }
             ShowBatList(false);

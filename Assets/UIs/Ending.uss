@@ -1,0 +1,22 @@
+.unity-label {
+    flex-grow: 1;
+    flex-wrap: wrap;
+    -unity-font: url('project://database/Assets/ThirdParties/Fonts/Zen_Antique_Soft/ZenAntiqueSoft-Regular.ttf?fileID=12800000&guid=ae747c6b991a4734397cbd04e8473a24&type=3#ZenAntiqueSoft-Regular');
+    -unity-font-definition: initial;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 40px;
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+.scroll {
+    translate: 0 -100%;
+}
+
+.animation {
+    transition-property: translate;
+    transition-duration: 34s;
+    transition-timing-function: linear;
+    transition-delay: 1s;
+}
