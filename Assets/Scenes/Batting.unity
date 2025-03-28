@@ -2051,7 +2051,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 2800000, guid: 3b5f9b8d453ab664aab0ca634fd753a9,
       type: 3}
     <Name>k__BackingField: "\u708E\u306E\u30D0\u30C3\u30C8"
-    <Amplifier>k__BackingField: 6030000
+    <Amplifier>k__BackingField: 6800000
     <EnableMeter>k__BackingField: 5555
     <LabelColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
@@ -2063,7 +2063,7 @@ MonoBehaviour:
       <Clip>k__BackingField: {fileID: 8300000, guid: d540d8dec8494cc4dabe84bb5437ae25,
         type: 3}
       <Volume>k__BackingField: 1
-    <HardHitMeter>k__BackingField: 350000000
+    <HardHitMeter>k__BackingField: 384400000
   home: {fileID: 746919239}
   batSelector: {fileID: 1558326581}
   currentBatParent: {fileID: 155297074}
