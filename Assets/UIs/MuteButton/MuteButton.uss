@@ -6,11 +6,12 @@
     background-color: rgba(0, 0, 0, 0);
     height: auto;
     display: flex;
+    flex-shrink: 0;
 }
 
 .circle-button {
-    -unity-font: url('project://database/Assets/ThirdParties/Fonts/Awesome/Font%20Awesome%206%20Free-Solid-900.otf?fileID=12800000&guid=fc1d44441d2803a40bd0b92c38f0bec2&type=3#Font Awesome 6 Free-Solid-900');
-    -unity-font-definition: initial;
+    -unity-font: initial;
+    -unity-font-definition: url('project://database/Assets/ThirdParties/Fonts/Awesome/Font%20Awesome%206%20Free-Solid-900%20SDF.asset?fileID=11400000&guid=b3cce31b111293845858b6efd56d8fba&type=2#Font Awesome 6 Free-Solid-900 SDF');
     background-color: rgb(255, 255, 255);
     font-size: 20px;
     width: 50px;

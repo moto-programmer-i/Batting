@@ -55,6 +55,11 @@ public class EndingManager : MonoBehaviour
         enable = true;
     }
 
+    void Start()
+    {
+        StartEnding();
+    }
+
     public async void StartEnding()
     {
         if (!enable) {

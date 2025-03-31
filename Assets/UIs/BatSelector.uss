@@ -59,3 +59,7 @@
     bottom: 0;
     position: absolute;
 }
+
+.unity-label {
+    -unity-font-definition: url('project://database/Assets/ThirdParties/Fonts/Zen_Antique_Soft/ZenAntiqueSoft-Regular%20SDF.asset?fileID=11400000&guid=d2a3b8a4bea321a4188bbd79d24091f5&type=2#ZenAntiqueSoft-Regular SDF');
+}
