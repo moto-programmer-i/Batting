@@ -18,5 +18,5 @@
     transition-property: translate;
     transition-duration: 34s;
     transition-timing-function: linear;
-    transition-delay: 1s;
+    transition-delay: 0s;
 }
