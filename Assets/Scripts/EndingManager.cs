@@ -43,6 +43,7 @@ public class EndingManager : MonoBehaviour
             if(UIUtils.IsDoubleClick(e)) {
                 SkipEnding();
             }
+            e.StopImmediatePropagation();
         });
 
         // エンディングの画像クリックで戻る
@@ -55,10 +56,10 @@ public class EndingManager : MonoBehaviour
         enable = true;
     }
 
-    void Start()
-    {
-        StartEnding();
-    }
+    // void Start()
+    // {
+    //     StartEnding();
+    // }
 
     public async void StartEnding()
     {
