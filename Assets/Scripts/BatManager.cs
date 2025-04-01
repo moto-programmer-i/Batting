@@ -81,14 +81,12 @@ public class BatManager : MonoBehaviour
 
         // バットリスト初期化
         InitBatList();
-
         
         // セーブデータから現在のバット設定を適用
         saveDataManager.AddAfterLoad((saveData) => {
             radioButtonGroup.value = saveDataManager.SaveData.CurrentBatIndex;
             ChangeBat(GetCurrentBatSetting());
-        });
-        
+        }); 
     }
 
     public void InitBatList()
@@ -134,8 +132,9 @@ public class BatManager : MonoBehaviour
             masks.Add(mask);
         }
 
-        // 画面サイズの変更に応じて、ラジオボタンのサイズを調整
+        // 表示時
         batListView.RegisterCallback<GeometryChangedEvent>(e => {
+            // 画面サイズの変更に応じて、ラジオボタンのサイズを調整
             var icon = batSettings.First().Icon;
             var height = icon.height *
                         (e.newRect.width - SCROLL_BAR_WIDTH_PX) / icon.width / BAT_NUM_IN_PAGE;
@@ -143,7 +142,11 @@ public class BatManager : MonoBehaviour
             foreach(var radioButton in radioButtons) {
                 radioButton.style.height = height;
             }
-        });
+
+            // スクロールを調整
+            // 選択中のバットを一番上に
+            batListView.scrollOffset = new Vector2(0,radioButtonGroup.value * height);
+        });        
 
         // 飛距離に応じて新しいバットを入手
         distanceManager.OnMaxMeterChange.Add(meter => {
@@ -155,7 +158,6 @@ public class BatManager : MonoBehaviour
                 }
             });
         });
-        
     }
 
     private void ShowNewBatNotice(bool visible)
