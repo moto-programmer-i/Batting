@@ -1,6 +1,4 @@
-不要ライブラリ、不要オブジェクト（Destroy zoneなど）、不要コメント削除
-    System.Text.Jsonへの移行
-    メモリチェック
+メモリチェック
 
 他社ライセンス表記
     https://fonts.google.com/specimen/Zen+Antique+Soft/license?lang=ja_Jpan&categoryFilters=Feeling:%2FExpressive%2FBusiness
