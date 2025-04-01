@@ -130,6 +130,7 @@ public class PaintController : MonoBehaviour
                 // スイングを初期化
                 swingPath.Clear();
                 Destroy(texture);
+                texture = null;
                 prePenPosition = null;
                 ShowSwingDrawer(false);
             }
