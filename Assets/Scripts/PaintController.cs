@@ -92,9 +92,6 @@ public class PaintController : MonoBehaviour
     [SerializeField]
     private BatController batController;
 
-    
-
-    // Start is called before the first frame update
     void Start()
     {
         // ファイルからスイング読み込み
@@ -165,7 +162,6 @@ public class PaintController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         // 画面が表示されてなければ何もしない

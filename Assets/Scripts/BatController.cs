@@ -45,8 +45,6 @@ public class BatController : MonoBehaviour
 
     private BatSetting currentBat;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();

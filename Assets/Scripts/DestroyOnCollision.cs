@@ -4,19 +4,6 @@ using UnityEngine;
 
 public class DestroyOnCollision : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     /// <summary>
     /// 衝突した相手を削除する
     /// </summary>

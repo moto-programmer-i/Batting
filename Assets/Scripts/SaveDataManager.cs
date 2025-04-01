@@ -12,7 +12,6 @@ public class SaveDataManager : MonoBehaviour
 
     private List<Action<SaveData>> afterLoads = new ();
     
-    // Start is called before the first frame update
     void Awake()
     {
         // セーブデータを読み込み

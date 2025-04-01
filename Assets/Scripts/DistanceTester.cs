@@ -60,7 +60,6 @@ public class DistanceTester : MonoBehaviour
 
     private float one_kdt;
 
-    // Start is called before the first frame update
     void Start()
     {
         k = drag;

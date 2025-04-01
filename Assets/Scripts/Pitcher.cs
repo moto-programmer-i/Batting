@@ -28,13 +28,11 @@ public class Pitcher : MonoBehaviour
 
     private MeshRenderer ballMesh;
 
-    // Start is called before the first frame update
     void Start()
     {
         ballMesh = ballOnHand.GetComponent<MeshRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         // // idleSecondごとにボールを投げる
