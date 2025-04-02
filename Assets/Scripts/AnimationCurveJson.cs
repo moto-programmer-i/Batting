@@ -4,8 +4,6 @@ using System.Runtime.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Numerics;
 
 public class AnimationCurveJson
 {
@@ -72,17 +70,14 @@ public class AnimationCurveJson
     /// <param name="to">新しい起点</param>
     public void Offset(Transform to)
     {
-       
-        
-        
         AnimationKeyframe first = _keyframes.First();
 
         // toが起点になるように差を作成
         Vector3Data offset = Vector3Data.From(to.position) - first.Position;
 
-        Debug.Log("from: " + first.Position);
-        Debug.Log("to: " + to.position);
-        Debug.Log("offset: " + offset);
+        // Debug.Log("from: " + first.Position);
+        // Debug.Log("to: " + to.position);
+        // Debug.Log("offset: " + offset);
 
         // toを起点に設定
         first.Position = Vector3Data.From(to.position);
@@ -90,7 +85,7 @@ public class AnimationCurveJson
         // 全ての要素に差を適用
         for (int i = 1; i < _keyframes.Count; ++i) {
             _keyframes[i].Position += offset;
-            Debug.Log($"{i}: {_keyframes[i].Position}");
+            // Debug.Log($"{i}: {_keyframes[i].Position}");
         }
     }
 }
