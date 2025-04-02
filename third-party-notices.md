@@ -1,3 +1,11 @@
+# Unityアセットのライセンス
+|ライブラリ|Copyright|ライセンス種類|
+| ---- | ---- | ---- |
+|[Particle Pack](https://assetstore.unity.com/packages/vfx/particles/particle-pack-127325)|Unity Technologies|Standard Unity Asset Store EULA|
+
+---
+<br><br>
+
 # ソースコードの外部ライブラリのライセンス
 
 |ライブラリ|Copyright|ライセンス種類|
@@ -30,6 +38,8 @@
 
 
 ---
+<br><br>
+
 # その他のライセンス
 Assets/ThirdPartiesフォルダ以下はそれぞれのライセンスに従います。
 （ライセンス種類がないものは、独自ライセンス）
