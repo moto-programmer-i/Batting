@@ -1,5 +1,5 @@
 # Unityアセットのライセンス
-|ライブラリ|Copyright|ライセンス種類|
+|アセット|Copyright|ライセンス種類|
 | ---- | ---- | ---- |
 |[Particle Pack](https://assetstore.unity.com/packages/vfx/particles/particle-pack-127325)|Unity Technologies|Standard Unity Asset Store EULA|
 
