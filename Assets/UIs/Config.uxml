@@ -19,7 +19,7 @@
                 <MuteButton style="width: 50px; height: auto; flex-grow: 0;" />
                 <ui:Slider picking-mode="Ignore" label="Slider" value="0" high-value="20" low-value="-80" class="volume" />
             </ui:VisualElement>
-            <ui:Label tabindex="-1" text="&lt;a href=&quot;https://github.com/moto-programmer-i/Batting/blob/main/third-party-notices.txt&quot;&gt;外部ライセンス&lt;a&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="third-party" style="margin-top: 50px;" />
+            <ui:Label tabindex="-1" text="&lt;a href=&quot;https://github.com/moto-programmer-i/Batting/blob/main/third-party-notices.md&quot;&gt;外部ライセンス&lt;a&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="third-party" style="margin-top: 50px;" />
         </ui:ScrollView>
     </CloseArea>
 </ui:UXML>

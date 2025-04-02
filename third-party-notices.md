@@ -1,0 +1,40 @@
+# ソースコードの外部ライブラリのライセンス
+
+|ライブラリ|権利元|ライセンス種類|
+| ---- | ---- | ---- |
+|[Burst](https://docs.unity3d.com/Packages/com.unity.burst@1.8/license/LICENSE.html)|copyright © 2022 Unity Technologies|Unity Companion License|
+|[Core RP Library](https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@14.0/license/LICENSE.html)|copyright © 2020 Unity Technologies ApS|Unity Companion License|
+|[Newtonsoft.Json](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@3.2/license/Third%20Party%20Notices.html)|Copyright (c) 2007 James Newton-King|The MIT License (MIT)|
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+|[]()|||
+
+
+
+---
+# その他のライセンス
+Assets/ThirdPartiesフォルダ以下はそれぞれのライセンスに従います。
+（ライセンス種類がないものは、独自ライセンス）
+
+|名前|権利元|ライセンス種類|フォルダ|
+| --- | --- | --- | --- |
+|[Font Awesome](https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt)|Copyright (c) 2024 Fonticons, Inc.|SIL OFL 1.1 License|[Fonts/Awesome](/Assets/Fonts/Awesome)|
+|[Zen Antique Soft](https://github.com/googlefonts/zen-antique/blob/main/OFL.txt)|Copyright 2021 The Zen Antique Project|SIL OFL 1.1 License|[Fonts/Zen_Antique_Soft](/Assets/Fonts/Awesome)|
+|[NASA Jet Propulsion Laboratory (JPL)](https://www.jpl.nasa.gov/jpl-image-use-policy/)|NASA/JPL-Caltech||[Images/NASA](/Assets/Images/NASA)<br>[使用画像](https://www.jpl.nasa.gov/images/pia00126-moon-north-pole/)|
+|[DOVA-SYNDROME](https://dova-s.jp/_contents/license/)|COPYRIGHT © 2025, DOVA-SYNDROME.||[Sounds/DOVA-SYNDROME](/Assets/Sounds/DOVA-SYNDROME)|
+|[効果音ラボ](https://soundeffect-lab.info/agreement/)|© 2013 効果音ラボ||[Sounds/効果音ラボ](/Assets/Sounds/効果音ラボ)|
+|[音人](https://on-jin.com/kiyaku.php)|copyright © 2004-2018 On-Jin ～音人～||[Sounds/音人](/Assets/Sounds/音人)|
+|[ユニティちゃん](https://unity-chan.com/contents/guideline/)|© Unity Technologies Japan/UCL||[UnityChan](/Assets/UnityChan)|
+|[]()|||[](/Assets/)|
+|[]()|||[](/Assets/)|
+|[]()|||[](/Assets/)| 
+
+
