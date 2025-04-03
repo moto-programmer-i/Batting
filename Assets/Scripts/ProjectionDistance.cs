@@ -1,5 +1,4 @@
 using System;
-using PlasticPipe.PlasticProtocol.Messages;
 using UnityEngine;
 
 /// <summary>
