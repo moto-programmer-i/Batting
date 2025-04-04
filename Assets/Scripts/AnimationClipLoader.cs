@@ -39,22 +39,35 @@ public static class AnimationClipLoader
     const string ROTATION_W_KEY = "localRotation.w";
     
 
+    // WebGLだと動作しなかった
     /// <summary>
     /// AnimationClipをAnimatorに設定
     /// </summary>
     /// <param name="jsonFilename"></param>
     /// <param name="clipname"></param>
     /// <param name="anim"></param>
-    public static void setClip(AnimationCurveJson curve, string clipname, Animator anim)
+    // public static void setClip(AnimationCurveJson curve, string clipname, Animator anim)
+    // {
+    //     // AnimationCurveJsonからAnimationClipを作成
+    //     AnimationClip clip = convertToAnimationClip(curve);
+    //     clip.name = clipname;
+
+    //     // AnimationClipを変更（AnimatorOverrideControllerを経由しないと動かない）
+    //     if (anim.runtimeAnimatorController is AnimatorOverrideController) {
+    //         ((AnimatorOverrideController)anim.runtimeAnimatorController)[clip.name] = clip;
+    //     } else {
+    //         AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(anim.runtimeAnimatorController);
+    //         animatorOverrideController[clip.name] = clip;
+    //         anim.runtimeAnimatorController = animatorOverrideController;
+    //     }
+    // }
+
+    public static void setClip(AnimationCurveJson curve, string clipname, Animation anim)
     {
         // AnimationCurveJsonからAnimationClipを作成
         AnimationClip clip = convertToAnimationClip(curve);
         clip.name = clipname;
-
-        // AnimationClipを変更（AnimatorOverrideControllerを経由しないと動かない）
-		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(anim.runtimeAnimatorController);
-        anim.runtimeAnimatorController = animatorOverrideController;
-        animatorOverrideController[clip.name] = clip;
+        anim.AddClip(clip, clipname);
     }
 
     /// <summary>
@@ -69,6 +82,10 @@ public static class AnimationClipLoader
         }
 
         AnimationClip clip = new AnimationClip();
+        
+        // WebGLビルド エラー対処
+        // Can't use AnimationClip::SetCurve at Runtime on non Legacy AnimationClips
+        clip.legacy = true;
 
         // Positionの成分ごとのカーブを作成
         // 参考
@@ -106,6 +123,11 @@ public static class AnimationClipLoader
         clip.SetCurve("", typeof(Transform), ROTATION_Y_KEY, yRotationCurve);
         clip.SetCurve("", typeof(Transform), ROTATION_Z_KEY, zRotationCurve);
         clip.SetCurve("", typeof(Transform), ROTATION_W_KEY, wRotationCurve);
+
+        // legacyがtrueのままだとその先で動かないのでfalseに戻す
+        // 明らかに正当な手段ではないが、正しい方法不明
+        // The legacy Animation Clip "Swing" cannot be used in the Override Controller "". Legacy Animation Clips are not allowed in Animator Override Controllers.
+        // clip.legacy = false;
 
         return clip;
     }

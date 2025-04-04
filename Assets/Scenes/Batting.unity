@@ -2093,6 +2093,7 @@ GameObject:
   - component: {fileID: 368529954}
   - component: {fileID: 368529956}
   - component: {fileID: 368529957}
+  - component: {fileID: 368529958}
   m_Layer: 7
   m_Name: Bat
   m_TagString: Bat
@@ -2264,6 +2265,8 @@ MonoBehaviour:
   distanceManager: {fileID: 289460919}
   saveDataManager: {fileID: 289460923}
   se: {fileID: 368529957}
+  swingStopTime: 1
+  swingRewindTime: 0.2
 --- !u!54 &368529955
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2299,7 +2302,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368529949}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 158dfecd04c45864889e07ac4dcbcfb4, type: 2}
   m_CullingMode: 0
@@ -2409,6 +2412,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!111 &368529958
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368529949}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

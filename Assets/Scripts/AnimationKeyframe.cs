@@ -29,6 +29,13 @@ public class AnimationKeyframe
         this.Type = type;
     }
 
+    public AnimationKeyframe(Transform transform, float time = 0)
+    {
+        this.Time = time;
+        this.Position = Vector3Data.From(transform.position);
+        this.Rotation = Vector3Data.From(transform.eulerAngles);
+    }
+
     public AnimationKeyframe Clone()
     {
         return new AnimationKeyframe(

@@ -8,10 +8,15 @@ using UnityEngine.InputSystem;
 
 public class BatController : MonoBehaviour
 {
-    public static readonly string DEFAULT_SWING_FILENAME = "Animations/defaultSwingPath";
-    public static readonly string SAVED_SWING_FILENAME = "swingPath.json";
+    const string DEFAULT_SWING_FILENAME = "Animations/defaultSwingPath";
+    const string SAVED_SWING_FILENAME = "swingPath.json";
 
-    public static readonly string SWING_CLIPNAME = "Swing";
+    const string SWING_CLIPNAME = "Swing";
+
+    /// <summary>
+    /// クリップが最初の状態に戻らないので、ダミー用
+    /// </summary>
+    const string SWING_DEFAULT_CLIPNAME = "SwingDefault";
 
     public Camera mainCamera; 
 
@@ -24,7 +29,9 @@ public class BatController : MonoBehaviour
     /// </summary>
     private List<InputAction> actions = new ();
 
-    private Animator animator;
+    // WebGLだと動作しなかった
+    // private Animator animator;
+    private Animation swingAnimation;
 
     [SerializeField]
     private float amplifier = 1.0f;
@@ -43,9 +50,24 @@ public class BatController : MonoBehaviour
 
     private BatSetting currentBat;
 
+    /// <summary>
+    /// スイング終了後、フォロースルーで停止する時間
+    /// </summary>
+    [SerializeField]
+    private float swingStopTime = 1.0f;
+
+    /// <summary>
+    /// スイング終了後、構えに戻る時間
+    /// </summary>
+    [SerializeField]
+    private float swingRewindTime = 0.1f;
+
+
     void Start()
     {
-        animator = GetComponent<Animator>();
+        // WebGLだと動作しなかった
+        // animator = GetComponent<Animator>();
+        swingAnimation = GetComponent<Animation>();
 
         // 保存されたスイング読み込み
         AnimationCurveJson curve;
@@ -65,14 +87,32 @@ public class BatController : MonoBehaviour
 
     public void SetSwing(AnimationCurveJson curve)
     {
-        AnimationClipLoader.setClip(curve, SWING_CLIPNAME, animator);
+        // WebGLだと動作しなかった
+        // AnimationClipLoader.setClip(curve, SWING_CLIPNAME, animator);
+
+        AnimationClipLoader.setClip(curve, SWING_CLIPNAME, swingAnimation);
+
+        // 最初の状態に戻らないので、無理やり戻す用のダミー
+        AnimationCurveJson swingDefault = new ();
+        AnimationKeyframe end = curve.Keyframes.Last().Clone();
+        end.Time = swingStopTime;
+        swingDefault.Keyframes.Add(end);
+        swingDefault.Keyframes.Add(new (transform, swingStopTime + swingRewindTime));
+        AnimationClipLoader.setClip(swingDefault, SWING_DEFAULT_CLIPNAME, swingAnimation);
     }
 
     
 
     void Swing(InputAction.CallbackContext context) {
         // スイング
-        animator.SetTrigger(AnimatorConstants.SWING);
+        // WebGLだと動作しなかった
+        // animator.SetTrigger(AnimatorConstants.SWING);
+
+        
+        swingAnimation.Play(AnimatorConstants.SWING);
+
+        // 最初の状態に戻らないので無理やり戻す
+        swingAnimation.PlayQueued(SWING_DEFAULT_CLIPNAME);
     }
 
     void OnEnable()
