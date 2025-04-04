@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -11,6 +12,8 @@ public class ConfigManager : MonoBehaviour
     const string BGM_NAME = "bgm";
     const string SE_NAME = "se";
     const string CONFIG_BUTTON_NAME = "config-button";
+
+    const string THIRD_PARTY_NAME  = "third-party";
 
     // AudioMixerの名前と対応させる必要がある
     const string AUDIO_GROUP_MASTER_NAME = "Master";
@@ -40,6 +43,11 @@ public class ConfigManager : MonoBehaviour
     private AudioContainer master;
     private AudioContainer bgm;
     private AudioContainer se;
+
+    private Label thirdParty;
+
+    [SerializeField]
+    private string thirdPartyLink;
     
     void Awake()
     {        
@@ -60,6 +68,11 @@ public class ConfigManager : MonoBehaviour
         bgm = CreateContainerFrom(AUDIO_GROUP_BGM_NAME, config.rootVisualElement.Q<VisualElement>(BGM_NAME));
         se = CreateContainerFrom(AUDIO_GROUP_SE_NAME, config.rootVisualElement.Q<VisualElement>(SE_NAME));
 
+        // なぜか<a>がそのまま動かないので、無理やりやる
+        thirdParty = config.rootVisualElement.Q<Label>(THIRD_PARTY_NAME);
+        thirdParty.RegisterCallback<ClickEvent>(e => {
+            Application.OpenURL(thirdPartyLink);
+        });
         
     }
 

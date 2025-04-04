@@ -1841,6 +1841,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 4baafd81d8dd4ea4a86d7a59e8e86983, type: 2}
   bgmSource: {fileID: 330585548}
   saveDataManager: {fileID: 289460923}
+  thirdPartyLink: https://github.com/moto-programmer-i/Batting/blob/main/third-party-notices.md
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
