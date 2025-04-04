@@ -10,7 +10,7 @@ public class DistanceSettings : MonoBehaviour
     /// 飛距離が表示される時間
     /// </summary>
     [field: SerializeField]
-    public int DistanceDisplayMiliSeconds { get; private set;} = 1000;
+    public int DistanceDisplaySeconds { get; private set;} = 1;
     
     [SerializeField]
     private List<DistanceSetting> textSettings = new ();

@@ -21,7 +21,7 @@ public class EndingManager : MonoBehaviour
     public float MeterCondition {set; get;}
 
     [SerializeField]
-    private int delayMiliSeconds = 1000;
+    private int delaySeconds = 1;
 
     private bool canPlay = true;
 
@@ -77,7 +77,7 @@ public class EndingManager : MonoBehaviour
     //     StartEnding();
     // }
 
-    public async void StartEnding()
+    public void StartEnding()
     {
         if (!canPlay) {
             return;
@@ -90,16 +90,16 @@ public class EndingManager : MonoBehaviour
         mainAudio.Pause();
         
         // 指定時間後にエンディングを開始
-        await Task.Delay(delayMiliSeconds);
-        
-        ending.EnableInClassList(ANIMATION_CLASS, true);
+        AsyncUtils.Delay(delaySeconds, () => {
+            ending.EnableInClassList(ANIMATION_CLASS, true);
 
-        // エンディングの高さが計算されてからスクロール
-        ending.RegisterCallback<GeometryChangedEvent>(e => {
-            ending.EnableInClassList(SCROLL_CLASS, true);
-        });
+            // エンディングの高さが計算されてからスクロール
+            ending.RegisterCallback<GeometryChangedEvent>(e => {
+                ending.EnableInClassList(SCROLL_CLASS, true);
+            });
 
-        endingAudio.Play();
+            endingAudio.Play();
+        });        
 
         // 一度エンディングに入ったら、そのプレイ中は流さない
         canPlay = false;

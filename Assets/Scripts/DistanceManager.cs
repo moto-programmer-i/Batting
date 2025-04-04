@@ -251,23 +251,13 @@ public class DistanceManager : MonoBehaviour
         return MathF.Sign(to.y) * MathF.Acos(dot);
     }
 
-    public async void ShowDistance(float distance)
+    public void ShowDistance(float distance)
     {
         ShowDistanceCanvas(true);
         distanceLabel.text = DistanceToText(distance);
 
-
-        // メソッド全体をasyncにしなければ、enabledが反映されなかった
-        // // 指定時間後に非表示にする
-        // Task.Run(async()  => {
-        //     await Task.Delay(distanceDisplayMiliSeconds);
-        //     ShowDistanceCanvas(false);
-        //     distanceText.enabled = false;
-        //     });
-
         // 指定時間後に非表示にする
-        await Task.Delay(SettingsManager.DistanceSettings.DistanceDisplayMiliSeconds);
-        ShowDistanceCanvas(false);
+        StartCoroutine(AsyncUtils.Delay(SettingsManager.DistanceSettings.DistanceDisplaySeconds, () => ShowDistanceCanvas(false)));
     }
 
     public void ShowMaxDistance(float distance)
