@@ -257,7 +257,7 @@ public class DistanceManager : MonoBehaviour
         distanceLabel.text = DistanceToText(distance);
 
         // 指定時間後に非表示にする
-        StartCoroutine(AsyncUtils.Delay(SettingsManager.DistanceSettings.DistanceDisplaySeconds, () => ShowDistanceCanvas(false)));
+        AsyncUtils.Delay(this, SettingsManager.DistanceSettings.DistanceDisplaySeconds, () => ShowDistanceCanvas(false));
     }
 
     public void ShowMaxDistance(float distance)

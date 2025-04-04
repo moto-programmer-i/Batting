@@ -1606,6 +1606,7 @@ GameObject:
   - component: {fileID: 289460922}
   - component: {fileID: 289460923}
   - component: {fileID: 289460924}
+  - component: {fileID: 289460925}
   m_Layer: 0
   m_Name: Instances
   m_TagString: Untagged
@@ -1644,7 +1645,7 @@ MonoBehaviour:
   homePlate: {fileID: 1780571332}
   ui: {fileID: 472610981}
   saveDataManager: {fileID: 289460923}
-  endingManager: {fileID: 1551797127}
+  endingManager: {fileID: 289460925}
 --- !u!114 &289460920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1670,7 +1671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e196ae6ede7d7a547a479ad15265f958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DistanceDisplayMiliSeconds>k__BackingField: 3000
+  <DistanceDisplaySeconds>k__BackingField: 1
   textSettings:
   - <Distance>k__BackingField: 0
     <Size>k__BackingField: 60
@@ -1842,6 +1843,23 @@ MonoBehaviour:
   bgmSource: {fileID: 330585548}
   saveDataManager: {fileID: 289460923}
   thirdPartyLink: https://github.com/moto-programmer-i/Batting/blob/main/third-party-notices.md
+--- !u!114 &289460925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289460917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61925c83331d2b44971141c37ce9e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui: {fileID: 1551797125}
+  <MeterCondition>k__BackingField: 384400000
+  delaySeconds: 1
+  endingAudio: {fileID: 1551797128}
+  mainAudio: {fileID: 330585548}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,7 +3281,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1551797126}
   - component: {fileID: 1551797125}
-  - component: {fileID: 1551797127}
   - component: {fileID: 1551797128}
   m_Layer: 5
   m_Name: EndingUI
@@ -3304,23 +3321,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1551797127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1551797124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d61925c83331d2b44971141c37ce9e4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ui: {fileID: 1551797125}
-  <MeterCondition>k__BackingField: 384400000
-  delayMiliSeconds: 1000
-  endingAudio: {fileID: 1551797128}
-  mainAudio: {fileID: 330585548}
 --- !u!82 &1551797128
 AudioSource:
   m_ObjectHideFlags: 0

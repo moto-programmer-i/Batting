@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ public class EndingManager : MonoBehaviour
     public float MeterCondition {set; get;}
 
     [SerializeField]
-    private int delaySeconds = 1;
+    private float delaySeconds = 1;
 
     private bool canPlay = true;
 
@@ -32,9 +33,12 @@ public class EndingManager : MonoBehaviour
     private AudioSource mainAudio;
 
     private bool initialized = false;
+
+    private String debug;
     
     void Awake()
     {
+        Init();
     }
 
     /// <summary>
@@ -52,6 +56,8 @@ public class EndingManager : MonoBehaviour
         ending = ui.rootVisualElement.Q(ENDING_NAME);
         ending.EnableInClassList(SCROLL_CLASS, false);
         endingImage = ui.rootVisualElement.Q(ENDING_IMAGE_NAME);
+
+        ending.EnableInClassList(ANIMATION_CLASS, false);
         
 
         // ダブルクリックでスキップ
@@ -69,13 +75,21 @@ public class EndingManager : MonoBehaviour
             mainAudio.UnPause();
         });
 
-        canPlay = true;
+        initialized = true;
     }
 
-    // void Start()
-    // {
-    //     StartEnding();
-    // }
+    void Start()
+    {
+        StartEnding();
+    }
+
+    void Update()
+    {
+        if (debug != null) {
+            Debug.Log(debug);
+            debug = null;
+        }
+    }
 
     public void StartEnding()
     {
@@ -90,7 +104,7 @@ public class EndingManager : MonoBehaviour
         mainAudio.Pause();
         
         // 指定時間後にエンディングを開始
-        AsyncUtils.Delay(delaySeconds, () => {
+        AsyncUtils.Delay(this, delaySeconds, () => {
             ending.EnableInClassList(ANIMATION_CLASS, true);
 
             // エンディングの高さが計算されてからスクロール

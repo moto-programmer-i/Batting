@@ -8,9 +8,16 @@ using UnityEngine;
 /// </summary>
 public static class AsyncUtils
 {
-    public static IEnumerator Delay(float seconds, Action action)
+    public static void Delay(MonoBehaviour instance, float seconds, Action action)
+    {
+        instance.StartCoroutine(Wait(seconds, action));
+        
+    }
+
+    private static IEnumerator Wait(float seconds, Action action)
     {
         yield return new WaitForSecondsRealtime(seconds);
         action.Invoke();
     }
+
 }
