@@ -23,16 +23,32 @@ public class EndingManager : MonoBehaviour
     [SerializeField]
     private int delayMiliSeconds = 1000;
 
-    private bool enable = true;
+    private bool canPlay = true;
 
     [SerializeField]
     private AudioSource endingAudio;
 
     [SerializeField]
     private AudioSource mainAudio;
+
+    private bool initialized = false;
     
     void Awake()
     {
+    }
+
+    /// <summary>
+    /// 事前にui.enabled = trueが必要、この構成でないとWebGLで動作しない
+    /// </summary>
+    // ArgumentNullException: Value cannot be null.
+    // Parameter name: e
+    //   at UnityEngine.UIElements.UQueryExtensions.Q (UnityEngine.UIElements.VisualElement e, System.String name, System.String className) [0x00000] in <00000000000000000000000000000000>:0 
+    public void Init()
+    {
+        if (initialized){
+            return;
+        }
+
         ending = ui.rootVisualElement.Q(ENDING_NAME);
         ending.EnableInClassList(SCROLL_CLASS, false);
         endingImage = ui.rootVisualElement.Q(ENDING_IMAGE_NAME);
@@ -53,7 +69,7 @@ public class EndingManager : MonoBehaviour
             mainAudio.UnPause();
         });
 
-        enable = true;
+        canPlay = true;
     }
 
     // void Start()
@@ -63,16 +79,19 @@ public class EndingManager : MonoBehaviour
 
     public async void StartEnding()
     {
-        if (!enable) {
+        if (!canPlay) {
             return;
         }
+
+        ui.enabled = true;
+
+        Init();
 
         mainAudio.Pause();
         
         // 指定時間後にエンディングを開始
         await Task.Delay(delayMiliSeconds);
         
-        ui.enabled = true;
         ending.EnableInClassList(ANIMATION_CLASS, true);
 
         // エンディングの高さが計算されてからスクロール
@@ -83,7 +102,7 @@ public class EndingManager : MonoBehaviour
         endingAudio.Play();
 
         // 一度エンディングに入ったら、そのプレイ中は流さない
-        enable = false;
+        canPlay = false;
     }
 
     public void SkipEnding()
