@@ -1671,7 +1671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e196ae6ede7d7a547a479ad15265f958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DistanceDisplaySeconds>k__BackingField: 1
+  <DistanceDisplaySeconds>k__BackingField: 2
   textSettings:
   - <Distance>k__BackingField: 0
     <Size>k__BackingField: 60
