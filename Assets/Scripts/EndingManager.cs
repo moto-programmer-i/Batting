@@ -33,8 +33,6 @@ public class EndingManager : MonoBehaviour
     private AudioSource mainAudio;
 
     private bool initialized = false;
-
-    private String debug;
     
     void Awake()
     {
@@ -78,18 +76,10 @@ public class EndingManager : MonoBehaviour
         initialized = true;
     }
 
-    void Start()
-    {
-        StartEnding();
-    }
-
-    void Update()
-    {
-        if (debug != null) {
-            Debug.Log(debug);
-            debug = null;
-        }
-    }
+    // void Start()
+    // {
+    //     StartEnding();
+    // }
 
     public void StartEnding()
     {
@@ -97,21 +87,17 @@ public class EndingManager : MonoBehaviour
             return;
         }
 
+        // Initの前にenabledしないとWebGLビルドでエラー
         ui.enabled = true;
 
-        Init();
+        Init();  
 
         mainAudio.Pause();
         
         // 指定時間後にエンディングを開始
         AsyncUtils.Delay(this, delaySeconds, () => {
             ending.EnableInClassList(ANIMATION_CLASS, true);
-
-            // エンディングの高さが計算されてからスクロール
-            ending.RegisterCallback<GeometryChangedEvent>(e => {
-                ending.EnableInClassList(SCROLL_CLASS, true);
-            });
-
+            ending.EnableInClassList(SCROLL_CLASS, true);
             endingAudio.Play();
         });        
 
