@@ -19,5 +19,4 @@ public static class AsyncUtils
         yield return new WaitForSecondsRealtime(seconds);
         action.Invoke();
     }
-
 }

@@ -36,7 +36,8 @@ public class EndingManager : MonoBehaviour
     
     void Awake()
     {
-        Init();
+        // ここでInitするとNull例外
+        // Init();
     }
 
     /// <summary>
@@ -88,7 +89,7 @@ public class EndingManager : MonoBehaviour
         }
 
         // Initの前にenabledしないとWebGLビルドでエラー
-        ui.enabled = true;
+        ui.enabled = true;        
 
         Init();  
 
@@ -96,9 +97,9 @@ public class EndingManager : MonoBehaviour
         
         // 指定時間後にエンディングを開始
         AsyncUtils.Delay(this, delaySeconds, () => {
+            endingAudio.Play();
             ending.EnableInClassList(ANIMATION_CLASS, true);
             ending.EnableInClassList(SCROLL_CLASS, true);
-            endingAudio.Play();
         });        
 
         // 一度エンディングに入ったら、そのプレイ中は流さない

@@ -1,7 +1,10 @@
 WebGL ビルド
-    Audio Mixerが機能しないかも？
-        https://docs.unity3d.com/ja/2022.3/Manual/AudioMixer.html
-        https://negi-lab.blog.jp/archives/build_for_wegGL.html
+    一旦圧縮 Optim DataCaching なし、Developmentビルド
+
+
+
+
+
 
 
 Androidビルド
