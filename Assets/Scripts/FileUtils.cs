@@ -21,7 +21,8 @@ public static class FileUtils
 
     public static string GetCurrentDirectory()
     {
-        // 開発中は C:/Users/%USERNAME%/AppData/LocalLow/DefaultCompany/Batting
+        // 開発中は C:/Users/%USERNAME%/AppData/LocalLow/moto_pg_i/batting_center
+        // プロジェクト設定次第、 C:/Users/%USERNAME%/AppData/LocalLow/（Company Name）/（Product Name）
         return Application.persistentDataPath;
     }
     
