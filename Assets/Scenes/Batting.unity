@@ -1740,7 +1740,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 2800000, guid: 22a2697fea7b3e44abdb79b91b4e3965,
       type: 3}
     <Name>k__BackingField: "\u6728\u88FD\u30D0\u30C3\u30C8"
-    <Amplifier>k__BackingField: 4
+    <Amplifier>k__BackingField: 3.93
     <EnableMeter>k__BackingField: 20
     <LabelColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 1, g: 0.046127945, b: 0, a: 1}
@@ -1776,7 +1776,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 2800000, guid: 7bc403fc52754654db2dd03f52669d76,
       type: 3}
     <Name>k__BackingField: "\u30DC\u30E8\uFF5E\u30F3\u30C9"
-    <Amplifier>k__BackingField: 100
+    <Amplifier>k__BackingField: 150
     <EnableMeter>k__BackingField: 165
     <LabelColor>k__BackingField: {r: 0, g: 0.13698149, b: 1, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
@@ -1794,7 +1794,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 2800000, guid: 3b5f9b8d453ab664aab0ca634fd753a9,
       type: 3}
     <Name>k__BackingField: "\u708E\u306E\u30D0\u30C3\u30C8"
-    <Amplifier>k__BackingField: 6800000
+    <Amplifier>k__BackingField: 7500000
     <EnableMeter>k__BackingField: 5555
     <LabelColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
     <LabelOutlineColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
