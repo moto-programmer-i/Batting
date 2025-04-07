@@ -81,6 +81,11 @@ public class BatController : MonoBehaviour
         }
         SetSwing(curve);
 
+        // 最初の状態に戻らないので、無理やり戻す用のダミー
+        AnimationCurveJson swingDefault = new ();
+        swingDefault.Keyframes.Add(new (transform, swingRewindTime));
+        AnimationClipLoader.setClip(swingDefault, SWING_DEFAULT_CLIPNAME, swingAnimation);
+
         // スイング入力設定
         swing.performed += context => Swing(context);
     }
@@ -90,15 +95,12 @@ public class BatController : MonoBehaviour
         // WebGLだと動作しなかった
         // AnimationClipLoader.setClip(curve, SWING_CLIPNAME, animator);
 
-        AnimationClipLoader.setClip(curve, SWING_CLIPNAME, swingAnimation);
+        // フォロースルー時間を追加
+        AnimationKeyframe last = curve.Keyframes.Last().Clone();
+        last.Time += swingStopTime;
+        curve.Keyframes.Add(last);
 
-        // 最初の状態に戻らないので、無理やり戻す用のダミー
-        AnimationCurveJson swingDefault = new ();
-        AnimationKeyframe end = curve.Keyframes.Last().Clone();
-        end.Time = swingStopTime;
-        swingDefault.Keyframes.Add(end);
-        swingDefault.Keyframes.Add(new (transform, swingStopTime + swingRewindTime));
-        AnimationClipLoader.setClip(swingDefault, SWING_DEFAULT_CLIPNAME, swingAnimation);
+        AnimationClipLoader.setClip(curve, SWING_CLIPNAME, swingAnimation);
     }
 
     
