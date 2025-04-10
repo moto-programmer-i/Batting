@@ -305,9 +305,4 @@ public class DistanceManager : MonoBehaviour
         saveDataManager.Save();
         return true;
     }
-
-    public void Debug(string message)
-    {
-        maxDistanceLabel.text = message;
-    }
 }
