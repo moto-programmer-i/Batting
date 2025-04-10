@@ -91,12 +91,17 @@ public class EndingManager : MonoBehaviour
         // Initの前にenabledしないとWebGLビルドでエラー
         ui.enabled = true;        
 
-        Init();  
+        // 先にサイズ計算して隠しておく
+        Init();
+        endingImage.style.visibility = Visibility.Hidden;
 
         mainAudio.Pause();
         
         // 指定時間後にエンディングを開始
         AsyncUtils.Delay(this, delaySeconds, () => {
+            // ディレイ後に表示、バグ発生の場合はやめる
+            endingImage.style.visibility = Visibility.Visible;
+
             endingAudio.Play();
             ending.EnableInClassList(ANIMATION_CLASS, true);
             ending.EnableInClassList(SCROLL_CLASS, true);
