@@ -2230,14 +2230,6 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 154b8fb4-4770-4b2c-8571-b6367daf59b4
-      m_Path: <Mouse>/leftButton
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Swing
-      m_Flags: 0
-    - m_Name: 
       m_Id: 08834419-1c27-4a27-a4e4-a52acff35811
       m_Path: <Keyboard>/space
       m_Interactions: 
@@ -2270,8 +2262,8 @@ MonoBehaviour:
       m_Action: Swing
       m_Flags: 0
     - m_Name: 
-      m_Id: 3aef70c9-6955-40e3-91c7-165655ffbedf
-      m_Path: <Touchscreen>/Press
+      m_Id: 6600e513-7d96-405a-bfe5-c33566add928
+      m_Path: <Pointer>/press
       m_Interactions: 
       m_Processors: 
       m_Groups: 

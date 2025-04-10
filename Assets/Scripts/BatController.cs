@@ -87,7 +87,15 @@ public class BatController : MonoBehaviour
         AnimationClipLoader.setClip(swingDefault, SWING_DEFAULT_CLIPNAME, swingAnimation);
 
         // スイング入力設定
-        swing.performed += context => Swing(context);
+        swing.performed += context => {
+            distanceManager.Debug($"touch");
+            Swing(context);
+        };
+    }
+
+    void Update()
+    {
+        distanceManager.Debug($"isPressed {swing.IsPressed()}");
     }
 
     public void SetSwing(AnimationCurveJson curve)
