@@ -33,6 +33,8 @@ public class EndingManager : MonoBehaviour
     private AudioSource mainAudio;
 
     private bool initialized = false;
+
+    private bool eventRegistered = false;
     
     void Awake()
     {
@@ -57,7 +59,16 @@ public class EndingManager : MonoBehaviour
         endingImage = ui.rootVisualElement.Q(ENDING_IMAGE_NAME);
 
         ending.EnableInClassList(ANIMATION_CLASS, false);
-        
+
+        initialized = true;
+    }
+
+    private void RegisterEvents()
+    {
+        // すでに登録されていれば何もしない
+        if (eventRegistered) {
+            return;
+        }
 
         // ダブルクリックでスキップ
         ending.RegisterCallback<ClickEvent>(e => {
@@ -74,7 +85,7 @@ public class EndingManager : MonoBehaviour
             mainAudio.UnPause();
         });
 
-        initialized = true;
+        eventRegistered = true;
     }
 
     // void Start()
@@ -105,6 +116,9 @@ public class EndingManager : MonoBehaviour
             endingAudio.Play();
             ending.EnableInClassList(ANIMATION_CLASS, true);
             ending.EnableInClassList(SCROLL_CLASS, true);
+            
+            // hiddenのまま表示される時間ができてしまったので、クリックなどをあとで登録
+            RegisterEvents();
         });        
 
         // 一度エンディングに入ったら、そのプレイ中は流さない
