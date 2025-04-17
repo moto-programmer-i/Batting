@@ -11,6 +11,7 @@ public class ConfigManager : MonoBehaviour
     const string BGM_NAME = "bgm";
     const string SE_NAME = "se";
     const string CONFIG_BUTTON_NAME = "config-button";
+    const string AD_BUTTON_NAME = "ad-button";
 
     const string THIRD_PARTY_NAME  = "third-party";
 
@@ -47,6 +48,9 @@ public class ConfigManager : MonoBehaviour
 
     [SerializeField]
     private string thirdPartyLink;
+
+    [SerializeField]
+    private AdManager adManager;
     
     void Awake()
     {        
@@ -72,7 +76,10 @@ public class ConfigManager : MonoBehaviour
         thirdParty.RegisterCallback<ClickEvent>(e => {
             Application.OpenURL(thirdPartyLink);
         });
-        
+
+        // 広告設定
+        var adButton = config.rootVisualElement.Q<Button>(AD_BUTTON_NAME);
+        adButton.RegisterCallback<ClickEvent>(evt => adManager.ShowRewardedVideo());
     }
 
     void Start()

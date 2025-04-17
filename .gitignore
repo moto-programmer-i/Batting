@@ -90,3 +90,7 @@ crashlytics-build.properties
 /[Aa]ssets/ThirdParties/**/*.ttf
 /[Aa]ssets/ThirdParties/**/*.jpg
 /[Aa]ssets/ThirdParties/Fonts/**/*.asset
+
+# 広告用モジュールはリポジトリに含めない
+/[Aa]ssets/MobileDependencyResolver
+/[Aa]ssets/Plugins

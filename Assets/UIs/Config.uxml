@@ -20,6 +20,7 @@
                 <ui:Slider picking-mode="Ignore" label="Slider" value="0" high-value="20" low-value="-80" class="volume" />
             </ui:VisualElement>
             <ui:Label tabindex="-1" text="外部ライセンス（ブラウザで開きます）" parse-escape-sequences="false" display-tooltip-when-elided="true" name="third-party" enable-rich-text="false" style="margin-top: 50px; color: rgb(1, 186, 255); margin-right: auto; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+            <ui:Button text="広告（開発裏話がでるだけです）" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ad-button" style="-unity-font: initial; -unity-font-definition: url(&apos;project://database/Assets/ThirdParties/Fonts/Zen_Antique_Soft/ZenAntiqueSoft-Regular%20SDF.asset?fileID=11400000&amp;guid=d2a3b8a4bea321a4188bbd79d24091f5&amp;type=2#ZenAntiqueSoft-Regular SDF&apos;); margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;" />
         </ui:ScrollView>
     </CloseArea>
 </ui:UXML>
