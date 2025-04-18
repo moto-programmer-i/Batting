@@ -14,10 +14,13 @@ public class SaveData
     public VolumeData Bgm {get; set;}
     public VolumeData Se {get; set;}
 
+    public int DevelopmentMessageIndex {get; set;}
+
     public static SaveData CreateDefault() {
         SaveData saveData = new ();
         saveData.CurrentBatIndex = 0;
         saveData.MaxMeter = 0;
+        saveData.DevelopmentMessageIndex = 0;
         saveData.InitNullObjects();
         return saveData;
     }
