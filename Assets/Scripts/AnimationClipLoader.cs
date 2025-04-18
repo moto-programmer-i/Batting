@@ -124,11 +124,6 @@ public static class AnimationClipLoader
         clip.SetCurve("", typeof(Transform), ROTATION_Z_KEY, zRotationCurve);
         clip.SetCurve("", typeof(Transform), ROTATION_W_KEY, wRotationCurve);
 
-        // legacyがtrueのままだとその先で動かないのでfalseに戻す
-        // 明らかに正当な手段ではないが、正しい方法不明
-        // The legacy Animation Clip "Swing" cannot be used in the Override Controller "". Legacy Animation Clips are not allowed in Animator Override Controllers.
-        // clip.legacy = false;
-
         return clip;
     }
 }
