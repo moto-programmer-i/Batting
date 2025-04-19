@@ -56,15 +56,6 @@ public class AdManager : MonoBehaviour
 
     // void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
     // {
-    //     AndroidUtils.ShowDialog("Closed", "");
-    //     // saveDataManager.AddAfterLoad(saveData => {
-    //     //     // 順番に開発裏話を表示
-    //     //     if (saveData.DevelopmentMessageIndex < 0 || saveData.DevelopmentMessageIndex >= messages.Count) {
-    //     //         saveData.DevelopmentMessageIndex = 0;
-    //     //     }
-    //     //     AndroidUtils.ShowDialog("開発裏話", messages[saveData.DevelopmentMessageIndex]);
-    //     //     ++saveData.DevelopmentMessageIndex;
-    //     // });
     // }
 
     // The user completed to watch the video, and should be rewarded.
