@@ -3736,8 +3736,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 459819a7-1e60-4ef4-8aac-77bc6f1692cf
-      m_Path: <Mouse>/press
+      m_Id: fadcf79c-979a-4373-abab-b46651115e82
+      m_Path: <Pointer>/press
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -3753,8 +3753,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: dd982a92-613f-4258-9979-9fd017639b5e
-      m_Path: <Mouse>/position
+      m_Id: 71758d8e-77c5-4788-9d19-60968f182fe6
+      m_Path: <Pointer>/position
       m_Interactions: 
       m_Processors: 
       m_Groups: 
