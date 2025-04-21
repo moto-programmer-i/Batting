@@ -63,6 +63,11 @@ public class AdManager : MonoBehaviour
     // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
     void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
     {        
+        ShowBehindTheScenes();
+    }
+
+    public void ShowBehindTheScenes()
+    {
         saveDataManager.AddAfterLoad(saveData => {
             // 順番に開発裏話を表示
             if (saveData.DevelopmentMessageIndex < 0 || saveData.DevelopmentMessageIndex >= messages.Count) {
