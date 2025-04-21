@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/UIs/CloseArea/CloseArea.uss?fileID=7433441132597879392&amp;guid=d65afb240c9b83145b757d3318d0fc6b&amp;type=3#CloseArea" />
     <Style src="project://database/Assets/UIs/MuteButton/MuteButton.uss?fileID=7433441132597879392&amp;guid=358a560c64287314ba0239d036013879&amp;type=3#MuteButton" />
     <CloseArea style="display: none; height: 100%; width: 100%; -unity-font: url(&apos;project://database/Assets/ThirdParties/Fonts/Zen_Antique_Soft/ZenAntiqueSoft-Regular.ttf?fileID=12800000&amp;guid=ae747c6b991a4734397cbd04e8473a24&amp;type=3#ZenAntiqueSoft-Regular&apos;);">
-        <ui:ScrollView name="ConfigView" focusable="false" mode="Vertical" horizontal-scroller-visibility="Auto" style="overflow: visible; background-color: rgb(219, 219, 219); width: 90%; margin-top: auto; margin-right: auto; margin-bottom: auto; margin-left: auto;">
+        <ui:ScrollView name="ConfigView" focusable="false" mode="Vertical" horizontal-scroller-visibility="Auto" style="overflow: visible; background-color: rgb(219, 219, 219); width: 70%; margin-top: auto; margin-right: auto; margin-bottom: auto; margin-left: auto;">
             <ui:VisualElement name="master" style="flex-grow: 1; width: auto; height: 60px; flex-direction: row;">
                 <ui:Label tabindex="-1" text="主音量" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="false" class="volume-label" style="flex-direction: column; -unity-text-align: middle-center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
                 <MuteButton style="flex-shrink: 0;" />
