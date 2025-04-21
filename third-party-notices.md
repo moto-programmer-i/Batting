@@ -7,10 +7,11 @@
 <br><br>
 
 # ソースコードの外部ライブラリのライセンス
-
+（ライセンス種類がないものは、独自ライセンス）
 |ライブラリ|Copyright|ライセンス種類|
 | ---- | ---- | ---- |
 |[.NET](https://github.com/dotnet/core/blob/main/license-information.md)|.NET Foundation and Contributors|The MIT License|
+|[Ads Mediation](https://docs.unity3d.com/Packages/com.unity.services.levelplay@8.8/license/LICENSE.html)|2022 Unity Technologies||
 |[Burst](https://docs.unity3d.com/Packages/com.unity.burst@1.8/license/LICENSE.html)|2022 Unity Technologies|Unity Companion License|
 |[Core RP Library](https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@14.0/license/LICENSE.html)|2020 Unity Technologies ApS|Unity Companion License|
 |[Custom NUnit](https://docs.unity3d.com/Packages/com.unity.ext.nunit@1.0/license/LICENSE.html)|2018 Charlie Poole, Rob Prouse|The MIT License|
@@ -34,6 +35,7 @@
 |[Visual Scripting](https://docs.unity3d.com/Packages/com.unity.visualscripting@1.9/license/LICENSE.html)|2020 Unity Technologies|Unity Package Distribution License|
 |[Visual Studio Code Editor](https://docs.unity3d.com/Packages/com.unity.ide.vscode@1.2/license/LICENSE.html)|2019 Unity Technologies|The MIT License|
 |[Visual Studio Editor](https://docs.unity3d.com/Packages/com.unity.ide.visualstudio@2.0/license/LICENSE.html)|2019 Unity Technologies<br>2019 Microsoft Corporation|The MIT License|
+
 
 
 
